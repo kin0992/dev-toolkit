@@ -1,0 +1,77 @@
+name: Static Analysis (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version. Defaults to .nvmrc / 22.'
+        required: false
+        type: string
+        default: ''
+      working-directory:
+        description: 'Path to the project root.'
+        required: false
+        type: string
+        default: '.'
+      run-build:
+        description: 'Run `turbo run build`.'
+        required: false
+        type: boolean
+        default: true
+      run-lint:
+        description: 'Run `turbo run lint`.'
+        required: false
+        type: boolean
+        default: true
+      run-typecheck:
+        description: 'Run `turbo run typecheck`.'
+        required: false
+        type: boolean
+        default: true
+      run-format-check:
+        description: 'Run `pnpm format:check`.'
+        required: false
+        type: boolean
+        default: true
+      run-test:
+        description: 'Run `turbo run test`.'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  static-analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: kin0992/dev-toolkit/.github/actions/setup@main
+        with:
+          node-version: ${{ inputs.node-version }}
+          working-directory: ${{ inputs.working-directory }}
+
+      - name: Format check
+        if: ${{ inputs.run-format-check }}
+        run: pnpm format:check
+
+      - name: Build
+        if: ${{ inputs.run-build }}
+        run: pnpm turbo run build
+
+      - name: Typecheck
+        if: ${{ inputs.run-typecheck }}
+        run: pnpm turbo run typecheck
+
+      - name: Lint
+        if: ${{ inputs.run-lint }}
+        run: pnpm turbo run lint
+
+      - name: Test
+        if: ${{ inputs.run-test }}
+        run: pnpm turbo run test

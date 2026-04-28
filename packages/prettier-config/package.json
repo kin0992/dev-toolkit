@@ -1,0 +1,20 @@
+{
+  "name": "@kin0992/prettier-config",
+  "version": "0.0.0",
+  "description": "Shared Prettier configuration.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kin0992/dev-toolkit.git",
+    "directory": "packages/prettier-config"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "main": "index.json",
+  "files": [
+    "index.json",
+    "README.md"
+  ]
+}

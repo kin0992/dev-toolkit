@@ -1,0 +1,26 @@
+{
+  "name": "@kin0992/vitest-config",
+  "version": "0.0.0",
+  "description": "Shared Vitest configurations.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kin0992/dev-toolkit.git",
+    "directory": "packages/vitest-config"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "type": "module",
+  "exports": {
+    "./node": "./node.js"
+  },
+  "files": [
+    "node.js",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "vitest": "^2.0.0 || ^3.0.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@kin0992/tsconfig",
+  "version": "0.0.0",
+  "description": "Shared TypeScript configurations for dev-toolkit consumers.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kin0992/dev-toolkit.git",
+    "directory": "packages/tsconfig"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "files": [
+    "base.json",
+    "node.json",
+    "library.json",
+    "README.md"
+  ],
+  "exports": {
+    "./base": "./base.json",
+    "./node": "./node.json",
+    "./library": "./library.json"
+  }
+}

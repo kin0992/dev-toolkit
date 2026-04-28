@@ -1,0 +1,54 @@
+name: 'Setup Node + pnpm'
+description: 'Sets up Node.js (LTS by default) with pnpm and dependency caching.'
+inputs:
+  node-version:
+    description: 'Node.js version to use. Defaults to the .nvmrc value if present, otherwise 22.'
+    required: false
+    default: ''
+  pnpm-version:
+    description: 'pnpm version to install.'
+    required: false
+    default: '9'
+  working-directory:
+    description: 'Working directory containing package.json / pnpm-lock.yaml.'
+    required: false
+    default: '.'
+  install:
+    description: 'Whether to run `pnpm install --frozen-lockfile`.'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: ${{ inputs.pnpm-version }}
+        run_install: false
+
+    - name: Resolve Node version
+      id: node
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ -n "${{ inputs.node-version }}" ]; then
+          echo "version=${{ inputs.node-version }}" >> "$GITHUB_OUTPUT"
+        elif [ -f .nvmrc ]; then
+          echo "version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
+        else
+          echo "version=22" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ steps.node.outputs.version }}
+        cache: 'pnpm'
+        cache-dependency-path: ${{ inputs.working-directory }}/pnpm-lock.yaml
+
+    - name: Install dependencies
+      if: inputs.install == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: pnpm install --frozen-lockfile

@@ -1,0 +1,25 @@
+{
+  "name": "@kin0992/skills",
+  "version": "0.0.0",
+  "description": "AI Skills bundle: commit messages, PR title/description, code review, changelog summary.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kin0992/dev-toolkit.git",
+    "directory": "packages/skills"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "files": [
+    "src/**",
+    "README.md"
+  ],
+  "exports": {
+    "./commit-message": "./src/commit-message/SKILL.md",
+    "./pr-title-description": "./src/pr-title-description/SKILL.md",
+    "./code-review": "./src/code-review/SKILL.md",
+    "./changelog-summary": "./src/changelog-summary/SKILL.md"
+  }
+}
