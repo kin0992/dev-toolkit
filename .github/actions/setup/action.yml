@@ -5,10 +5,6 @@ inputs:
     description: 'Node.js version to use. Defaults to the .nvmrc value if present, otherwise 22.'
     required: false
     default: ''
-  pnpm-version:
-    description: 'pnpm version to install.'
-    required: false
-    default: '9'
   working-directory:
     description: 'Working directory containing package.json / pnpm-lock.yaml.'
     required: false
@@ -21,10 +17,26 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Resolve pnpm version
+      id: pnpm
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ -f package.json ]; then
+          VERSION=$(jq -r '.packageManager | split("@") | .[1] | split("+") | .[0]' package.json)
+          if [ -z "$VERSION" ] || [ "$VERSION" = "null" ]; then
+            echo "::error::pnpm version not found in package.json packageManager field"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        else
+          echo "::error::package.json not found"
+          exit 1
+        fi
+
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
-        version: ${{ inputs.pnpm-version }}
         run_install: false
 
     - name: Resolve Node version
