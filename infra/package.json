@@ -1,0 +1,24 @@
+{
+  "name": "dev-toolkit-infra",
+  "version": "0.0.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'no lint configured for infra'",
+    "test": "echo 'no infra tests'",
+    "preview": "pulumi preview",
+    "up": "pulumi up",
+    "drift": "pulumi preview --expect-no-changes --diff"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.140.0",
+    "@pulumi/github": "^6.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}

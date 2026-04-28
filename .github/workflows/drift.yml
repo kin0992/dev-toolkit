@@ -1,0 +1,25 @@
+name: IaC Drift
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'infra/**'
+      - '.github/workflows/drift.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+jobs:
+  drift:
+    uses: ./.github/workflows/iac-drift.yml
+    with:
+      stack: kin0992/dev-toolkit-infra/prod
+      working-directory: infra
+    secrets:
+      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

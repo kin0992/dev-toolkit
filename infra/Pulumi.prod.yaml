@@ -1,0 +1,4 @@
+config:
+  devToolkit:repoName: dev-toolkit
+  devToolkit:defaultBranch: main
+  github:owner: kin0992

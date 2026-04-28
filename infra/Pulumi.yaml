@@ -1,0 +1,13 @@
+name: dev-toolkit-infra
+runtime:
+  name: nodejs
+  options:
+    packagemanager: pnpm
+description: Manages the kin0992/dev-toolkit GitHub repository via Pulumi.
+config:
+  github:owner:
+    value: kin0992
+  devToolkit:repoName:
+    value: dev-toolkit
+  devToolkit:defaultBranch:
+    value: main
