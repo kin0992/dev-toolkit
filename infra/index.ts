@@ -9,7 +9,7 @@ export const repo = new github.Repository('dev-toolkit', {
   name: repoName,
   description:
     'Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared TypeScript configs.',
-  visibility: 'public',
+  visibility: 'private',
   hasIssues: true,
   hasDiscussions: false,
   hasProjects: false,
