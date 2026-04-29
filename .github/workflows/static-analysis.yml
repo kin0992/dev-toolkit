@@ -16,6 +16,9 @@ on:
 
 jobs:
   static-analysis:
+    permissions:
+      contents: read
+      packages: read
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
