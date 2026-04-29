@@ -45,8 +45,8 @@ jobs:
         with:
           publish: pnpm release
           version: pnpm version-packages
-          commit: 'chore(release): version packages'
-          title: 'chore(release): version packages'
+          commit: 'Release new artifacts'
+          title: 'Release new artifacts'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
