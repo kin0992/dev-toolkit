@@ -54,6 +54,9 @@ on:
 
 jobs:
   ci:
+    permissions:
+      contents: read
+      packages: read
     uses: kin0992/dev-toolkit/.github/workflows/static-analysis.yml@main
     with:
       node-version: '22'
@@ -71,6 +74,11 @@ on:
 
 jobs:
   drift:
+    permissions:
+      contents: read
+      packages: read
+      id-token: write
+      pull-requests: write
     uses: kin0992/dev-toolkit/.github/workflows/iac-drift.yml@main
     with:
       stack: kin0992/myapp/dev
@@ -101,6 +109,11 @@ Create or update `.npmrc` in the consumer repo:
 ```
 
 In CI, set `NODE_AUTH_TOKEN` to `${{ secrets.GITHUB_TOKEN }}` (the default token has `read:packages` scope when `permissions.packages: read` is set).
+
+`dev-toolkit`'s shared setup action also forwards a token to pnpm-related steps as
+`NODE_AUTH_TOKEN`, defaulting to `github.token`. If you override job
+permissions in a caller workflow, keep `packages: read` available or private
+`@kin0992/*` installs will still fail.
 
 Locally, generate a Personal Access Token with `read:packages` and put it in `~/.npmrc` or export it as `NODE_AUTH_TOKEN`.
 
