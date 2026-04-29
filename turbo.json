@@ -16,6 +16,7 @@
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
-    "format:check": {}
+    "format:check": {},
+    "format": {}
   }
 }
