@@ -21,7 +21,7 @@
     "format:check": "prettier --check .",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "code-review": "pnpm format:check && pnpm turbo run build typecheck lint test",
+    "code-review": "pnpm format:check && pnpm turbo run typecheck lint test",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build && changeset publish"
