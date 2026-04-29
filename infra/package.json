@@ -8,6 +8,7 @@
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "lint": "echo 'no lint configured for infra'",
+    "format:check": "prettier --check .",
     "test": "echo 'no infra tests'",
     "preview": "pulumi preview",
     "up": "pulumi up",

@@ -31,12 +31,12 @@ The static analysis workflow runs a single command: `pnpm code-review`. Your roo
 ```json
 {
   "scripts": {
-    "code-review": "pnpm format:check && pnpm turbo run typecheck lint test"
+    "code-review": "pnpm turbo run format:check typecheck lint test"
   }
 }
 ```
 
-Adapt the script body to your project's toolchain (add `turbo run build` if needed, substitute your linter, etc.).
+Adapt the script body to your project's toolchain (add other turbo tasks if needed, add `build` if required, etc.).
 
 ---
 
