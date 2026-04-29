@@ -8,10 +8,6 @@
     "url": "https://github.com/kin0992/dev-toolkit.git",
     "directory": "packages/tsconfig"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
-  },
   "files": [
     "base.json",
     "node.json",
@@ -22,5 +18,9 @@
     "./base": "./base.json",
     "./node": "./node.json",
     "./library": "./library.json"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
   }
 }
