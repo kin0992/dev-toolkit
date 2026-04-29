@@ -7,6 +7,39 @@
 
 ---
 
+## Requirements
+
+Before consuming any reusable workflow from `dev-toolkit`, your repository must meet these prerequisites.
+
+### Package manager: pnpm
+
+All workflows use **pnpm** exclusively. Your consumer repository must:
+
+- Use pnpm as its package manager (not npm or yarn).
+- Declare the exact pnpm version in the `packageManager` field of your root `package.json`. The `setup` composite action reads this field to install the correct pnpm version.
+
+  ```json
+  { "packageManager": "pnpm@10.x.x+sha512.<hash>" }
+  ```
+
+  Generate the correct value locally with `corepack use pnpm@latest`.
+
+### `code-review` script
+
+The static analysis workflow runs a single command: `pnpm code-review`. Your root `package.json` must define this script. A recommended implementation:
+
+```json
+{
+  "scripts": {
+    "code-review": "pnpm turbo run format:check typecheck lint test"
+  }
+}
+```
+
+Adapt the script body to your project's toolchain (add other turbo tasks if needed, add `build` if required, etc.).
+
+---
+
 ## 1. Reusable GitHub workflows
 
 ### Static analysis
@@ -26,8 +59,6 @@ jobs:
       node-version: '22'
       working-directory: '.'
 ```
-
-Skip individual steps via boolean inputs (`run-build`, `run-lint`, `run-typecheck`, `run-format-check`, `run-test`).
 
 ### IaC drift detection (Pulumi)
 
