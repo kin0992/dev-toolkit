@@ -8,18 +8,18 @@
     "url": "https://github.com/kin0992/dev-toolkit.git",
     "directory": "packages/vitest-config"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
-  },
-  "type": "module",
-  "exports": {
-    "./node": "./node.js"
-  },
   "files": [
     "node.js",
     "README.md"
   ],
+  "type": "module",
+  "exports": {
+    "./node": "./node.js"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  },
   "peerDependencies": {
     "vitest": "^2.0.0 || ^3.0.0"
   }

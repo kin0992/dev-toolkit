@@ -8,10 +8,6 @@
     "url": "https://github.com/kin0992/dev-toolkit.git",
     "directory": "packages/skills"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
-  },
   "files": [
     "src/**",
     "README.md"
@@ -21,5 +17,9 @@
     "./pr-title-description": "./src/pr-title-description/SKILL.md",
     "./code-review": "./src/code-review/SKILL.md",
     "./changelog-summary": "./src/changelog-summary/SKILL.md"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
   }
 }
