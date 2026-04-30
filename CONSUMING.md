@@ -59,7 +59,7 @@ jobs:
       packages: read
     uses: kin0992/dev-toolkit/.github/workflows/static-analysis.yml@main
     with:
-      node-version: '22'
+      node-version: '24'
       working-directory: '.'
 ```
 

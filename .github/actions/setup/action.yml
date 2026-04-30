@@ -2,7 +2,7 @@ name: 'Setup Node + pnpm'
 description: 'Sets up Node.js (LTS by default) with pnpm and dependency caching.'
 inputs:
   node-version:
-    description: 'Node.js version to use. Defaults to the .nvmrc value if present, otherwise 22.'
+    description: 'Node.js version to use. Defaults to the .node-version value if present, otherwise 24.'
     required: false
     default: ''
   node-auth-token:
@@ -52,10 +52,10 @@ runs:
       run: |
         if [ -n "${{ inputs.node-version }}" ]; then
           echo "version=${{ inputs.node-version }}" >> "$GITHUB_OUTPUT"
-        elif [ -f .nvmrc ]; then
-          echo "version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
+        elif [ -f .node-version ]; then
+          echo "version=$(cat .node-version)" >> "$GITHUB_OUTPUT"
         else
-          echo "version=22" >> "$GITHUB_OUTPUT"
+          echo "version=24" >> "$GITHUB_OUTPUT"
         fi
 
     - name: Setup Node.js

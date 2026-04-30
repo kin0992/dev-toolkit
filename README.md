@@ -18,7 +18,7 @@ Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared Typ
 
 ## Stack
 
-Node.js LTS · TypeScript · pnpm workspaces · Turbo · OXC (`oxfmt`, `oxlint`) · Vitest · Pulumi (TS) · Changesets · GitHub Actions · GitHub Packages registry
+Node.js 24 · TypeScript · pnpm workspaces · Turbo · OXC (`oxfmt`, `oxlint`) · Vitest · Pulumi (TS) · Changesets · GitHub Actions · GitHub Packages registry
 
 ## How to consume from another project
 
