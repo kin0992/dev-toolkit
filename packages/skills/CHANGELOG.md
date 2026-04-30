@@ -1,5 +1,11 @@
 # @kin0992/skills
 
+## 0.0.2
+
+### Patch Changes
+
+- bf533a6: Format code using new code style rules
+
 ## 0.0.1
 
 ### Patch Changes
