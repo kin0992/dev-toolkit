@@ -22,9 +22,9 @@
   },
   "devDependencies": {
     "@kin0992/oxc-config": "workspace:*",
-    "@types/node": "^22.10.2",
+    "@types/node": "catalog:core",
     "oxfmt": "catalog:core",
     "oxlint": "catalog:core",
-    "typescript": "^5.7.2"
+    "typescript": "catalog:core"
   }
 }

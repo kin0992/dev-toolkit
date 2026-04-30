@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       node-version:
-        description: 'Node.js version. Defaults to .nvmrc / 22.'
+        description: 'Node.js version. Defaults to .node-version / 24.'
         required: false
         type: string
         default: ''
