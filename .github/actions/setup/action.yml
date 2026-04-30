@@ -39,7 +39,7 @@ runs:
         fi
 
     - name: Install pnpm
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@v5
       env:
         NODE_AUTH_TOKEN: ${{ inputs.node-auth-token || github.token }}
       with:
@@ -59,7 +59,7 @@ runs:
         fi
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       env:
         NODE_AUTH_TOKEN: ${{ inputs.node-auth-token || github.token }}
       with:
