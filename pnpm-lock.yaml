@@ -24,8 +24,8 @@ importers:
   infra:
     dependencies:
       '@pulumi/github':
-        specifier: ^6.4.0
-        version: 6.13.0(typescript@5.9.3)
+        specifier: ^6.13.1
+        version: 6.13.1(typescript@5.9.3)
       '@pulumi/pulumi':
         specifier: ^3.140.0
         version: 3.232.0(typescript@5.9.3)
@@ -714,8 +714,8 @@ packages:
   '@protobufjs/utf8@1.1.1':
     resolution: {integrity: sha512-oOAWABowe8EAbMyWKM0tYDKi8Yaox52D+HWZhAIJqQXbqe0xI/GV7FhLWqlEKreMkfDjshR5FKgi3mnle0h6Eg==}
 
-  '@pulumi/github@6.13.0':
-    resolution: {integrity: sha512-VoQEHG7oAm7IWGwNCOKZl0FELTch9gtOBbyMLRHZgPIwyF+xxXwXomnEyAkell/PzfjuHl9HYZeOQPMS9doUaw==}
+  '@pulumi/github@6.13.1':
+    resolution: {integrity: sha512-dvQtwXvhIqx7HHTe0+PzLooyboiNapDHOnxEbGd0jY6boFFuFJpT5LKapK25cjsc6s4qKduvLo2HZdo9UtH05g==}
 
   '@pulumi/pulumi@3.232.0':
     resolution: {integrity: sha512-5Pl48cCwOOZEvG7b6w6sErrD1D/QiEwiPqEtHCIzF/alU0yzFjo95uxNteKFlt0LsnzWsZ58DJHgBe9gurjIFg==}
@@ -2967,7 +2967,7 @@ snapshots:
 
   '@protobufjs/utf8@1.1.1': {}
 
-  '@pulumi/github@6.13.0(typescript@5.9.3)':
+  '@pulumi/github@6.13.1(typescript@5.9.3)':
     dependencies:
       '@pulumi/pulumi': 3.232.0(typescript@5.9.3)
     transitivePeerDependencies:

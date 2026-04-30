@@ -15,7 +15,7 @@
     "drift": "pulumi preview --expect-no-changes --diff"
   },
   "dependencies": {
-    "@pulumi/github": "^6.4.0",
+    "@pulumi/github": "^6.13.1",
     "@pulumi/pulumi": "^3.140.0"
   },
   "devDependencies": {
