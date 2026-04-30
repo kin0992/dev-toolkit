@@ -7,8 +7,10 @@
   "scripts": {
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "lint": "echo 'no lint configured for infra'",
-    "format:check": "oxfmt --check",
+    "format": "oxfmt --config oxfmt.config.mjs",
+    "format:check": "oxfmt --check --config oxfmt.config.mjs",
+    "lint": "oxlint -c oxlint.config.mjs --fix",
+    "lint:check": "oxlint -c oxlint.config.mjs",
     "test": "echo 'no infra tests'",
     "preview": "pulumi preview",
     "up": "pulumi up",
@@ -19,7 +21,10 @@
     "@pulumi/pulumi": "^3.140.0"
   },
   "devDependencies": {
+    "@kin0992/oxc-config": "workspace:*",
     "@types/node": "^22.10.2",
+    "oxfmt": "catalog:core",
+    "oxlint": "catalog:core",
     "typescript": "^5.7.2"
   }
 }

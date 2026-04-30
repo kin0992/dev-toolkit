@@ -9,6 +9,9 @@
     "lint": {
       "dependsOn": ["^build"]
     },
+    "lint:check": {
+      "dependsOn": ["^build"]
+    },
     "typecheck": {
       "dependsOn": ["^build"]
     },
@@ -16,7 +19,11 @@
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
-    "format:check": {},
-    "format": {}
+    "format:check": {
+      "dependsOn": ["^build"]
+    },
+    "format": {
+      "dependsOn": ["^build"]
+    }
   }
 }

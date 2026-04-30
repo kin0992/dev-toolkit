@@ -12,6 +12,7 @@
     "src/**",
     "README.md"
   ],
+  "type": "module",
   "exports": {
     "./commit-message": "./src/commit-message/SKILL.md",
     "./pr-title-description": "./src/pr-title-description/SKILL.md",
@@ -23,7 +24,14 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
+    "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "format": "oxfmt --write"
+    "lint": "oxlint",
+    "lint:check": "oxlint"
+  },
+  "devDependencies": {
+    "@kin0992/oxc-config": "workspace:*",
+    "oxfmt": "catalog:core",
+    "oxlint": "catalog:core"
   }
 }

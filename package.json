@@ -12,13 +12,13 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build",
-    "lint": "pnpm lint:oxlint && turbo run lint",
-    "lint:oxlint": "oxlint .",
+    "lint": "turbo run lint",
+    "lint:check": "turbo run lint:check",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "code-review": "pnpm format:check && pnpm typecheck && pnpm lint && pnpm test",
+    "code-review": "pnpm format:check && pnpm typecheck && pnpm lint:check && pnpm test",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build && changeset publish"
@@ -26,10 +26,10 @@
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "@kin0992/oxc-config": "workspace:*",
-    "oxfmt": "^0.47.0",
-    "oxlint": "^1.62.0",
+    "oxfmt": "catalog:core",
+    "oxlint": "catalog:core",
     "turbo": "^2.9.6",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:core"
   },
   "engines": {
     "node": ">=22.0.0",

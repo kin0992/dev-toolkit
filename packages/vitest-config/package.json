@@ -20,6 +20,17 @@
     "access": "restricted",
     "registry": "https://npm.pkg.github.com"
   },
+  "scripts": {
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint",
+    "lint:check": "oxlint"
+  },
+  "devDependencies": {
+    "@kin0992/oxc-config": "workspace:*",
+    "oxfmt": "catalog:core",
+    "oxlint": "catalog:core"
+  },
   "peerDependencies": {
     "vitest": "^2.0.0 || ^3.0.0"
   }

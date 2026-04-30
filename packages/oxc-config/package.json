@@ -22,6 +22,16 @@
     "access": "restricted",
     "registry": "https://npm.pkg.github.com"
   },
+  "scripts": {
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint --fix",
+    "lint:check": "oxlint"
+  },
+  "devDependencies": {
+    "oxfmt": "catalog:core",
+    "oxlint": "catalog:core"
+  },
   "peerDependencies": {
     "oxfmt": "^0.47.0",
     "oxlint": "^1.62.0"

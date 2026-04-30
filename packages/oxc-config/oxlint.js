@@ -9,9 +9,6 @@ export default {
     es2024: true,
   },
   ignorePatterns: ['dist/**', 'build/**', 'coverage/**', '.turbo/**', 'node_modules/**'],
-  options: {
-    reportUnusedDisableDirectives: 'error',
-  },
   rules: {
     'eslint/prefer-const': 'error',
     'import/no-cycle': 'error',
@@ -26,12 +23,6 @@ export default {
       files: ['**/*.test.*', '**/*.spec.*', '**/test/**'],
       rules: {
         'typescript/no-explicit-any': 'off',
-      },
-    },
-    {
-      files: ['infra/**/*.ts'],
-      rules: {
-        'no-new': 'off',
       },
     },
   ],

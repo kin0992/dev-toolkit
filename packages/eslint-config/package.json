@@ -21,10 +21,21 @@
     "access": "restricted",
     "registry": "https://npm.pkg.github.com"
   },
+  "scripts": {
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint",
+    "lint:check": "oxlint"
+  },
   "dependencies": {
     "@eslint/js": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
     "typescript-eslint": "^8.18.2"
+  },
+  "devDependencies": {
+    "@kin0992/oxc-config": "workspace:*",
+    "oxfmt": "catalog:core",
+    "oxlint": "catalog:core"
   },
   "peerDependencies": {
     "eslint": "^9.0.0"

@@ -4,6 +4,18 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  core:
+    oxfmt:
+      specifier: ^0.47.0
+      version: 0.47.0
+    oxlint:
+      specifier: ^1.62.0
+      version: 1.62.0
+    typescript:
+      specifier: ^5.9.3
+      version: 5.9.3
+
 importers:
 
   .:
@@ -15,16 +27,16 @@ importers:
         specifier: workspace:*
         version: link:packages/oxc-config
       oxfmt:
-        specifier: ^0.47.0
+        specifier: catalog:core
         version: 0.47.0
       oxlint:
-        specifier: ^1.62.0
+        specifier: catalog:core
         version: 1.62.0
       turbo:
         specifier: ^2.9.6
         version: 2.9.6
       typescript:
-        specifier: ^5.9.3
+        specifier: catalog:core
         version: 5.9.3
 
   infra:
@@ -36,9 +48,18 @@ importers:
         specifier: ^3.140.0
         version: 3.232.0(typescript@5.9.3)
     devDependencies:
+      '@kin0992/oxc-config':
+        specifier: workspace:*
+        version: link:../packages/oxc-config
       '@types/node':
         specifier: ^22.10.2
         version: 22.19.17
+      oxfmt:
+        specifier: catalog:core
+        version: 0.47.0
+      oxlint:
+        specifier: catalog:core
+        version: 1.62.0
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -57,27 +78,77 @@ importers:
       typescript-eslint:
         specifier: ^8.18.2
         version: 8.59.1(eslint@9.39.4)(typescript@5.9.3)
-
-  packages/oxc-config:
-    dependencies:
+    devDependencies:
+      '@kin0992/oxc-config':
+        specifier: workspace:*
+        version: link:../oxc-config
       oxfmt:
-        specifier: ^0.47.0
+        specifier: catalog:core
         version: 0.47.0
       oxlint:
-        specifier: ^1.62.0
+        specifier: catalog:core
         version: 1.62.0
 
-  packages/prettier-config: {}
+  packages/oxc-config:
+    devDependencies:
+      oxfmt:
+        specifier: catalog:core
+        version: 0.47.0
+      oxlint:
+        specifier: catalog:core
+        version: 1.62.0
 
-  packages/skills: {}
+  packages/prettier-config:
+    devDependencies:
+      '@kin0992/oxc-config':
+        specifier: workspace:*
+        version: link:../oxc-config
+      oxfmt:
+        specifier: catalog:core
+        version: 0.47.0
+      oxlint:
+        specifier: catalog:core
+        version: 1.62.0
 
-  packages/tsconfig: {}
+  packages/skills:
+    devDependencies:
+      '@kin0992/oxc-config':
+        specifier: workspace:*
+        version: link:../oxc-config
+      oxfmt:
+        specifier: catalog:core
+        version: 0.47.0
+      oxlint:
+        specifier: catalog:core
+        version: 1.62.0
+
+  packages/tsconfig:
+    devDependencies:
+      '@kin0992/oxc-config':
+        specifier: workspace:*
+        version: link:../oxc-config
+      oxfmt:
+        specifier: catalog:core
+        version: 0.47.0
+      oxlint:
+        specifier: catalog:core
+        version: 1.62.0
 
   packages/vitest-config:
     dependencies:
       vitest:
         specifier: ^2.0.0 || ^3.0.0
         version: 3.2.4(@types/node@22.19.17)
+    devDependencies:
+      '@kin0992/oxc-config':
+        specifier: workspace:*
+        version: link:../oxc-config
+      oxfmt:
+        specifier: catalog:core
+        version: 0.47.0
+      oxlint:
+        specifier: catalog:core
+        version: 1.62.0
 
 packages:
 

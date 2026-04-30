@@ -12,9 +12,21 @@
     "index.json",
     "README.md"
   ],
+  "type": "module",
   "main": "index.json",
   "publishConfig": {
     "access": "restricted",
     "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint",
+    "lint:check": "oxlint"
+  },
+  "devDependencies": {
+    "@kin0992/oxc-config": "workspace:*",
+    "oxfmt": "catalog:core",
+    "oxlint": "catalog:core"
   }
 }
