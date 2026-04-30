@@ -3,14 +3,13 @@ import * as github from '@pulumi/github';
 
 const cfg = new pulumi.Config('devToolkit');
 const repoName = cfg.get('repoName') ?? 'dev-toolkit';
-const defaultBranch = cfg.get('defaultBranch') ?? 'main';
 
 export const repo = new github.Repository('dev-toolkit', {
   name: repoName,
   description:
     'Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared TypeScript configs.',
   visibility: 'private',
-  hasIssues: true,
+  hasIssues: false,
   hasDiscussions: false,
   hasProjects: false,
   hasWiki: false,
@@ -22,6 +21,9 @@ export const repo = new github.Repository('dev-toolkit', {
   squashMergeCommitTitle: 'PR_TITLE',
   squashMergeCommitMessage: 'PR_BODY',
   vulnerabilityAlerts: true,
+  allowUpdateBranch: true,
+  mergeCommitTitle: 'PR_TITLE',
+  mergeCommitMessage: 'PR_BODY',
   topics: [
     'platform-engineering',
     'github-actions',
@@ -38,7 +40,7 @@ export const branchProtection = new github.BranchProtection(
   'main-protection',
   {
     repositoryId: repo.nodeId,
-    pattern: defaultBranch,
+    pattern: 'main',
     enforceAdmins: false,
     requireConversationResolution: true,
     requiredLinearHistory: true,
