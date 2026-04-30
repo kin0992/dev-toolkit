@@ -1,6 +1,6 @@
 {
   "name": "@kin0992/tsconfig",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Shared TypeScript configurations for dev-toolkit consumers.",
   "license": "MIT",
   "repository": {
