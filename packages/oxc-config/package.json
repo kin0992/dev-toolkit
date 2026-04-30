@@ -1,19 +1,23 @@
 {
-  "name": "@kin0992/prettier-config",
+  "name": "@kin0992/oxc-config",
   "version": "0.0.0",
-  "description": "Shared Prettier configuration.",
+  "description": "Shared OXC formatter and lint configuration.",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/kin0992/dev-toolkit.git",
-    "directory": "packages/prettier-config"
+    "directory": "packages/oxc-config"
   },
   "files": [
-    "index.json",
+    "oxfmt.js",
+    "oxlint.js",
     "README.md"
   ],
   "type": "module",
-  "main": "index.json",
+  "exports": {
+    "./oxfmt": "./oxfmt.js",
+    "./oxlint": "./oxlint.js"
+  },
   "publishConfig": {
     "access": "restricted",
     "registry": "https://npm.pkg.github.com"
@@ -21,12 +25,15 @@
   "scripts": {
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "lint": "oxlint",
+    "lint": "oxlint --fix",
     "lint:check": "oxlint"
   },
   "devDependencies": {
-    "@kin0992/oxc-config": "workspace:*",
     "oxfmt": "catalog:core",
     "oxlint": "catalog:core"
+  },
+  "peerDependencies": {
+    "oxfmt": "^0.47.0",
+    "oxlint": "^1.62.0"
   }
 }

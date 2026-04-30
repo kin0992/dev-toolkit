@@ -10,14 +10,15 @@ Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared Typ
 | `.github/workflows/iac-drift.yml`       | Reusable workflow: Pulumi drift detection                      |
 | `.github/actions/setup`                 | Composite action: Node + pnpm + cache                          |
 | `packages/tsconfig`                     | `@kin0992/tsconfig` — base / node / library presets            |
+| `packages/oxc-config`                   | `@kin0992/oxc-config` — shared OXC format + lint config        |
 | `packages/eslint-config`                | `@kin0992/eslint-config` — flat ESLint config for TS           |
-| `packages/prettier-config`              | `@kin0992/prettier-config` — shared Prettier config            |
+| `packages/prettier-config`              | `@kin0992/prettier-config` — legacy Prettier config            |
 | `packages/vitest-config`                | `@kin0992/vitest-config` — shared Vitest preset                |
 | `packages/skills`                       | `@kin0992/skills` — AI Skills (commit, PR, review, changelog)  |
 
 ## Stack
 
-Node.js LTS · TypeScript · pnpm workspaces · Turbo · Vitest · Pulumi (TS) · Changesets · GitHub Actions · GitHub Packages registry
+Node.js LTS · TypeScript · pnpm workspaces · Turbo · OXC (`oxfmt`, `oxlint`) · Vitest · Pulumi (TS) · Changesets · GitHub Actions · GitHub Packages registry
 
 ## How to consume from another project
 
