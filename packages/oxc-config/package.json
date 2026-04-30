@@ -1,0 +1,29 @@
+{
+  "name": "@kin0992/oxc-config",
+  "version": "0.0.0",
+  "description": "Shared OXC formatter and lint configuration.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kin0992/dev-toolkit.git",
+    "directory": "packages/oxc-config"
+  },
+  "files": [
+    "oxfmt.js",
+    "oxlint.js",
+    "README.md"
+  ],
+  "type": "module",
+  "exports": {
+    "./oxfmt": "./oxfmt.js",
+    "./oxlint": "./oxlint.js"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "oxfmt": "^0.47.0",
+    "oxlint": "^1.62.0"
+  }
+}

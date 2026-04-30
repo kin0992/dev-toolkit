@@ -122,9 +122,11 @@ Locally, generate a Personal Access Token with `read:packages` and put it in `~/
 ```sh
 pnpm add -D \
   @kin0992/tsconfig \
+  @kin0992/oxc-config \
   @kin0992/eslint-config \
-  @kin0992/prettier-config \
-  @kin0992/vitest-config
+  @kin0992/vitest-config \
+  oxfmt \
+  oxlint
 ```
 
 ### Wire them up
@@ -142,10 +144,30 @@ import config from '@kin0992/eslint-config';
 export default config;
 ```
 
+`oxfmt.config.ts`:
+
+```ts
+import config from '@kin0992/oxc-config/oxfmt';
+export default config;
+```
+
+`oxlint.config.ts`:
+
+```ts
+import config from '@kin0992/oxc-config/oxlint';
+export default config;
+```
+
 `package.json`:
 
 ```json
-{ "prettier": "@kin0992/prettier-config" }
+{
+  "scripts": {
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint:oxlint": "oxlint ."
+  }
+}
 ```
 
 `vitest.config.ts`:
@@ -161,6 +183,10 @@ pnpm add -D @kin0992/skills
 ```
 
 Skills live as `SKILL.md` files under `node_modules/@kin0992/skills/src/<name>/SKILL.md` and can be loaded by your AI tooling of choice.
+
+### Legacy formatter package
+
+`@kin0992/prettier-config` is still available for existing consumers, but new projects should prefer `@kin0992/oxc-config`.
 
 ---
 

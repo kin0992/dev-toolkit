@@ -9,21 +9,25 @@
     "type": "git",
     "url": "https://github.com/kin0992/dev-toolkit.git"
   },
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
-    "lint": "turbo run lint",
+    "lint": "pnpm lint:oxlint && turbo run lint",
+    "lint:oxlint": "oxlint .",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "code-review": "pnpm turbo run format:check typecheck lint test",
+    "code-review": "pnpm format:check && pnpm typecheck && pnpm lint && pnpm test",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
+    "@kin0992/oxc-config": "workspace:*",
     "oxfmt": "^0.47.0",
+    "oxlint": "^1.62.0",
     "turbo": "^2.9.6",
     "typescript": "^5.9.3"
   },
