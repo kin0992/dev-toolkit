@@ -1,8 +1,6 @@
 name: IaC Drift
 
 on:
-  schedule:
-    - cron: '0 6 * * *'
   pull_request:
     branches: [main]
     paths:
