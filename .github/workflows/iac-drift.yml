@@ -12,11 +12,6 @@ on:
         required: false
         type: string
         default: 'infra'
-      node-version:
-        description: 'Node.js version.'
-        required: false
-        type: string
-        default: ''
       comment-on-pr:
         description: 'Comment preview on PRs.'
         required: false
@@ -57,7 +52,6 @@ jobs:
       - name: Setup
         uses: kin0992/dev-toolkit/.github/actions/setup@main
         with:
-          node-version: ${{ inputs.node-version }}
           working-directory: ${{ inputs.working-directory }}
 
       - name: Pulumi login

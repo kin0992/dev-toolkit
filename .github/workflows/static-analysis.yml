@@ -3,11 +3,6 @@ name: Static Analysis (reusable)
 on:
   workflow_call:
     inputs:
-      node-version:
-        description: 'Node.js version. Defaults to .node-version / 24.'
-        required: false
-        type: string
-        default: ''
       working-directory:
         description: 'Path to the project root.'
         required: false
@@ -31,7 +26,6 @@ jobs:
       - name: Setup
         uses: kin0992/dev-toolkit/.github/actions/setup@main
         with:
-          node-version: ${{ inputs.node-version }}
           working-directory: ${{ inputs.working-directory }}
 
       - name: Code Review
