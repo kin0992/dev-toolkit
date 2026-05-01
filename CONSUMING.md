@@ -59,9 +59,33 @@ jobs:
       packages: read
     uses: kin0992/dev-toolkit/.github/workflows/static-analysis.yml@main
     with:
-      node-version: '24'
       working-directory: '.'
 ```
+
+**Note:** The workflow reads your repository's `.node-version` file automatically. Ensure it exists at the root and contains the Node.js version you want to use (e.g., `24.15.0`).
+
+### Release (Changesets + npm publish)
+
+To automate versioning and publishing with Changesets:
+
+```yaml
+name: Release
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+
+jobs:
+  release:
+    permissions:
+      contents: write
+      pull-requests: write
+      packages: write
+      id-token: write
+    uses: kin0992/dev-toolkit/.github/workflows/release.yml@main
+    secrets: inherit
+```
+
+Your `package.json` must define `release` and `version-packages` scripts, and your repository must publish to the `@kin0992` npm scope (or adjust the `.npmrc` config as needed). The workflow uses Changesets to manage versioning.
 
 ### IaC drift detection (Pulumi)
 
