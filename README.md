@@ -7,7 +7,7 @@ Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared Typ
 | Path                                    | Description                                                    |
 | --------------------------------------- | -------------------------------------------------------------- |
 | `.github/workflows/static-analysis.yml` | Reusable workflow: build, lint, typecheck, format check, tests |
-| `.github/workflows/release.yml`         | Reusable workflow: Changesets versioning and npm publish        |
+| `.github/workflows/release.yml`         | Reusable workflow: Changesets versioning and npm publish       |
 | `.github/workflows/iac-drift.yml`       | Reusable workflow: Pulumi drift detection                      |
 | `.github/actions/setup`                 | Composite action: Node + pnpm + cache                          |
 | `packages/tsconfig`                     | `@kin0992/tsconfig` — base / node / library presets            |
