@@ -12,8 +12,6 @@ Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared Typ
 | `.github/actions/setup`                 | Composite action: Node + pnpm + cache                          |
 | `packages/tsconfig`                     | `@kin0992/tsconfig` — base / node / library presets            |
 | `packages/oxc-config`                   | `@kin0992/oxc-config` — shared OXC format + lint config        |
-| `packages/eslint-config`                | `@kin0992/eslint-config` — flat ESLint config for TS           |
-| `packages/prettier-config`              | `@kin0992/prettier-config` — legacy Prettier config            |
 | `packages/vitest-config`                | `@kin0992/vitest-config` — shared Vitest preset                |
 | `packages/skills`                       | `@kin0992/skills` — AI Skills (commit, PR, review, changelog)  |
 

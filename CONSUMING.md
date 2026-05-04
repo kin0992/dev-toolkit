@@ -147,7 +147,6 @@ Locally, generate a Personal Access Token with `read:packages` and put it in `~/
 pnpm add -D \
   @kin0992/tsconfig \
   @kin0992/oxc-config \
-  @kin0992/eslint-config \
   @kin0992/vitest-config \
   oxfmt \
   oxlint
@@ -159,13 +158,6 @@ pnpm add -D \
 
 ```jsonc
 { "extends": "@kin0992/tsconfig/library" }
-```
-
-`eslint.config.js`:
-
-```js
-import config from '@kin0992/eslint-config';
-export default config;
 ```
 
 `oxfmt.config.ts`:
@@ -207,12 +199,6 @@ pnpm add -D @kin0992/skills
 ```
 
 Skills live as `SKILL.md` files under `node_modules/@kin0992/skills/src/<name>/SKILL.md` and can be loaded by your AI tooling of choice.
-
-### Legacy formatter package
-
-`@kin0992/prettier-config` is still available for existing consumers, but new projects should prefer `@kin0992/oxc-config`.
-
----
 
 ## 3. Recommended consumer workflow setup
 
