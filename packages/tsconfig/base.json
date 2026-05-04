@@ -1,9 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Base",
+  "extends": "@tsconfig/node24",
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2022"],
+    "lib": [
+      "es2024",
+      "ESNext.Array",
+      "ESNext.Collection",
+      "ESNext.Error",
+      "ESNext.Iterator",
+      "ESNext.Promise"
+    ],
+    "target": "ES2024",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "strict": true,
