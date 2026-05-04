@@ -2,6 +2,9 @@
 
 Legacy shared Prettier config. New projects should prefer `@kin0992/oxc-config`.
 
+> [!WARNING]
+> **This package is no longer maintained.** Please migrate to `oxfmt` and `oxlint` for all formatting and linting needs.
+
 ## Install
 
 ```sh
