@@ -32,6 +32,6 @@
     "oxlint": "catalog:core"
   },
   "peerDependencies": {
-    "vitest": "^2.0.0 || ^3.0.0"
+    "vitest": "^4.0.0"
   }
 }

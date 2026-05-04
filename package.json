@@ -29,7 +29,8 @@
     "oxfmt": "catalog:core",
     "oxlint": "catalog:core",
     "turbo": "^2.9.8",
-    "typescript": "catalog:core"
+    "typescript": "catalog:core",
+    "vitest": "^4.1.5"
   },
   "engines": {
     "node": ">=24.0.0",
