@@ -1,0 +1,18 @@
+{
+  "name": "dev-toolkit",
+  "owner": {
+    "name": "kin0992"
+  },
+  "metadata": {
+    "description": "Reusable AI Skills and plugins for kin0992 projects: git workflow helpers.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "git-skills",
+      "description": "Skills for git workflow automation: commit messages and PR title/description generation.",
+      "version": "0.1.0",
+      "source": "./plugins/git-skills"
+    }
+  ]
+}

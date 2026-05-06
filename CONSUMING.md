@@ -192,7 +192,7 @@ export default config;
 export { default } from '@kin0992/vitest-config/node';
 ```
 
-### Install AI Skills
+### Install AI Skills (programmatic / non-Copilot tooling)
 
 ```sh
 pnpm add -D @kin0992/skills
@@ -200,7 +200,70 @@ pnpm add -D @kin0992/skills
 
 Skills live as `SKILL.md` files under `node_modules/@kin0992/skills/src/<name>/SKILL.md` and can be loaded by your AI tooling of choice.
 
-## 3. Recommended consumer workflow setup
+For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel below — skills auto-load on demand without any `node_modules` plumbing.
+
+---
+
+## 3. AI Skills via the dev-toolkit marketplace
+
+`dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json`, exposing the skills as a plugin:
+
+| Plugin       | Skills                                   |
+| ------------ | ---------------------------------------- |
+| `git-skills` | `commit-message`, `pr-title-description` |
+
+Each plugin ships dual manifests so it works in:
+
+- **GitHub Copilot CLI** and **VS Code** — via `.github/plugin.json`
+- **Claude Code** — via `.claude-plugin/plugin.json`
+
+Skills load **on demand**: Copilot/Claude only pull a skill into context when it matches the current task, so installing a plugin has no token cost when its skills are not relevant.
+
+### GitHub Copilot CLI
+
+```sh
+copilot plugin marketplace add kin0992/dev-toolkit
+copilot plugin install git-skills@dev-toolkit
+```
+
+To pin to a specific version, push a Git tag from `dev-toolkit` and reference it; otherwise installs track the marketplace's default branch.
+
+Manage installed plugins with:
+
+```sh
+copilot plugin list
+copilot plugin update git-skills
+copilot plugin uninstall git-skills
+```
+
+### VS Code
+
+1. Set `chat.plugins.enabled` to `true` in your **user** settings.
+2. Add the marketplace to `chat.plugins.marketplaces` (also user-level — workspace settings are not honoured by the preview):
+
+   ```json
+   {
+     "chat.plugins.marketplaces": ["kin0992/dev-toolkit"]
+   }
+   ```
+
+3. Browse and install via the Command Palette → **Chat: Plugins**.
+
+### Claude Code
+
+Claude Code reads the same marketplace and picks up `.claude-plugin/plugin.json` from each plugin. Add the marketplace through Claude Code's plugin UI / config and install `git-skills` the same way.
+
+### Choosing between npm and the marketplace
+
+| Use case                                                                        | Recommended channel                         |
+| ------------------------------------------------------------------------------- | ------------------------------------------- |
+| GitHub Copilot CLI, Copilot in VS Code, or Claude Code                          | Marketplace (`copilot plugin install`)      |
+| Programmatic access to a `SKILL.md` (custom tooling, scripts, other AI clients) | npm (`@kin0992/skills`)                     |
+| You want both                                                                   | Both — they share the same `SKILL.md` files |
+
+---
+
+## 4. Recommended consumer workflow setup
 
 In each consumer repo, add a Renovate or Dependabot config that bumps `@kin0992/*` automatically so updates flow with minimal effort.
 
