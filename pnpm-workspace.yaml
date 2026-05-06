@@ -5,6 +5,6 @@ packages:
 catalogs:
   core:
     '@types/node': ^24.12.2
-    oxfmt: ^0.47.0
-    oxlint: ^1.62.0
+    oxfmt: ^0.48.0
+    oxlint: ^1.63.0
     typescript: ^6.0.3
