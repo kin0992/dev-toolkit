@@ -4,21 +4,15 @@
     "name": "kin0992"
   },
   "metadata": {
-    "description": "Reusable AI Skills and plugins for kin0992 projects: git workflow helpers and code-review automation.",
-    "version": "1.0.0"
+    "description": "Reusable AI Skills and plugins for kin0992 projects: git workflow helpers.",
+    "version": "0.1.0"
   },
   "plugins": [
     {
       "name": "git-skills",
       "description": "Skills for git workflow automation: commit messages and PR title/description generation.",
-      "version": "1.0.0",
+      "version": "0.1.0",
       "source": "./plugins/git-skills"
-    },
-    {
-      "name": "review-skills",
-      "description": "Skills for code review and changelog summary generation.",
-      "version": "1.0.0",
-      "source": "./plugins/review-skills"
     }
   ]
 }

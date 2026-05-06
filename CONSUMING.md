@@ -206,12 +206,11 @@ For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel
 
 ## 3. AI Skills via the dev-toolkit marketplace
 
-`dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json`, exposing the skills as themed plugins:
+`dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json`, exposing the skills as a plugin:
 
-| Plugin          | Skills                                   |
-| --------------- | ---------------------------------------- |
-| `git-skills`    | `commit-message`, `pr-title-description` |
-| `review-skills` | `code-review`, `changelog-summary`       |
+| Plugin       | Skills                                   |
+| ------------ | ---------------------------------------- |
+| `git-skills` | `commit-message`, `pr-title-description` |
 
 Each plugin ships dual manifests so it works in:
 
@@ -225,7 +224,6 @@ Skills load **on demand**: Copilot/Claude only pull a skill into context when it
 ```sh
 copilot plugin marketplace add kin0992/dev-toolkit
 copilot plugin install git-skills@dev-toolkit
-copilot plugin install review-skills@dev-toolkit
 ```
 
 To pin to a specific version, push a Git tag from `dev-toolkit` and reference it; otherwise installs track the marketplace's default branch.
@@ -253,7 +251,7 @@ copilot plugin uninstall git-skills
 
 ### Claude Code
 
-Claude Code reads the same marketplace and picks up `.claude-plugin/plugin.json` from each plugin. Add the marketplace through Claude Code's plugin UI / config and install `git-skills` and/or `review-skills` the same way.
+Claude Code reads the same marketplace and picks up `.claude-plugin/plugin.json` from each plugin. Add the marketplace through Claude Code's plugin UI / config and install `git-skills` the same way.
 
 ### Choosing between npm and the marketplace
 

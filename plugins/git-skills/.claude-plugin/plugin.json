@@ -1,7 +1,7 @@
 {
   "name": "git-skills",
   "description": "AI Skills for git workflow: classic-style commit messages and PR title/description generation from a diff.",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": {
     "name": "kin0992"
   },

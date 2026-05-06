@@ -13,9 +13,8 @@ Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared Typ
 | `packages/tsconfig`                     | `@kin0992/tsconfig` — base / node / library presets             |
 | `packages/oxc-config`                   | `@kin0992/oxc-config` — shared OXC format + lint config         |
 | `packages/vitest-config`                | `@kin0992/vitest-config` — shared Vitest preset                 |
-| `packages/skills`                       | `@kin0992/skills` — AI Skills (commit, PR, review, changelog)   |
+| `packages/skills`                       | `@kin0992/skills` — AI Skills (commit, PR title/description)    |
 | `plugins/git-skills`                    | Copilot/Claude plugin: `commit-message`, `pr-title-description` |
-| `plugins/review-skills`                 | Copilot/Claude plugin: `code-review`, `changelog-summary`       |
 | `.github/plugin/marketplace.json`       | Marketplace registry exposing the plugins above                 |
 
 ## Stack
