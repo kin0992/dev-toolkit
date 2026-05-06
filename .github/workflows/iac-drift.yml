@@ -51,8 +51,6 @@ jobs:
 
       - name: Setup
         uses: kin0992/dev-toolkit/.github/actions/setup@main
-        with:
-          working-directory: ${{ inputs.working-directory }}
 
       - name: Pulumi login
         if: inputs.cloud-url != ''

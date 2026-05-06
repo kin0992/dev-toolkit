@@ -18,5 +18,3 @@ jobs:
   static-analysis:
     name: Static Analysis (self)
     uses: ./.github/workflows/static-analysis.yml
-    with:
-      working-directory: '.'

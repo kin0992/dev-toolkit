@@ -18,6 +18,5 @@ jobs:
     uses: ./.github/workflows/iac-drift.yml
     with:
       stack: kin0992/dev-toolkit-infra/prod
-      working-directory: infra
     secrets:
       PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

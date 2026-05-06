@@ -9,10 +9,6 @@ inputs:
     description: 'Optional token exposed as NODE_AUTH_TOKEN to pnpm-related steps. Defaults to github.token.'
     required: false
     default: ''
-  working-directory:
-    description: 'Working directory containing package.json / pnpm-lock.yaml.'
-    required: false
-    default: '.'
   install:
     description: 'Whether to run `pnpm install --frozen-lockfile`.'
     required: false
@@ -21,23 +17,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Resolve pnpm version
-      id: pnpm
-      shell: bash
-      working-directory: ${{ inputs.working-directory }}
-      run: |
-        if [ -f package.json ]; then
-          VERSION=$(jq -r '.packageManager | split("@") | .[1] | split("+") | .[0]' package.json)
-          if [ -z "$VERSION" ] || [ "$VERSION" = "null" ]; then
-            echo "::error::pnpm version not found in package.json packageManager field"
-            exit 1
-          fi
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-        else
-          echo "::error::package.json not found"
-          exit 1
-        fi
-
     - name: Install pnpm
       uses: pnpm/action-setup@v5
       env:
@@ -45,32 +24,18 @@ runs:
       with:
         run_install: false
 
-    - name: Resolve Node version
-      id: node
-      shell: bash
-      working-directory: ${{ inputs.working-directory }}
-      run: |
-        if [ -n "${{ inputs.node-version }}" ]; then
-          echo "version=${{ inputs.node-version }}" >> "$GITHUB_OUTPUT"
-        elif [ -f .node-version ]; then
-          echo "version=$(cat .node-version)" >> "$GITHUB_OUTPUT"
-        else
-          echo "version=24" >> "$GITHUB_OUTPUT"
-        fi
-
     - name: Setup Node.js
       uses: actions/setup-node@v6
       env:
         NODE_AUTH_TOKEN: ${{ inputs.node-auth-token || github.token }}
       with:
-        node-version: ${{ steps.node.outputs.version }}
+        node-version-file: .node-version
         cache: 'pnpm'
-        cache-dependency-path: ${{ inputs.working-directory }}/pnpm-lock.yaml
+        cache-dependency-path: pnpm-lock.yaml
 
     - name: Install dependencies
       if: inputs.install == 'true'
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
       env:
         NODE_AUTH_TOKEN: ${{ inputs.node-auth-token || github.token }}
       run: pnpm install --frozen-lockfile
