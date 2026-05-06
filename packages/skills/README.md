@@ -29,3 +29,17 @@ const path = url.fileURLToPath(skillUrl);
 ```
 
 Or read it directly from `node_modules/@kin0992/skills/src/<skill>/SKILL.md`.
+
+## GitHub Copilot CLI / VS Code / Claude Code
+
+If you use GitHub Copilot CLI, Copilot in VS Code, or Claude Code, prefer the
+**marketplace channel**, which auto-loads these same `SKILL.md` files on
+demand without any `node_modules` plumbing:
+
+```sh
+copilot plugin marketplace add kin0992/dev-toolkit
+copilot plugin install git-skills@dev-toolkit     # commit-message, pr-title-description
+copilot plugin install review-skills@dev-toolkit  # code-review, changelog-summary
+```
+
+See [CONSUMING.md](../../CONSUMING.md#3-ai-skills-via-the-dev-toolkit-marketplace) for the full setup, including VS Code and Claude Code.
