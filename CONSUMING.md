@@ -111,6 +111,42 @@ jobs:
       PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 ```
 
+### IaC deploy (Pulumi up)
+
+To run `pulumi up` automatically on pushes to main (or manually):
+
+```yaml
+name: IaC Deploy
+on:
+  push:
+    branches: [main]
+    paths: ['infra/**']
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    permissions:
+      contents: read
+      packages: read
+      id-token: write
+    uses: kin0992/dev-toolkit/.github/workflows/iac-deploy.yml@main
+    with:
+      stack: kin0992/myapp/prod
+      working-directory: infra
+      message: 'deploy from CI'
+    secrets:
+      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+```
+
+**Inputs:**
+
+| Input               | Required | Default | Description                                        |
+| ------------------- | -------- | ------- | -------------------------------------------------- |
+| `stack`             | yes      | —       | Pulumi stack name                                  |
+| `working-directory` | no       | `infra` | Path to the Pulumi project                         |
+| `message`           | no       | `''`    | Message attached to the update for audit trail     |
+| `cloud-url`         | no       | `''`    | Self-managed backend URL; omit to use Pulumi Cloud |
+
 ### Pinning strategy
 
 | Goal                    | Reference                          |

@@ -1,0 +1,22 @@
+name: IaC Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'infra/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/iac-deploy.yml
+    with:
+      stack: prod
+    secrets:
+      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

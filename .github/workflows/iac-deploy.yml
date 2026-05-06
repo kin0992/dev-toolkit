@@ -1,0 +1,63 @@
+name: IaC Deploy (Pulumi)
+
+on:
+  workflow_call:
+    inputs:
+      stack:
+        description: 'Pulumi stack name (e.g. kin0992/myapp/prod).'
+        required: true
+        type: string
+      working-directory:
+        description: 'Path to the Pulumi project.'
+        required: false
+        type: string
+        default: 'infra'
+      message:
+        description: 'Optional message to associate with the update (audit trail).'
+        required: false
+        type: string
+        default: ''
+      cloud-url:
+        description: 'Optional Pulumi backend URL (defaults to Pulumi Cloud).'
+        required: false
+        type: string
+        default: ''
+    secrets:
+      PULUMI_ACCESS_TOKEN:
+        description: 'Pulumi Cloud access token (omit when using OIDC + self-managed backend).'
+        required: false
+
+permissions:
+  contents: read
+  packages: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup
+        uses: kin0992/dev-toolkit/.github/actions/setup@main
+
+      - name: Pulumi Login
+        if: inputs.cloud-url != ''
+        run: pulumi login "${{ inputs.cloud-url }}"
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Pulumi Up
+        uses: pulumi/actions@v7
+        with:
+          command: up
+          stack-name: ${{ inputs.stack }}
+          work-dir: ${{ inputs.working-directory }}
+          message: ${{ inputs.message }}
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
