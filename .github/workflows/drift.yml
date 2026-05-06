@@ -17,6 +17,6 @@ jobs:
   drift:
     uses: ./.github/workflows/iac-drift.yml
     with:
-      stack: kin0992/dev-toolkit-infra/prod
+      stack: prod
     secrets:
       PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

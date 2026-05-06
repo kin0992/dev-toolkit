@@ -1,4 +1,4 @@
-name: IaC Drift (Pulumi, reusable)
+name: IaC Drift (Pulumi)
 
 on:
   workflow_call:
@@ -52,14 +52,14 @@ jobs:
       - name: Setup
         uses: kin0992/dev-toolkit/.github/actions/setup@main
 
-      - name: Pulumi login
+      - name: Pulumi Login
         if: inputs.cloud-url != ''
         run: pulumi login "${{ inputs.cloud-url }}"
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Pulumi preview (expect no changes)
-        uses: pulumi/actions@v6
+      - name: Pulumi Preview
+        uses: pulumi/actions@v7
         with:
           command: preview
           stack-name: ${{ inputs.stack }}
