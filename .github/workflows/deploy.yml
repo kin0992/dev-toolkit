@@ -12,6 +12,7 @@ permissions:
   contents: read
   id-token: write
   pull-requests: write
+  packages: read
 
 jobs:
   deploy:
