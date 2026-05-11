@@ -17,11 +17,6 @@ on:
         required: false
         type: boolean
         default: true
-      fail-on-drift:
-        description: 'Fail the job when drift is detected.'
-        required: false
-        type: boolean
-        default: true
       cloud-url:
         description: 'Optional Pulumi backend URL (defaults to Pulumi Cloud).'
         required: false
@@ -64,7 +59,7 @@ jobs:
           command: preview
           stack-name: ${{ inputs.stack }}
           work-dir: ${{ inputs.working-directory }}
-          expect-no-changes: ${{ inputs.fail-on-drift }}
+          expect-no-changes: false
           comment-on-pr: ${{ inputs.comment-on-pr }}
           diff: true
         env:
