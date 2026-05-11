@@ -1,29 +1,35 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalDependencies": ["tsconfig*.json"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig*.json"],
       "outputs": ["dist/**"]
     },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig*.json"]
+    },
     "lint": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "oxlint.config.*"]
     },
     "lint:check": {
-      "dependsOn": ["^build"]
-    },
-    "typecheck": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "oxlint.config.*"]
     },
     "test": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": ["coverage/**"]
     },
     "format:check": {
-      "dependsOn": ["^build"]
+      "inputs": ["$TURBO_DEFAULT$", "oxfmt.config.*"]
     },
     "format": {
-      "dependsOn": ["^build"]
+      "inputs": ["$TURBO_DEFAULT$", "oxfmt.config.*"]
     }
   }
 }
