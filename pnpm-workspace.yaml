@@ -1,6 +1,8 @@
 packages:
   - 'packages/*'
   - 'infra'
+allowBuilds:
+  protobufjs: true
 
 catalogs:
   core:
