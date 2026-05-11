@@ -1,7 +1,9 @@
 packages:
   - 'packages/*'
   - 'infra'
+
 allowBuilds:
+  esbuild: true
   protobufjs: true
 
 catalogs:
@@ -10,3 +12,6 @@ catalogs:
     oxfmt: ^0.48.0
     oxlint: ^1.63.0
     typescript: ^6.0.3
+
+autoInstallPeers: true
+strictPeerDependencies: false
