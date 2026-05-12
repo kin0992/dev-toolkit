@@ -1,0 +1,21 @@
+id: pr-with-template-001
+name: PR With Template
+description: |
+  Test that the skill respects a provided PR template and fills its
+  sections rather than inventing its own structure.
+tags:
+  - template
+  - compliance
+
+inputs:
+  prompt: 'Generate a PR title and description using this template'
+  files:
+    - path: feature-commits.txt
+    - path: feature-diff.diff
+    - path: pr-template.md
+
+expected:
+  outcomes:
+    - type: task_completed
+  behavior:
+    max_tool_calls: 5

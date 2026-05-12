@@ -1,45 +1,38 @@
 ---
 name: pr-title-description
-description: Generate a pull request title and description from a branch's commits, diff, and optional PR template. Use this skill when a PR needs a concise title and a reviewer-friendly description.
+description: |
+  **UTILITY SKILL** - Generate a pull request title and description from a branch diff.
+  USE FOR: write PR description, generate pull request title, summarize branch
+  for reviewers, create PR body from commits, draft pull request.
+  DO NOT USE FOR: writing commit messages (use commit-message skill),
+  code review feedback, changelog generation.
+  INVOKES: git log and git diff for reading branch changes, file reading for PR templates.
+  FOR SINGLE OPERATIONS: Use git log --oneline directly for a quick branch summary.
 license: MIT
 ---
 
 # Generate a PR title and description
 
-Use this skill to summarize a branch for reviewers with a concise PR title
-and a clear markdown description.
-
-## Inputs
-
-- `commits`: list of commit messages on the branch (from `git log base..head`).
-- `diff`: full or summarized diff against the base branch.
-- `template` (optional): the repo's PR template content.
+Summarize a branch for reviewers with a concise PR title and markdown
+description.
 
 ## Instructions
 
-1. Read the commits, diff, and optional template before writing.
-2. Write a **title** that:
-   - uses the imperative mood
-   - stays within 72 characters
-   - summarizes the primary user-facing change
-3. If the branch includes multiple themes, choose the dominant one for the
-   title and cover the rest in the description.
-4. If a PR template is provided, fill its sections instead of inventing a
-   different structure.
-5. If no template is provided, write a markdown description using these
-   sections and omit empty ones:
-   - **Why** - motivation, user problem, or linked context
-   - **What** - concise bullets grouped by area, not by file
-   - **How to verify** - manual checks or tests reviewers should inspect
-   - **Risks / follow-ups** - anything reviewers should watch closely
-6. Do not duplicate the diff. Describe the intent, outcome, and notable
-   reviewer context instead of narrating every edit.
-7. Never fabricate ticket numbers, links, screenshots, or validation
-   steps.
+1. Read commits, diff, and optional template before writing.
+2. Write a **title**: imperative mood, ≤72 chars, summarizing the
+   primary user-facing change.
+3. If a PR template is provided, fill its sections. Otherwise use:
+   - **Why** – motivation or linked context
+   - **What** – concise bullets grouped by area
+   - **How to verify** – checks or tests for reviewers
+   - **Risks / follow-ups** – anything to watch closely
+     Omit empty sections.
+4. Describe intent and outcome, not every edit. Never fabricate ticket
+   numbers, links, or steps.
 
 ## Output
 
-Return only the PR title and description.
+Return only the title and description:
 
 ```text
 TITLE: <pr title>
@@ -49,42 +42,23 @@ TITLE: <pr title>
 
 ## Example
 
-Input summary:
-
-- Commits add retry handling for webhook delivery failures
-- Diff adds retry metrics and updates docs
-
-Output:
-
 ```text
 TITLE: Add retry handling for webhook delivery
 
 ## Why
-
-Webhook delivery could fail permanently after transient outages, which
-made downstream processing unreliable.
+Transient outages could permanently fail webhook delivery.
 
 ## What
-
-- retry failed webhook deliveries before marking them as failed
-- emit metrics for retry attempts and exhausted retries
-- document the retry behavior for operators
+- retry failed deliveries before marking them failed
+- emit retry metrics
+- document retry behavior
 
 ## How to verify
-
-- review the retry path tests
-- confirm metrics are emitted for retries and terminal failures
-
-## Risks / follow-ups
-
-- monitor retry volume after rollout to confirm the backoff is tuned well
+- review retry path tests
+- confirm metrics for retries and terminal failures
 ```
 
 ## Common edge cases
 
-- If a template includes required headings, preserve them even when you
-  would normally choose a different structure.
-- If the diff is broad, group the description by reviewer-relevant areas
-  instead of listing files.
-- If verification details are missing, do not invent tests or manual
-  steps.
+- If a template includes required headings, preserve them.
+- If verification details are missing, do not invent steps.

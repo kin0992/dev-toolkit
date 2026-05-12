@@ -1,0 +1,19 @@
+id: multi-area-001
+name: Multi-Area Diff
+description: |
+  Test that the skill suggests splitting when a diff touches
+  multiple unrelated areas.
+tags:
+  - edge-case
+  - multi-area
+
+inputs:
+  prompt: 'Generate a commit message for this staged diff'
+  files:
+    - path: multi-area.diff
+
+expected:
+  outcomes:
+    - type: task_completed
+  behavior:
+    max_tool_calls: 5

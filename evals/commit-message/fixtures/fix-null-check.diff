@@ -1,0 +1,14 @@
+diff --git a/src/config.ts b/src/config.ts
+index 1a2b3c4..5d6e7f8 100644
+--- a/src/config.ts
++++ b/src/config.ts
+@@ -12,7 +12,9 @@ export function loadConfig(path: string): Config {
+   const raw = fs.readFileSync(path, 'utf-8');
+   const parsed = JSON.parse(raw);
+ 
+-  return parsed as Config;
++  if (!parsed || typeof parsed !== 'object') {
++    throw new Error(`Invalid configuration at ${path}`);
++  }
++  return parsed satisfies Config;
+ }

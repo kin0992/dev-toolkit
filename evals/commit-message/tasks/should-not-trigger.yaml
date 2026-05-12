@@ -1,0 +1,17 @@
+id: negative-trigger-001
+name: Should Not Trigger - PR Description Request
+description: |
+  Negative test: user asks for a PR description, not a commit message.
+  The skill should not activate.
+tags:
+  - negative
+  - trigger
+
+inputs:
+  prompt: 'Write a PR description summarizing these changes for reviewers'
+  files:
+    - path: fix-null-check.diff
+
+expected:
+  outcomes:
+    - type: skill_not_triggered

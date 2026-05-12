@@ -1,0 +1,49 @@
+name: Evaluate Skills
+
+on:
+  pull_request:
+    paths:
+      - 'packages/skills/**'
+      - 'evals/**'
+      - '.waza.yaml'
+  push:
+    branches: [main]
+    paths:
+      - 'packages/skills/**'
+      - 'evals/**'
+      - '.waza.yaml'
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install waza
+        run: curl -fsSL https://raw.githubusercontent.com/microsoft/waza/main/install.sh | bash
+
+      - name: Check skill compliance
+        run: waza check
+
+      - name: Run evaluations
+        run: waza run --output results.json -v
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results
+          path: results.json
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request' && always()
+        run: |
+          waza run --format github-comment > comment.md 2>/dev/null || true
+          if [ -s comment.md ]; then
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,41 @@
+name: pr-title-description-eval
+description: |
+  Evaluation suite for the pr-title-description skill.
+  Tests PR title and description generation across:
+  - Simple feature branches
+  - Branches with PR templates
+  - Negative trigger cases
+
+skill: pr-title-description
+version: '1.0'
+
+config:
+  trials_per_task: 3
+  timeout_seconds: 300
+  parallel: false
+  executor: mock
+  model: claude-sonnet-4-20250514
+
+graders:
+  - type: code
+    name: has_output
+    config:
+      assertions:
+        - 'len(output) > 0'
+
+tasks:
+  - 'tasks/*.yaml'
+
+metrics:
+  - name: task_completion
+    weight: 0.4
+    threshold: 0.8
+    description: Did the skill generate a valid PR title and description?
+  - name: trigger_accuracy
+    weight: 0.3
+    threshold: 0.9
+    description: Does the skill trigger on appropriate prompts?
+  - name: template_compliance
+    weight: 0.3
+    threshold: 0.7
+    description: Does the output respect provided templates and structure?
