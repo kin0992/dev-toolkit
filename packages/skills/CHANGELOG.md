@@ -1,5 +1,11 @@
 # @kin0992/skills
 
+## 0.0.3
+
+### Patch Changes
+
+- 9266551: Upgrade SKILL.md frontmatter to Waza high-compliance format and trim content to stay within 500-token budget
+
 ## 0.0.2
 
 ### Patch Changes
