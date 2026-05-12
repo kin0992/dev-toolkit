@@ -11,12 +11,17 @@
   "files": [
     "oxfmt.js",
     "oxlint.js",
+    "oxlint/",
     "README.md"
   ],
   "type": "module",
   "exports": {
     "./oxfmt": "./oxfmt.js",
-    "./oxlint": "./oxlint.js"
+    "./oxlint": "./oxlint.js",
+    "./oxlint/core": "./oxlint/core.js",
+    "./oxlint/react": "./oxlint/react.js",
+    "./oxlint/node": "./oxlint/node.js",
+    "./oxlint/testing": "./oxlint/testing.js"
   },
   "publishConfig": {
     "access": "restricted",
