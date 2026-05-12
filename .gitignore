@@ -32,3 +32,6 @@ pnpm-debug.log*
 # Pulumi
 .pulumi/
 Pulumi.*.yaml.bak
+
+# Waza
+.waza-cache/

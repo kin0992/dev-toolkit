@@ -1,0 +1,17 @@
+id: negative-trigger-001
+name: Should Not Trigger - Commit Message Request
+description: |
+  Negative test: user asks for a commit message, not a PR description.
+  The skill should not activate.
+tags:
+  - negative
+  - trigger
+
+inputs:
+  prompt: "Write a commit message for these staged changes"
+  files:
+    - path: feature-diff.diff
+
+expected:
+  outcomes:
+    - type: skill_not_triggered

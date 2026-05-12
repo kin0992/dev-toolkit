@@ -1,0 +1,51 @@
+skill: pr-title-description
+
+should_trigger_prompts:
+  - prompt: "Write a PR description for this branch"
+    reason: "Direct PR description request"
+    confidence: high
+
+  - prompt: "Generate a pull request title and body"
+    reason: "Explicit PR title + body request"
+    confidence: high
+
+  - prompt: "Summarize this branch for reviewers"
+    reason: "Reviewer-oriented branch summary"
+    confidence: high
+
+  - prompt: "Draft a PR for these changes"
+    reason: "Draft PR request"
+    confidence: high
+
+  - prompt: "Create a pull request description from these commits"
+    reason: "Commits to PR description"
+    confidence: high
+
+  - prompt: "I need a PR title for this feature branch"
+    reason: "PR title request"
+    confidence: medium
+
+should_not_trigger_prompts:
+  - prompt: "Write a commit message for this diff"
+    reason: "Commit message is a different skill"
+    confidence: high
+
+  - prompt: "Generate a changelog from these commits"
+    reason: "Changelog is not a PR description"
+    confidence: high
+
+  - prompt: "Explain what this code does"
+    reason: "Code explanation is unrelated"
+    confidence: high
+
+  - prompt: "Review this PR for issues"
+    reason: "Code review is different from generating PR content"
+    confidence: high
+
+  - prompt: "Merge this branch into main"
+    reason: "Git operation, not content generation"
+    confidence: high
+
+  - prompt: "Deploy my application"
+    reason: "Completely unrelated task"
+    confidence: high

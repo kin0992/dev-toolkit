@@ -1,0 +1,32 @@
+id: basic-pr-001
+name: Basic Feature PR
+description: |
+  Test generating a PR title and description for a simple feature branch
+  with a few commits and a clear diff.
+tags:
+  - basic
+  - feature
+
+inputs:
+  prompt: "Generate a PR title and description for this branch"
+  context:
+    branch: feature/add-retry-logic
+  files:
+    - path: feature-commits.txt
+    - path: feature-diff.diff
+
+expected:
+  output_contains:
+    - "TITLE:"
+    - "##"
+  outcomes:
+    - type: task_completed
+  behavior:
+    max_tool_calls: 5
+
+graders:
+  - name: title_length
+    type: code
+    config:
+      assertions:
+        - "len([l for l in output.split('\\n') if l.startswith('TITLE:')][0]) <= 79"

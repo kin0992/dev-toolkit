@@ -1,0 +1,38 @@
+name: pr-title-description-eval
+description: |
+  Evaluation suite for the pr-title-description skill.
+  Tests PR title and description generation across:
+  - Simple feature branches
+  - Branches with PR templates
+  - Negative trigger cases
+
+skill: pr-title-description
+version: "1.0"
+
+config:
+  trials_per_task: 3
+  timeout_seconds: 300
+  parallel: false
+  executor: mock
+  model: claude-sonnet-4-20250514
+
+graders:
+  - type: code
+    name: has_output
+    config:
+      assertions:
+        - "len(output) > 20"
+
+  - type: text
+    name: has_title
+    config:
+      pattern: "(?i)TITLE:"
+
+  - type: text
+    name: no_fabricated_links
+    config:
+      regex_not_match:
+        - "https?://(?!example\\.com)[a-z]+\\.[a-z]+/[^ ]+"
+
+tasks:
+  - "tasks/*.yaml"

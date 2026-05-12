@@ -1,0 +1,39 @@
+name: commit-message-eval
+description: |
+  Evaluation suite for the commit-message skill.
+  Tests commit message generation across different:
+  - Diff sizes (small fix, multi-file refactor)
+  - Change types (bug fix, feature addition, rename)
+  - Edge cases (multi-area diff, missing context)
+
+skill: commit-message
+version: "1.0"
+
+config:
+  trials_per_task: 3
+  timeout_seconds: 300
+  parallel: false
+  executor: mock
+  model: claude-sonnet-4-20250514
+
+graders:
+  - type: code
+    name: has_output
+    config:
+      assertions:
+        - "len(output) > 5"
+
+  - type: text
+    name: no_conventional_commits
+    config:
+      regex_not_match:
+        - "^(feat|fix|docs|chore|refactor|test|style|ci|build|perf)(\(.+\))?:"
+
+  - type: text
+    name: no_period_ending
+    config:
+      regex_not_match:
+        - "^[^\n]+\\.$"
+
+tasks:
+  - "tasks/*.yaml"

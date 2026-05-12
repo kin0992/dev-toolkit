@@ -1,0 +1,21 @@
+# Waza project configuration
+# See: https://github.com/microsoft/waza
+
+skills:
+  paths:
+    - packages/skills/src/commit-message
+    - packages/skills/src/pr-title-description
+
+evals:
+  path: evals
+
+tokens:
+  warningThreshold: 2500
+  fallbackLimit: 2000
+  limits:
+    defaults:
+      "SKILL.md": 500
+      "references/**/*.md": 1000
+      "*.md": 2000
+    overrides:
+      "README.md": 3000

@@ -1,0 +1,51 @@
+diff --git a/src/webhooks/delivery.ts b/src/webhooks/delivery.ts
+index 1111aaa..2222bbb 100644
+--- a/src/webhooks/delivery.ts
++++ b/src/webhooks/delivery.ts
+@@ -8,8 +8,26 @@ export async function deliver(webhook: Webhook): Promise<DeliveryResult> {
+-  const response = await fetch(webhook.url, { method: 'POST', body: webhook.payload });
+-  if (!response.ok) {
+-    return { status: 'failed', code: response.status };
++  const maxRetries = 3;
++  let attempt = 0;
++
++  while (attempt < maxRetries) {
++    const response = await fetch(webhook.url, {
++      method: 'POST',
++      body: webhook.payload,
++    });
++
++    if (response.ok) {
++      metrics.increment('webhook.delivery.success');
++      return { status: 'delivered', code: response.status };
++    }
++
++    attempt++;
++    metrics.increment('webhook.delivery.retry');
++
++    if (attempt < maxRetries) {
++      await sleep(Math.pow(2, attempt) * 1000);
++    }
+   }
+-  return { status: 'delivered', code: response.status };
++
++  metrics.increment('webhook.delivery.exhausted');
++  return { status: 'failed', code: 0, retriesExhausted: true };
+ }
+diff --git a/docs/ops/webhooks.md b/docs/ops/webhooks.md
+index 3333ccc..4444ddd 100644
+--- a/docs/ops/webhooks.md
++++ b/docs/ops/webhooks.md
+@@ -10,3 +10,11 @@ Webhooks are delivered via HTTP POST to the configured endpoint.
+ ## Monitoring
+ 
+ Check the `webhook.delivery.*` metrics in your dashboard.
++
++## Retry Behavior
++
++Failed deliveries are retried up to 3 times with exponential backoff:
++- Attempt 1: immediate
++- Attempt 2: after 2 seconds
++- Attempt 3: after 4 seconds
++
++If all retries are exhausted, the delivery is marked as permanently failed.
