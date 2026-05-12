@@ -1,5 +1,5 @@
 ---
-"@kin0992/oxc-config": minor
+'@kin0992/oxc-config': minor
 ---
 
 Add multi-flavor oxlint configs
@@ -12,4 +12,3 @@ Introduce four composable lint flavors so consumers can pick exactly the rules t
 - `@kin0992/oxc-config/oxlint/testing` — Jest/Vitest overrides for test files (use inside `overrides`)
 
 The existing `@kin0992/oxc-config/oxlint` export is preserved as a backward-compatible re-export of `core`.
-
