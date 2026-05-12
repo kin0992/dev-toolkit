@@ -4,8 +4,8 @@
     "name": "kin0992"
   },
   "metadata": {
-    "description": "Reusable AI Skills and plugins for kin0992 projects: git workflow helpers.",
-    "version": "0.1.0"
+    "description": "Reusable AI Skills and plugins for kin0992 projects: git workflow helpers and project management agents.",
+    "version": "0.2.0"
   },
   "plugins": [
     {
@@ -13,6 +13,12 @@
       "description": "Skills for git workflow automation: commit messages and PR title/description generation.",
       "version": "0.1.0",
       "source": "./plugins/git-skills"
+    },
+    {
+      "name": "project-manager",
+      "description": "Agents to capture ideas as well-formed GitHub issues on a Project board and transition items through their lifecycle.",
+      "version": "0.1.0",
+      "source": "./plugins/project-manager"
     }
   ]
 }

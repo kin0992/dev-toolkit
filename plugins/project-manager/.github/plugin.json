@@ -1,0 +1,11 @@
+{
+  "name": "project-manager",
+  "description": "Project management agents for GitHub: capture rough ideas/bugs into well-formed issues, attach them to a GitHub Project board, and move existing items through their lifecycle.",
+  "version": "0.1.0",
+  "author": {
+    "name": "kin0992"
+  },
+  "license": "MIT",
+  "keywords": ["github", "project-management", "issues", "triage", "agent"],
+  "agents": ["./agents/triage.agent.md"]
+}
