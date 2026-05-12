@@ -26,13 +26,28 @@ graders:
   - type: text
     name: has_title
     config:
-      pattern: "(?i)TITLE:"
+      contains:
+        - "TITLE:"
 
   - type: text
     name: no_fabricated_links
     config:
       regex_not_match:
-        - "https?://(?!example\\.com)[a-z]+\\.[a-z]+/[^ ]+"
+        - 'https?://(?!example\.com)[a-z]+\.[a-z]+/[^ ]+'
 
 tasks:
   - "tasks/*.yaml"
+
+metrics:
+  - name: task_completion
+    weight: 0.4
+    threshold: 0.8
+    description: Did the skill generate a valid PR title and description?
+  - name: trigger_accuracy
+    weight: 0.3
+    threshold: 0.9
+    description: Does the skill trigger on appropriate prompts?
+  - name: template_compliance
+    weight: 0.3
+    threshold: 0.7
+    description: Does the output respect provided templates and structure?

@@ -26,7 +26,7 @@ description.
    - **What** – concise bullets grouped by area
    - **How to verify** – checks or tests for reviewers
    - **Risks / follow-ups** – anything to watch closely
-   Omit empty sections.
+     Omit empty sections.
 4. Describe intent and outcome, not every edit. Never fabricate ticket
    numbers, links, or steps.
 

@@ -25,4 +25,4 @@ graders:
     type: code
     config:
       assertions:
-        - "len(output.split('\\n')[0]) <= 50"
+        - 'len(output.split("\n")[0]) <= 50'

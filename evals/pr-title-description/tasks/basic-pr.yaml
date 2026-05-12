@@ -29,4 +29,4 @@ graders:
     type: code
     config:
       assertions:
-        - "len([l for l in output.split('\\n') if l.startswith('TITLE:')][0]) <= 79"
+        - 'len([l for l in output.split("\n") if l.startswith("TITLE:")][0]) <= 79'
