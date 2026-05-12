@@ -7,7 +7,7 @@ description: |
   - Edge cases (multi-area diff, missing context)
 
 skill: commit-message
-version: "1.0"
+version: '1.0'
 
 config:
   trials_per_task: 3
@@ -21,7 +21,7 @@ graders:
     name: has_output
     config:
       assertions:
-        - "len(output) > 5"
+        - 'len(output) > 5'
 
   - type: text
     name: no_conventional_commits
@@ -36,7 +36,7 @@ graders:
         - '^[^\n]+\.$'
 
 tasks:
-  - "tasks/*.yaml"
+  - 'tasks/*.yaml'
 
 metrics:
   - name: task_completion

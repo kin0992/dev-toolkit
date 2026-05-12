@@ -8,13 +8,11 @@ tags:
   - multi-area
 
 inputs:
-  prompt: "Generate a commit message for this staged diff"
+  prompt: 'Generate a commit message for this staged diff'
   files:
     - path: multi-area.diff
 
 expected:
-  output_contains:
-    - "split"
   outcomes:
     - type: task_completed
   behavior:

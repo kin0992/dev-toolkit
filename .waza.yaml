@@ -14,8 +14,8 @@ tokens:
   fallbackLimit: 2000
   limits:
     defaults:
-      "SKILL.md": 500
-      "references/**/*.md": 1000
-      "*.md": 2000
+      'SKILL.md': 500
+      'references/**/*.md': 1000
+      '*.md': 2000
     overrides:
-      "README.md": 3000
+      'README.md': 3000

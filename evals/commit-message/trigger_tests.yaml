@@ -1,51 +1,51 @@
 skill: commit-message
 
 should_trigger_prompts:
-  - prompt: "Write a commit message for this diff"
-    reason: "Direct commit message request"
+  - prompt: 'Write a commit message for this diff'
+    reason: 'Direct commit message request'
     confidence: high
 
-  - prompt: "Generate a commit message from my staged changes"
-    reason: "Explicit staged changes context"
+  - prompt: 'Generate a commit message from my staged changes'
+    reason: 'Explicit staged changes context'
     confidence: high
 
-  - prompt: "Summarize this diff as a commit message"
-    reason: "Summarize + commit message keywords"
+  - prompt: 'Summarize this diff as a commit message'
+    reason: 'Summarize + commit message keywords'
     confidence: high
 
-  - prompt: "What should the commit message be for these changes?"
-    reason: "Asking for commit message recommendation"
+  - prompt: 'What should the commit message be for these changes?'
+    reason: 'Asking for commit message recommendation'
     confidence: high
 
-  - prompt: "Create a git commit message"
-    reason: "Direct git commit request"
+  - prompt: 'Create a git commit message'
+    reason: 'Direct git commit request'
     confidence: high
 
-  - prompt: "I need a commit message"
-    reason: "Implicit commit message need"
+  - prompt: 'I need a commit message'
+    reason: 'Implicit commit message need'
     confidence: medium
 
 should_not_trigger_prompts:
-  - prompt: "Write a PR description for this branch"
-    reason: "PR description is a different skill"
+  - prompt: 'Write a PR description for this branch'
+    reason: 'PR description is a different skill'
     confidence: high
 
-  - prompt: "Generate a changelog entry for this release"
-    reason: "Changelog generation is unrelated"
+  - prompt: 'Generate a changelog entry for this release'
+    reason: 'Changelog generation is unrelated'
     confidence: high
 
-  - prompt: "Explain what this diff does"
-    reason: "Code explanation, not commit message generation"
+  - prompt: 'Explain what this diff does'
+    reason: 'Code explanation, not commit message generation'
     confidence: high
 
-  - prompt: "Review this code for bugs"
-    reason: "Code review is unrelated"
+  - prompt: 'Review this code for bugs'
+    reason: 'Code review is unrelated'
     confidence: high
 
-  - prompt: "Write a feat: prefix commit message"
-    reason: "Conventional Commits format is forbidden by this skill"
+  - prompt: 'Write a feat: prefix commit message'
+    reason: 'Conventional Commits format is forbidden by this skill'
     confidence: medium
 
-  - prompt: "Deploy my application"
-    reason: "Completely unrelated task"
+  - prompt: 'Deploy my application'
+    reason: 'Completely unrelated task'
     confidence: high

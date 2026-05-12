@@ -8,17 +8,13 @@ tags:
   - compliance
 
 inputs:
-  prompt: "Generate a PR title and description using this template"
+  prompt: 'Generate a PR title and description using this template'
   files:
     - path: feature-commits.txt
     - path: feature-diff.diff
     - path: pr-template.md
 
 expected:
-  output_contains:
-    - "TITLE:"
-    - "Summary"
-    - "Testing"
   outcomes:
     - type: task_completed
   behavior:

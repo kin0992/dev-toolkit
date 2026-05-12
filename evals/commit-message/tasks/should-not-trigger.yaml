@@ -8,7 +8,7 @@ tags:
   - trigger
 
 inputs:
-  prompt: "Write a PR description summarizing these changes for reviewers"
+  prompt: 'Write a PR description summarizing these changes for reviewers'
   files:
     - path: fix-null-check.diff
 

@@ -3,15 +3,15 @@ name: Evaluate Skills
 on:
   pull_request:
     paths:
-      - "packages/skills/**"
-      - "evals/**"
-      - ".waza.yaml"
+      - 'packages/skills/**'
+      - 'evals/**'
+      - '.waza.yaml'
   push:
     branches: [main]
     paths:
-      - "packages/skills/**"
-      - "evals/**"
-      - ".waza.yaml"
+      - 'packages/skills/**'
+      - 'evals/**'
+      - '.waza.yaml'
 
 jobs:
   evaluate:

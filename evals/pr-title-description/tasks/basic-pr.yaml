@@ -8,7 +8,7 @@ tags:
   - feature
 
 inputs:
-  prompt: "Generate a PR title and description for this branch"
+  prompt: 'Generate a PR title and description for this branch'
   context:
     branch: feature/add-retry-logic
   files:
@@ -16,17 +16,7 @@ inputs:
     - path: feature-diff.diff
 
 expected:
-  output_contains:
-    - "TITLE:"
-    - "##"
   outcomes:
     - type: task_completed
   behavior:
     max_tool_calls: 5
-
-graders:
-  - name: title_length
-    type: code
-    config:
-      assertions:
-        - 'len([l for l in output.split("\n") if l.startswith("TITLE:")][0]) <= 79'

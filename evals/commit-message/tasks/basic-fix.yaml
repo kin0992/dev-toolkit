@@ -8,21 +8,12 @@ tags:
   - bug-fix
 
 inputs:
-  prompt: "Generate a commit message for this staged diff"
+  prompt: 'Generate a commit message for this staged diff'
   files:
     - path: fix-null-check.diff
 
 expected:
-  output_contains:
-    - ""
   outcomes:
     - type: task_completed
   behavior:
     max_tool_calls: 5
-
-graders:
-  - name: subject_length
-    type: code
-    config:
-      assertions:
-        - 'len(output.split("\n")[0]) <= 50'

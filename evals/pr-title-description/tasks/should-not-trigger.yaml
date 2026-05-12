@@ -8,7 +8,7 @@ tags:
   - trigger
 
 inputs:
-  prompt: "Write a commit message for these staged changes"
+  prompt: 'Write a commit message for these staged changes'
   files:
     - path: feature-diff.diff
 
