@@ -8,6 +8,13 @@ on:
         required: false
         type: string
         default: '.'
+    secrets:
+      TURBO_TOKEN:
+        description: 'Vercel access token for Turbo remote cache.'
+        required: false
+      TURBO_TEAM:
+        description: 'Vercel team or user slug for Turbo remote cache.'
+        required: false
 
 jobs:
   static-analysis:
@@ -28,3 +35,6 @@ jobs:
 
       - name: Code Review
         run: pnpm code-review
+        env:
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
