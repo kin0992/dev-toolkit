@@ -7,8 +7,5 @@
   },
   "license": "MIT",
   "keywords": ["git", "commit", "pull-request", "skills"],
-  "skills": [
-    "./skills/commit-message/",
-    "./skills/pr-title-description/"
-  ]
+  "skills": ["./skills/commit-message/", "./skills/pr-title-description/"]
 }
