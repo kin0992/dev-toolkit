@@ -34,7 +34,7 @@
     "lint:check": "oxlint"
   },
   "devDependencies": {
-    "oxfmt": "^0.49.0",
-    "oxlint": "^1.64.0"
+    "oxfmt": "catalog:core",
+    "oxlint": "catalog:core"
   }
 }
