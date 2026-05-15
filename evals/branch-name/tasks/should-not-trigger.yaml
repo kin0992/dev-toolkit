@@ -1,0 +1,16 @@
+id: branch-other-001
+name: Should Not Trigger
+description: |
+  Test that the skill doesn't trigger for unrelated requests.
+tags:
+  - edge-case
+  - negative
+
+inputs:
+  prompt: 'Write a commit message for my changes'
+
+expected:
+  outcomes:
+    - type: task_not_triggered
+  behavior:
+    max_tool_calls: 0

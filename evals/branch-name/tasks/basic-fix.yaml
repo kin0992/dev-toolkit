@@ -1,0 +1,17 @@
+id: branch-fix-001
+name: Fix Branch Naming
+description: |
+  Test generating a branch name for a bug fix.
+  Expects fixes/ prefix with lowercase hyphen-separated name.
+tags:
+  - basic
+  - bug-fix
+
+inputs:
+  prompt: 'What branch name should I use for fixing broken pagination links?'
+
+expected:
+  outcomes:
+    - type: task_completed
+  behavior:
+    max_tool_calls: 5
