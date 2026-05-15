@@ -234,7 +234,13 @@ export { default } from '@kin0992/vitest-config/node';
 pnpm add -D @kin0992/skills
 ```
 
-Skills live as `SKILL.md` files under `node_modules/@kin0992/skills/src/<name>/SKILL.md` and can be loaded by your AI tooling of choice.
+Skills live as `SKILL.md` files under
+`node_modules/@kin0992/skills/src/<category>/<skill>/SKILL.md` and can be
+loaded by your AI tooling of choice. Resolve them via subpath exports:
+
+```ts
+const skillUrl = import.meta.resolve('@kin0992/skills/git/commit-message');
+```
 
 For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel below — skills auto-load on demand without any `node_modules` plumbing.
 
@@ -242,11 +248,13 @@ For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel
 
 ## 3. AI Skills via the dev-toolkit marketplace
 
-`dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json`, exposing the skills as a plugin:
+`dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json`, exposing skills via **one plugin per category**:
 
-| Plugin       | Skills                                   |
-| ------------ | ---------------------------------------- |
-| `git-skills` | `commit-message`, `pr-title-description` |
+| Plugin       | Category | Skills                                   |
+| ------------ | -------- | ---------------------------------------- |
+| `git-skills` | `git`    | `commit-message`, `pr-title-description` |
+
+Each category folder under `packages/skills/src/` has a sibling plugin under `plugins/<category>-skills/`. Adding a new category is mechanical: drop the skills in `packages/skills/src/<category>/`, copy `plugins/git-skills/` as a template, and register the new plugin in `.github/plugin/marketplace.json`.
 
 Each plugin ships dual manifests so it works in:
 

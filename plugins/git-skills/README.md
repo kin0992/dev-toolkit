@@ -11,9 +11,15 @@ Plugin bundling AI Skills for git workflow automation, distributed via the
 | `pr-title-description` | Generate a PR title and description from a diff and commit log.                     |
 
 The actual `SKILL.md` files live at
-`packages/skills/src/<skill-name>/SKILL.md` in this repo and are referenced
-from the plugin manifests via relative paths, so the npm package
+`packages/skills/src/git/<skill-name>/SKILL.md` in this repo and are
+referenced from the plugin manifests via relative paths, so the npm package
 `@kin0992/skills` and this plugin share a single source of truth.
+
+This is the `git` category plugin. The repository follows a
+**one-plugin-per-category** convention: each top-level folder under
+`packages/skills/src/` (e.g. `git/`, `engineering/`, `productivity/`) has a
+sibling plugin under `plugins/<category>-skills/` that exposes its skills on
+the marketplace.
 
 ## Install
 
