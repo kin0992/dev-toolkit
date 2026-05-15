@@ -1,0 +1,47 @@
+name: branch-name-eval
+description: |
+  Evaluation suite for the branch-name skill.
+  Tests branch naming across different:
+  - Activity types (features, fixes, refactors, chores, docs)
+  - Task descriptions (clear, vague, with IDs)
+  - Edge cases (multi-concern tasks, security fixes)
+
+skill: git/branch-name
+version: '1.0'
+
+config:
+  trials_per_task: 3
+  timeout_seconds: 300
+  parallel: false
+  executor: mock
+  model: claude-sonnet-4-20250514
+
+graders:
+  - type: code
+    name: has_output
+    config:
+      assertions:
+        - 'len(output) > 0'
+
+  - type: text
+    name: no_ids
+    config:
+      regex_not_match:
+        - '[A-Z]+-[0-9]+' # No Jira-style IDs
+
+tasks:
+  - 'tasks/*.yaml'
+
+metrics:
+  - name: task_completion
+    weight: 0.5
+    threshold: 0.8
+    description: Did the skill generate a valid branch name?
+  - name: trigger_accuracy
+    weight: 0.3
+    threshold: 0.9
+    description: Does the skill trigger on appropriate prompts?
+  - name: format_quality
+    weight: 0.2
+    threshold: 0.8
+    description: Does the output follow the activity-type/activity-name convention?

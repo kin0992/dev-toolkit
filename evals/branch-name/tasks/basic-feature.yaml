@@ -1,0 +1,17 @@
+id: branch-feature-001
+name: Feature Branch Naming
+description: |
+  Test generating a branch name for a new feature.
+  Expects features/ prefix with lowercase hyphen-separated name.
+tags:
+  - basic
+  - feature
+
+inputs:
+  prompt: 'Name a branch for implementing dark mode settings'
+
+expected:
+  outcomes:
+    - type: task_completed
+  behavior:
+    max_tool_calls: 5

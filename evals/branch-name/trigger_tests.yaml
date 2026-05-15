@@ -1,0 +1,51 @@
+skill: git/branch-name
+
+should_trigger_prompts:
+  - prompt: 'Name a branch for this feature'
+    reason: 'Direct branch naming request'
+    confidence: high
+
+  - prompt: 'Suggest a branch name for implementing dark mode'
+    reason: 'Explicit feature branch naming request'
+    confidence: high
+
+  - prompt: 'What branch name should I use for fixing the login bug?'
+    reason: 'Bug fix branch naming question'
+    confidence: high
+
+  - prompt: 'Create a branch name for refactoring the auth system'
+    reason: 'Refactor branch naming request'
+    confidence: high
+
+  - prompt: 'Generate a git branch name for this task'
+    reason: 'Direct git branch request'
+    confidence: high
+
+  - prompt: 'I need a branch name'
+    reason: 'Implicit branch naming need'
+    confidence: medium
+
+should_not_trigger_prompts:
+  - prompt: 'Write a commit message for this change'
+    reason: 'Commit message is a different skill'
+    confidence: high
+
+  - prompt: 'Write a PR description for this branch'
+    reason: 'PR description is a different skill'
+    confidence: high
+
+  - prompt: 'Create a git tag for release'
+    reason: 'Tag naming is different from branch naming'
+    confidence: high
+
+  - prompt: 'Review this code'
+    reason: 'Code review is unrelated'
+    confidence: high
+
+  - prompt: 'Name a release'
+    reason: 'Release naming, not branch naming'
+    confidence: high
+
+  - prompt: 'Deploy my application'
+    reason: 'Completely unrelated task'
+    confidence: high

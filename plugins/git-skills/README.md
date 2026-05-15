@@ -9,6 +9,7 @@ Plugin bundling AI Skills for git workflow automation, distributed via the
 | ---------------------- | ----------------------------------------------------------------------------------- |
 | `commit-message`       | Generate a classic Git commit message from a staged diff (no Conventional Commits). |
 | `pr-title-description` | Generate a PR title and description from a diff and commit log.                     |
+| `branch-name`          | Suggest a branch name following the `<activity-type>/<activity-name>` convention.   |
 
 The actual `SKILL.md` files live at
 `packages/skills/src/git/<skill-name>/SKILL.md` in this repo and are
