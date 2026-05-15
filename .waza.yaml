@@ -3,8 +3,7 @@
 
 skills:
   paths:
-    - packages/skills/src/git/commit-message
-    - packages/skills/src/git/pr-title-description
+    - packages/skills/src/git
 
 evals:
   path: evals
