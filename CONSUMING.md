@@ -248,7 +248,7 @@ For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel
 
 ## 3. AI Skills via the dev-toolkit marketplace
 
-`dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json`, exposing skills via **one plugin per category**:
+`dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json` (mirrored at `.claude-plugin/marketplace.json` so Claude Code finds it on the conventional path), exposing skills via **one plugin per category**:
 
 | Plugin       | Category | Skills                                   |
 | ------------ | -------- | ---------------------------------------- |
