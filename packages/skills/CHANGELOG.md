@@ -19,15 +19,15 @@
   Before:
 
   ```ts
-  import.meta.resolve("@kin0992/skills/commit-message");
-  import.meta.resolve("@kin0992/skills/pr-title-description");
+  import.meta.resolve('@kin0992/skills/commit-message');
+  import.meta.resolve('@kin0992/skills/pr-title-description');
   ```
 
   After:
 
   ```ts
-  import.meta.resolve("@kin0992/skills/git/commit-message");
-  import.meta.resolve("@kin0992/skills/git/pr-title-description");
+  import.meta.resolve('@kin0992/skills/git/commit-message');
+  import.meta.resolve('@kin0992/skills/git/pr-title-description');
   ```
 
   The marketplace `git-skills` plugin and its `SKILL.md` content are unchanged
