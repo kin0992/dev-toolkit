@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Reusable AI Skills and plugins for kin0992 projects: git workflow helpers and project management agents.",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "plugins": [
     {

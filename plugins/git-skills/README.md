@@ -23,15 +23,36 @@ the marketplace.
 
 ## Install
 
-From a consumer machine:
+`dev-toolkit` is a public repository — no authentication required.
+
+**Copilot CLI / VS Code:**
 
 ```sh
 copilot plugin marketplace add kin0992/dev-toolkit
 copilot plugin install git-skills@dev-toolkit
 ```
 
-For Claude Code, add the same marketplace; the `.claude-plugin/plugin.json`
-manifest is shipped alongside `.github/plugin.json`.
+**Claude Code (project-level, shared with all contributors):**
+
+Add to `.claude/settings.json` in your consumer repo:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "dev-toolkit": {
+      "source": { "source": "github", "repo": "kin0992/dev-toolkit" }
+    }
+  },
+  "enabledPlugins": { "git-skills@dev-toolkit": true }
+}
+```
+
+**Claude Code (interactive):**
+
+```sh
+/plugin marketplace add kin0992/dev-toolkit
+/plugin install git-skills@dev-toolkit
+```
 
 ## Manifests
 

@@ -1,9 +1,10 @@
 # Consuming dev-toolkit from another repository
 
-`dev-toolkit` is distributed via two complementary channels:
+`dev-toolkit` is a **public** repository distributed via three complementary channels:
 
 1. **Reusable GitHub workflows & composite actions** — referenced by path/ref. Pin to `main` for rolling updates or to a tag (e.g. `v1`) for stability.
-2. **npm packages on GitHub Packages** — under the `@kin0992` scope. Use `latest` or caret ranges to inherit minor/patch updates.
+2. **AI Skills marketplace** — install one plugin per category into Claude Code, Copilot CLI, or VS Code. No auth required.
+3. **npm packages on GitHub Packages** — under the `@kin0992` scope. Auth required (GitHub Packages requires a PAT with `read:packages` even for packages from a public repo).
 
 ---
 
@@ -230,6 +231,9 @@ export { default } from '@kin0992/vitest-config/node';
 
 ### Install AI Skills (programmatic / non-Copilot tooling)
 
+> **Note:** GitHub Packages requires authentication even for packages from a public repository.
+> Marketplace install (below) has no auth requirement and is recommended for Claude Code / Copilot users.
+
 ```sh
 pnpm add -D @kin0992/skills
 ```
@@ -265,6 +269,8 @@ Skills load **on demand**: Copilot/Claude only pull a skill into context when it
 
 ### GitHub Copilot CLI
 
+No authentication is required — `dev-toolkit` is a public repository.
+
 ```sh
 copilot plugin marketplace add kin0992/dev-toolkit
 copilot plugin install git-skills@dev-toolkit
@@ -295,7 +301,30 @@ copilot plugin uninstall git-skills
 
 ### Claude Code
 
-Claude Code reads the same marketplace and picks up `.claude-plugin/plugin.json` from each plugin. Add the marketplace through Claude Code's plugin UI / config and install `git-skills` the same way.
+Claude Code fetches the marketplace from `.claude-plugin/marketplace.json` in this public repo — no auth needed. The simplest setup is to add it to your project's `.claude/settings.json` so every collaborator gets it automatically:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "dev-toolkit": {
+      "source": { "source": "github", "repo": "kin0992/dev-toolkit" }
+    }
+  },
+  "enabledPlugins": {
+    "git-skills@dev-toolkit": true
+  }
+}
+```
+
+Commit that file and every contributor who opens the project in Claude Code will have `git-skills` available after accepting the one-time trust prompt.
+
+Alternatively, add the marketplace interactively:
+
+```sh
+# inside Claude Code
+/plugin marketplace add kin0992/dev-toolkit
+/plugin install git-skills@dev-toolkit
+```
 
 ### Choosing between npm and the marketplace
 
