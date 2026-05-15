@@ -1,13 +1,9 @@
 # Waza project configuration
 # See: https://github.com/microsoft/waza
 
-skills:
-  paths:
-    - packages/skills/src/commit-message
-    - packages/skills/src/pr-title-description
-
-evals:
-  path: evals
+paths:
+  skills: packages/skills/src/git
+  evals: evals
 
 tokens:
   warningThreshold: 2500

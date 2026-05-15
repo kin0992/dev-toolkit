@@ -1,9 +1,10 @@
 # Consuming dev-toolkit from another repository
 
-`dev-toolkit` is distributed via two complementary channels:
+`dev-toolkit` is a **public** repository distributed via three complementary channels:
 
 1. **Reusable GitHub workflows & composite actions** — referenced by path/ref. Pin to `main` for rolling updates or to a tag (e.g. `v1`) for stability.
-2. **npm packages on GitHub Packages** — under the `@kin0992` scope. Use `latest` or caret ranges to inherit minor/patch updates.
+2. **AI Skills marketplace** — install one plugin per category into Claude Code, Copilot CLI, or VS Code. No auth required.
+3. **npm packages on GitHub Packages** — under the `@kin0992` scope. Auth required (GitHub Packages requires a PAT with `read:packages` even for packages from a public repo).
 
 ---
 
@@ -230,11 +231,20 @@ export { default } from '@kin0992/vitest-config/node';
 
 ### Install AI Skills (programmatic / non-Copilot tooling)
 
+> **Note:** GitHub Packages requires authentication even for packages from a public repository.
+> Marketplace install (below) has no auth requirement and is recommended for Claude Code / Copilot users.
+
 ```sh
 pnpm add -D @kin0992/skills
 ```
 
-Skills live as `SKILL.md` files under `node_modules/@kin0992/skills/src/<name>/SKILL.md` and can be loaded by your AI tooling of choice.
+Skills live as `SKILL.md` files under
+`node_modules/@kin0992/skills/src/<category>/<skill>/SKILL.md` and can be
+loaded by your AI tooling of choice. Resolve them via subpath exports:
+
+```ts
+const skillUrl = import.meta.resolve('@kin0992/skills/git/commit-message');
+```
 
 For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel below — skills auto-load on demand without any `node_modules` plumbing.
 
@@ -242,11 +252,13 @@ For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel
 
 ## 3. AI Skills via the dev-toolkit marketplace
 
-`dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json`, exposing the skills as a plugin:
+`dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json` (mirrored at `.claude-plugin/marketplace.json` so Claude Code finds it on the conventional path), exposing skills via **one plugin per category**:
 
-| Plugin       | Skills                                   |
-| ------------ | ---------------------------------------- |
-| `git-skills` | `commit-message`, `pr-title-description` |
+| Plugin       | Category | Skills                                   |
+| ------------ | -------- | ---------------------------------------- |
+| `git-skills` | `git`    | `commit-message`, `pr-title-description` |
+
+Each category folder under `packages/skills/src/` has a sibling plugin under `plugins/<category>-skills/`. Adding a new category is mechanical: drop the skills in `packages/skills/src/<category>/`, copy `plugins/git-skills/` as a template, and register the new plugin in `.github/plugin/marketplace.json`.
 
 Each plugin ships dual manifests so it works in:
 
@@ -256,6 +268,8 @@ Each plugin ships dual manifests so it works in:
 Skills load **on demand**: Copilot/Claude only pull a skill into context when it matches the current task, so installing a plugin has no token cost when its skills are not relevant.
 
 ### GitHub Copilot CLI
+
+No authentication is required — `dev-toolkit` is a public repository.
 
 ```sh
 copilot plugin marketplace add kin0992/dev-toolkit
@@ -287,7 +301,30 @@ copilot plugin uninstall git-skills
 
 ### Claude Code
 
-Claude Code reads the same marketplace and picks up `.claude-plugin/plugin.json` from each plugin. Add the marketplace through Claude Code's plugin UI / config and install `git-skills` the same way.
+Claude Code fetches the marketplace from `.claude-plugin/marketplace.json` in this public repo — no auth needed. The simplest setup is to add it to your project's `.claude/settings.json` so every collaborator gets it automatically:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "dev-toolkit": {
+      "source": { "source": "github", "repo": "kin0992/dev-toolkit" }
+    }
+  },
+  "enabledPlugins": {
+    "git-skills@dev-toolkit": true
+  }
+}
+```
+
+Commit that file and every contributor who opens the project in Claude Code will have `git-skills` available after accepting the one-time trust prompt.
+
+Alternatively, add the marketplace interactively:
+
+```sh
+# inside Claude Code
+/plugin marketplace add kin0992/dev-toolkit
+/plugin install git-skills@dev-toolkit
+```
 
 ### Choosing between npm and the marketplace
 

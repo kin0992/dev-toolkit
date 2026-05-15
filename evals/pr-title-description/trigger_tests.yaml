@@ -1,4 +1,4 @@
-skill: pr-title-description
+skill: git/pr-title-description
 
 should_trigger_prompts:
   - prompt: 'Write a PR description for this branch'

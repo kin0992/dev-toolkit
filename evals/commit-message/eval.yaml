@@ -6,7 +6,7 @@ description: |
   - Change types (bug fix, feature addition, rename)
   - Edge cases (multi-area diff, missing context)
 
-skill: commit-message
+skill: git/commit-message
 version: '1.0'
 
 config:

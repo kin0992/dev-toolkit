@@ -14,8 +14,8 @@
   ],
   "type": "module",
   "exports": {
-    "./commit-message": "./src/commit-message/SKILL.md",
-    "./pr-title-description": "./src/pr-title-description/SKILL.md"
+    "./git/commit-message": "./src/git/commit-message/SKILL.md",
+    "./git/pr-title-description": "./src/git/pr-title-description/SKILL.md"
   },
   "publishConfig": {
     "access": "restricted",
