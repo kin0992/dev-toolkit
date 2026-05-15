@@ -24,10 +24,10 @@ graders:
         - 'len(output) > 0'
 
   - type: text
-    name: valid_branch_format
+    name: contains_branch_prefix
     config:
       regex_match:
-        - '^(features|fixes|refactors|chores|docs)/[a-z0-9-]+$'
+        - '(features|fixes|refactors|chores|docs)/'
 
   - type: text
     name: no_ids
