@@ -8,7 +8,7 @@ export const repo = new github.Repository('dev-toolkit', {
   name: repoName,
   description:
     'Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared TypeScript configs.',
-  visibility: 'private',
+  visibility: 'public',
   hasIssues: false,
   hasDiscussions: false,
   hasProjects: false,
@@ -32,6 +32,10 @@ export const repo = new github.Repository('dev-toolkit', {
     'typescript',
     'pulumi',
     'changesets',
+    'agent-skills',
+    'claude-code',
+    'copilot-cli',
+    'marketplace',
   ],
   archiveOnDestroy: true,
 });
