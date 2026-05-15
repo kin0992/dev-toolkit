@@ -6,7 +6,7 @@ description: |
   - Branches with PR templates
   - Negative trigger cases
 
-skill: pr-title-description
+skill: git/pr-title-description
 version: '1.0'
 
 config:

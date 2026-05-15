@@ -1,4 +1,4 @@
-skill: commit-message
+skill: git/commit-message
 
 should_trigger_prompts:
   - prompt: 'Write a commit message for this diff'
