@@ -24,13 +24,13 @@ Propose a well-formed branch name from a task description, following the
 
 ### Activity types
 
-| Type        | Use for                                              |
-| ----------- | ---------------------------------------------------- |
-| `features`  | New features                                         |
-| `fixes`     | Any kind of fix                                      |
-| `refactors` | Code refactoring and reducing technical debt         |
-| `chores`    | System tasks that are not user-facing                |
-| `docs`      | Documentation-related tasks                          |
+| Type        | Use for                                      |
+| ----------- | -------------------------------------------- |
+| `features`  | New features                                 |
+| `fixes`     | Any kind of fix                              |
+| `refactors` | Code refactoring and reducing technical debt |
+| `chores`    | System tasks that are not user-facing        |
+| `docs`      | Documentation-related tasks                  |
 
 ### Activity name rules
 
