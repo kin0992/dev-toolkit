@@ -1,5 +1,38 @@
 # @kin0992/skills
 
+## 0.1.0
+
+### Minor Changes
+
+- 51ca22e: Add `branch-name` skill to the `git-skills` plugin.
+
+  The new skill suggests well-formed Git branch names following the
+  `<activity-type>/<activity-name>` convention with five activity types:
+  `features`, `fixes`, `refactors`, `chores`, and `docs`.
+
+- e0258b1: Organize skills by category. Skill sources now live under
+  `src/<category>/<skill>/SKILL.md`, starting with the `git/` category for the
+  existing `commit-message` and `pr-title-description` skills.
+
+  **Breaking (pre-1.0):** the package subpath exports changed accordingly.
+
+  Before:
+
+  ```ts
+  import.meta.resolve("@kin0992/skills/commit-message");
+  import.meta.resolve("@kin0992/skills/pr-title-description");
+  ```
+
+  After:
+
+  ```ts
+  import.meta.resolve("@kin0992/skills/git/commit-message");
+  import.meta.resolve("@kin0992/skills/git/pr-title-description");
+  ```
+
+  The marketplace `git-skills` plugin and its `SKILL.md` content are unchanged
+  for end users — only the on-disk paths moved.
+
 ## 0.0.3
 
 ### Patch Changes

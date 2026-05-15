@@ -1,5 +1,11 @@
 # dev-toolkit-infra
 
+## 0.0.3
+
+### Patch Changes
+
+- ab6cdbc: Make repository public
+
 ## 0.0.2
 
 ### Patch Changes
