@@ -1,5 +1,5 @@
 ---
-"dev-toolkit-infra": patch
+'dev-toolkit-infra': patch
 ---
 
 Make repository public
