@@ -1,11 +1,11 @@
 {
   "name": "git-skills",
-  "description": "AI Skills for git workflow: classic-style commit messages and PR title/description generation from a diff.",
-  "version": "0.2.0",
+  "description": "AI Skills for git workflow: classic-style commit messages, PR title/description generation, and branch naming.",
+  "version": "0.3.0",
   "author": {
     "name": "kin0992"
   },
   "license": "MIT",
-  "keywords": ["git", "commit", "pull-request", "skills"],
-  "skills": ["./skills/commit-message/", "./skills/pr-title-description/"]
+  "keywords": ["git", "commit", "pull-request", "branch", "skills"],
+  "skills": ["./skills/commit-message/", "./skills/pr-title-description/", "./skills/branch-name/"]
 }
