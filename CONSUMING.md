@@ -83,10 +83,18 @@ jobs:
       packages: write
       id-token: write
     uses: kin0992/dev-toolkit/.github/workflows/release.yml@main
-    secrets: inherit
+    secrets:
+      app_id: ${{ secrets.APP_ID }}
+      app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
 ```
 
-Your `package.json` must define `release` and `version-packages` scripts, and your repository must publish to the `@kin0992` npm scope (or adjust the `.npmrc` config as needed). The workflow uses Changesets to manage versioning.
+**Prerequisites:**
+
+- Your `package.json` must define `release` and `version-packages` scripts, and your repository must publish to the `@kin0992` npm scope (or adjust the `.npmrc` config as needed).
+- The workflow always uses a **GitHub App token** for all git operations and publishing. This ensures that tags pushed by the release workflow trigger downstream workflows (e.g. `deploy.yml`), which `GITHUB_TOKEN` cannot do.
+  - Create a GitHub App with `contents: write` and `pull-requests: write` permissions on your repository.
+  - Add `APP_ID` (the numeric App ID) and `APP_PRIVATE_KEY` (the PEM private key) as repository secrets.
+  - Install the GitHub App on the repository.
 
 ### IaC drift detection (Pulumi)
 

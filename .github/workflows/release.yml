@@ -8,9 +8,9 @@ on:
   workflow_call:
     secrets:
       app_id:
-        required: false
+        required: true
       app_private_key:
-        required: false
+        required: true
 
 concurrency:
   group: release-${{ github.ref }}
@@ -35,7 +35,6 @@ jobs:
 
       - name: Generate GitHub App token
         id: app-token
-        if: ${{ secrets.app_id != '' }}
         uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ secrets.app_id }}
@@ -49,7 +48,7 @@ jobs:
           echo "@kin0992:registry=https://npm.pkg.github.com" >> .npmrc
           echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
         env:
-          NODE_AUTH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Build
         run: pnpm turbo run build
@@ -62,6 +61,6 @@ jobs:
           commit: 'Release new artifacts'
           title: 'Release new artifacts'
         env:
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          NODE_AUTH_TOKEN: ${{ steps.app-token.outputs.token }}
+          NPM_TOKEN: ${{ steps.app-token.outputs.token }}
