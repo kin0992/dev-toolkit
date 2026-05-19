@@ -48,7 +48,7 @@ jobs:
           echo "@kin0992:registry=https://npm.pkg.github.com" >> .npmrc
           echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
         env:
-          NODE_AUTH_TOKEN: ${{ steps.app-token.outputs.token }}
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: Build
         run: pnpm turbo run build
@@ -62,5 +62,5 @@ jobs:
           title: 'Release new artifacts'
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ steps.app-token.outputs.token }}
-          NPM_TOKEN: ${{ steps.app-token.outputs.token }}
+          NODE_AUTH_TOKEN: ${{ github.token }}
+          NPM_TOKEN: ${{ github.token }}
