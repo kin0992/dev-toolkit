@@ -28,7 +28,7 @@
     "@kin0992/oxc-config": "workspace:*",
     "oxfmt": "catalog:core",
     "oxlint": "catalog:core",
-    "turbo": "^2.9.12",
+    "turbo": "^2.9.14",
     "typescript": "catalog:core",
     "vitest": "^4.1.6"
   },
