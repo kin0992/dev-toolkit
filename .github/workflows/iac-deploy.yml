@@ -45,19 +45,11 @@ jobs:
         with:
           egress-policy: audit
 
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+      - name: Pulumi setup
+        uses: kin0992/dev-toolkit/.github/actions/pulumi-setup@main
         with:
-          persist-credentials: false
-
-      - name: Setup
-        uses: kin0992/dev-toolkit/.github/actions/setup@main
-
-      - name: Pulumi Login
-        if: inputs.cloud-url != ''
-        run: pulumi login "${{ inputs.cloud-url }}"
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          cloud-url: ${{ inputs.cloud-url }}
+          pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
       - name: Pulumi Up
         uses: pulumi/actions@8e5e406f4007fca908480587cb9893c07090f58d # 7.0.0

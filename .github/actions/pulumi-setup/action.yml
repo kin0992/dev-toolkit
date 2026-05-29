@@ -1,0 +1,29 @@
+name: 'Pulumi setup'
+description: 'Checkout the repo, install Node + pnpm, and optionally log in to a custom Pulumi backend.'
+inputs:
+  cloud-url:
+    description: 'Optional self-managed Pulumi backend URL. Omit to use Pulumi Cloud.'
+    required: false
+    default: ''
+  pulumi-access-token:
+    description: 'Pulumi access token forwarded as PULUMI_ACCESS_TOKEN to the login step.'
+    required: false
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+      with:
+        persist-credentials: false
+
+    - name: Setup Node and pnpm
+      uses: kin0992/dev-toolkit/.github/actions/setup@main
+
+    - name: Pulumi login (custom backend)
+      if: inputs.cloud-url != ''
+      shell: bash
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ inputs.pulumi-access-token }}
+      run: pulumi login "${{ inputs.cloud-url }}"
