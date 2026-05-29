@@ -8,7 +8,7 @@ allowBuilds:
 
 catalogs:
   core:
-    '@types/node': ^24.12.3
+    '@types/node': ^24.12.4
     oxfmt: ^0.52.0
     oxlint: ^1.67.0
     typescript: ^6.0.3
