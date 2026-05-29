@@ -51,6 +51,13 @@ immediately. When changing anything under `.github/workflows/` or
 - Pin third-party actions by commit SHA, with the tag as a trailing comment
   (e.g. `actions/checkout@<sha> # 6.0.2`). This matches the existing style and
   is required for supply-chain hardening.
+- Self-references to actions in this same repository
+  (`kin0992/dev-toolkit/.github/actions/*`) intentionally stay on `@main`
+  rather than a pinned SHA. The supply-chain trust boundary does not exist
+  (we control both ends), Dependabot cannot bump same-repo references, and
+  SHA-pinning would force a manual two-step on every change to the action.
+  OpenSSF Scorecard's `Pinned-Dependencies` check flags these and they are
+  dismissed as `won't fix`.
 
 ## Skills and plugins
 
