@@ -107,6 +107,41 @@ jobs:
   - Add `APP_ID` (the numeric App ID — used as `client-id`) and `APP_PRIVATE_KEY` (the PEM private key) as repository secrets.
   - Install the GitHub App on the repository.
 
+### Security analysis (CodeQL + secret scan + pnpm audit)
+
+A reusable workflow that bundles three checks consumer repos commonly want:
+
+```yaml
+name: Security
+on:
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
+  schedule: [{ cron: '0 6 * * 1' }] # weekly Monday
+
+jobs:
+  security:
+    permissions:
+      contents: read
+      packages: read
+      actions: read
+      security-events: write
+    uses: kin0992/dev-toolkit/.github/workflows/security-analysis.yml@main
+    with:
+      working-directory: '.'
+      # codeql-languages: 'javascript-typescript'
+      # audit-level: 'high'
+```
+
+**Inputs:**
+
+| Input               | Required | Default                 | Description                                              |
+| ------------------- | -------- | ----------------------- | -------------------------------------------------------- |
+| `working-directory` | no       | `.`                     | Path used for `pnpm audit`.                              |
+| `codeql-languages`  | no       | `javascript-typescript` | Comma-separated CodeQL languages.                        |
+| `audit-level`       | no       | `high`                  | Minimum severity that fails `pnpm audit`.                |
+
+The workflow runs three independent jobs: `CodeQL` (init + autobuild + analyze, results upload as SARIF to code scanning), `Secret scan (trufflehog)` over the full git history with `--only-verified`, and `pnpm audit` against production dependencies. Each job hardens the runner with `step-security/harden-runner` in audit mode.
+
 ### IaC drift detection (Pulumi)
 
 ```yaml

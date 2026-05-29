@@ -1,0 +1,98 @@
+name: Security Analysis (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        description: 'Path to the project root for pnpm audit.'
+        required: false
+        type: string
+        default: '.'
+      codeql-languages:
+        description: 'Comma-separated CodeQL languages to analyze.'
+        required: false
+        type: string
+        default: 'javascript-typescript'
+      audit-level:
+        description: 'Minimum severity that fails pnpm audit (low, moderate, high, critical).'
+        required: false
+        type: string
+        default: 'high'
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+  security-events: write
+
+jobs:
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@7211b7c8077ea37d8641b6271f6a365a22a5fbfa # v4.36.0
+        with:
+          languages: ${{ inputs.codeql-languages }}
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@7211b7c8077ea37d8641b6271f6a365a22a5fbfa # v4.36.0
+
+      - name: Analyze
+        uses: github/codeql-action/analyze@7211b7c8077ea37d8641b6271f6a365a22a5fbfa # v4.36.0
+
+  secret-scan:
+    name: Secret scan (trufflehog)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Scan with trufflehog
+        uses: trufflesecurity/trufflehog@37b77001d0174ebec2fcca2bd83ff83a6d45a3ab # v3.95.3
+        with:
+          extra_args: --only-verified
+
+  audit:
+    name: pnpm audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Node and pnpm
+        uses: kin0992/dev-toolkit/.github/actions/setup@main
+
+      - name: pnpm audit
+        run: pnpm audit --prod --audit-level=${{ inputs.audit-level }}
