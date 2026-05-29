@@ -21,6 +21,8 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+        with:
+          persist-credentials: false
 
       - name: Install waza
         run: curl -fsSL https://raw.githubusercontent.com/microsoft/waza/main/install.sh | bash
