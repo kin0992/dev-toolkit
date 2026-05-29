@@ -11,14 +11,16 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
-  pull-requests: write
-  packages: write
-  id-token: write
+  contents: read
 
 jobs:
   release:
     name: Version or Publish
+    permissions:
+      contents: write
+      pull-requests: write
+      packages: write
+      id-token: write
     uses: ./.github/workflows/release-reusable.yml
     with:
       npm-scope: '@kin0992'

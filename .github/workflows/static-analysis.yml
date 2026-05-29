@@ -16,6 +16,9 @@ on:
         description: 'Vercel team or user slug for Turbo remote cache.'
         required: false
 
+permissions:
+  contents: read
+
 jobs:
   static-analysis:
     permissions:

@@ -17,6 +17,9 @@ concurrency:
   group: eval-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   evaluate:
     runs-on: ubuntu-latest

@@ -21,16 +21,18 @@ on:
         required: true
 
 permissions:
-  contents: write
-  pull-requests: write
-  packages: write
-  id-token: write
+  contents: read
 
 jobs:
   release:
     name: Version or Publish
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+      packages: write
+      id-token: write
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
