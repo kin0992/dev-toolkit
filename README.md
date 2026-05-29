@@ -1,5 +1,7 @@
 # dev-toolkit
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/kin0992/dev-toolkit/badge)](https://scorecard.dev/viewer/?uri=github.com/kin0992/dev-toolkit)
+
 Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared TypeScript configs that every new project of mine should inherit from a single source of truth.
 
 ## What's inside
