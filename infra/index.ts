@@ -78,5 +78,9 @@ new github.RepositoryDependabotSecurityUpdates('dependabot-updates', {
   enabled: true,
 });
 
+// TODO: Move Private Vulnerability Reporting under Pulumi when
+// @pulumi/github exposes the resource (upstream Terraform gap).
+// Enabled out-of-band: PUT /repos/{owner}/{repo}/private-vulnerability-reporting.
+
 export const repoUrl = repo.htmlUrl;
 export const repoFullName = repo.fullName;
