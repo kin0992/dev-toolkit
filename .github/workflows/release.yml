@@ -5,12 +5,6 @@ on:
   push:
     branches:
       - main
-  workflow_call:
-    secrets:
-      app_id:
-        required: true
-      app_private_key:
-        required: true
 
 concurrency:
   group: release-${{ github.ref }}
@@ -25,48 +19,7 @@ permissions:
 jobs:
   release:
     name: Version or Publish
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
-        with:
-          egress-policy: audit
-
-      - name: Generate GitHub App token
-        id: app-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # 3.2.0
-        with:
-          client-id: ${{ secrets.app_id }}
-          private-key: ${{ secrets.app_private_key }}
-
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
-        with:
-          fetch-depth: 0
-          token: ${{ steps.app-token.outputs.token || github.token }}
-
-      - name: Setup
-        uses: kin0992/dev-toolkit/.github/actions/setup@main
-
-      - name: Configure GitHub Packages auth
-        run: |
-          echo "@kin0992:registry=https://npm.pkg.github.com" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ github.token }}
-
-      - name: Build
-        run: pnpm turbo run build
-
-      - name: Create release PR or publish
-        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # 1.8.0
-        with:
-          publish: pnpm release
-          version: pnpm version-packages
-          commit: 'Release new artifacts'
-          title: 'Release new artifacts'
-        env:
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ github.token }}
-          NPM_TOKEN: ${{ github.token }}
+    uses: ./.github/workflows/release-reusable.yml
+    with:
+      npm-scope: '@kin0992'
+    secrets: inherit
