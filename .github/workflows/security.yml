@@ -15,11 +15,13 @@ concurrency:
 
 permissions:
   contents: read
-  packages: read
-  actions: read
-  security-events: write
 
 jobs:
   security:
     name: Security (self)
+    permissions:
+      contents: read
+      packages: read
+      actions: read
+      security-events: write
     uses: ./.github/workflows/security-analysis.yml
