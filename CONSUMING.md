@@ -94,10 +94,10 @@ jobs:
 
 **Inputs:**
 
-| Input          | Required | Default                       | Description                                    |
-| -------------- | -------- | ----------------------------- | ---------------------------------------------- |
-| `npm-scope`    | yes      | —                             | npm scope to authenticate (e.g. `@yourscope`). |
-| `registry-url` | no       | `https://npm.pkg.github.com`  | Registry the scope is authenticated against.   |
+| Input          | Required | Default                      | Description                                    |
+| -------------- | -------- | ---------------------------- | ---------------------------------------------- |
+| `npm-scope`    | yes      | —                            | npm scope to authenticate (e.g. `@yourscope`). |
+| `registry-url` | no       | `https://npm.pkg.github.com` | Registry the scope is authenticated against.   |
 
 **Prerequisites:**
 
