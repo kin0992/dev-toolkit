@@ -33,8 +33,8 @@ pnpm changeset
 ```
 
 Commit the generated file with your PR. On merge to `main`, the release
-workflow opens a "Version Packages" PR; merging that PR publishes to GitHub
-Packages.
+workflow opens a "Version Packages" PR; merging that PR publishes the
+`@kin0992/*` packages to the public npm registry (npmjs.org) with provenance.
 
 Changes scoped purely to `infra/`, workflows, docs, or the marketplace
 manifests do not need a changeset.

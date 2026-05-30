@@ -21,8 +21,8 @@
     "./library": "./library.json"
   },
   "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.pkg.github.com"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "format": "oxfmt",

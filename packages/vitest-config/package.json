@@ -17,8 +17,8 @@
     "./node": "./node.js"
   },
   "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.pkg.github.com"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "format": "oxfmt",

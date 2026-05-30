@@ -11,13 +11,21 @@ on:
         description: 'npm registry to authenticate against.'
         required: false
         type: string
-        default: 'https://npm.pkg.github.com'
+        default: 'https://registry.npmjs.org'
+      provenance:
+        description: 'Publish with npm provenance (requires id-token: write and a public registry).'
+        required: false
+        type: boolean
+        default: true
     secrets:
       app_id:
         description: 'GitHub App client ID used to mint a token for git ops and publishing.'
         required: true
       app_private_key:
         description: 'GitHub App private key (PEM).'
+        required: true
+      npm_token:
+        description: 'Token for the target npm registry (e.g. an npmjs.org automation token).'
         required: true
 
 permissions:
@@ -31,8 +39,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      packages: write
-      id-token: write
+      id-token: write # required for npm provenance
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
@@ -59,7 +66,7 @@ jobs:
         env:
           NPM_SCOPE: ${{ inputs.npm-scope }}
           REGISTRY_URL: ${{ inputs.registry-url }}
-          NODE_AUTH_TOKEN: ${{ github.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
         run: |
           set -euo pipefail
           host="${REGISTRY_URL#https://}"
@@ -80,5 +87,6 @@ jobs:
           title: 'Release new artifacts'
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ github.token }}
-          NPM_TOKEN: ${{ github.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NPM_TOKEN: ${{ secrets.npm_token }}
+          NPM_CONFIG_PROVENANCE: ${{ inputs.provenance }}

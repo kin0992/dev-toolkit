@@ -19,8 +19,8 @@
     "./git/branch-name": "./src/git/branch-name/SKILL.md"
   },
   "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.pkg.github.com"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "format": "oxfmt",
