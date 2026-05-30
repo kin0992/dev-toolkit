@@ -94,18 +94,18 @@ jobs:
 
 **Inputs:**
 
-| Input          | Required | Default                       | Description                                                  |
-| -------------- | -------- | ----------------------------- | ------------------------------------------------------------ |
-| `npm-scope`    | yes      | —                             | npm scope to authenticate (e.g. `@yourscope`).               |
-| `registry-url` | no       | `https://registry.npmjs.org`  | Registry the scope is authenticated against.                 |
-| `provenance`   | no       | `true`                        | Publish with npm provenance (needs `id-token: write`).       |
+| Input          | Required | Default                      | Description                                            |
+| -------------- | -------- | ---------------------------- | ------------------------------------------------------ |
+| `npm-scope`    | yes      | —                            | npm scope to authenticate (e.g. `@yourscope`).         |
+| `registry-url` | no       | `https://registry.npmjs.org` | Registry the scope is authenticated against.           |
+| `provenance`   | no       | `true`                       | Publish with npm provenance (needs `id-token: write`). |
 
 **Secrets:**
 
-| Secret            | Required | Description                                                       |
-| ----------------- | -------- | ---------------------------------------------------------------- |
-| `app_id`          | yes      | GitHub App client ID used to mint a token for git ops.           |
-| `app_private_key` | yes      | GitHub App private key (PEM).                                     |
+| Secret            | Required | Description                                                         |
+| ----------------- | -------- | ------------------------------------------------------------------- |
+| `app_id`          | yes      | GitHub App client ID used to mint a token for git ops.              |
+| `app_private_key` | yes      | GitHub App private key (PEM).                                       |
 | `npm_token`       | yes      | Token for the target registry (e.g. an npmjs.org automation token). |
 
 **Prerequisites:**

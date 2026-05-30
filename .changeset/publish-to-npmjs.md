@@ -1,8 +1,8 @@
 ---
-"@kin0992/tsconfig": minor
-"@kin0992/oxc-config": minor
-"@kin0992/vitest-config": minor
-"@kin0992/skills": minor
+'@kin0992/tsconfig': minor
+'@kin0992/oxc-config': minor
+'@kin0992/vitest-config': minor
+'@kin0992/skills': minor
 ---
 
 Publish to the public npm registry (npmjs.org) with provenance.
