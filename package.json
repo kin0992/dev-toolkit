@@ -18,10 +18,12 @@
     "format:check": "oxfmt --check",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "code-review": "pnpm format:check && pnpm typecheck && pnpm lint:check && pnpm test",
+    "code-review": "pnpm format:check && pnpm typecheck && pnpm lint:check && pnpm test && pnpm marketplace:check",
     "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "turbo run build && changeset publish"
+    "version-packages": "changeset version && pnpm marketplace:sync",
+    "release": "turbo run build && changeset publish",
+    "marketplace:sync": "node scripts/sync-marketplace.mjs",
+    "marketplace:check": "node scripts/sync-marketplace.mjs --check"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
