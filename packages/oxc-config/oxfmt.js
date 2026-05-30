@@ -10,5 +10,12 @@ export default {
   objectWrap: 'preserve',
   proseWrap: 'preserve',
   sortPackageJson: true,
-  ignorePatterns: ['dist/**', 'build/**', 'coverage/**', '.turbo/**', 'node_modules/**'],
+  ignorePatterns: [
+    'dist/**',
+    'build/**',
+    'coverage/**',
+    '.turbo/**',
+    'node_modules/**',
+    '**/CHANGELOG.md',
+  ],
 };

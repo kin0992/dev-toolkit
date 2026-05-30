@@ -8,7 +8,14 @@ export default {
     node: true,
     es2024: true,
   },
-  ignorePatterns: ['dist/**', 'build/**', 'coverage/**', '.turbo/**', 'node_modules/**'],
+  ignorePatterns: [
+    'dist/**',
+    'build/**',
+    'coverage/**',
+    '.turbo/**',
+    'node_modules/**',
+    '**/CHANGELOG.md',
+  ],
   rules: {
     // eslint — correctness / code quality
     'eslint/eqeqeq': 'error',
