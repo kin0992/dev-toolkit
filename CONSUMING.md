@@ -67,7 +67,12 @@ jobs:
 
 ### Release (Changesets + npm publish)
 
-Consumers call the reusable workflow `release-reusable.yml` and pass their own npm scope. `release.yml` in this repo is a thin local entry-point — do not reference it from another repository.
+Consumers call the reusable workflow `release-reusable.yml`. `release.yml` in this repo is a thin local entry-point — do not reference it from another repository.
+
+There are two modes:
+
+- **Publishing** — set `npm-scope` and provide the `npm_token` secret. The workflow authenticates to the registry and your `release` script publishes packages.
+- **Tag-only** — omit `npm-scope` (and `npm_token`). The npm auth step is skipped entirely, so a repo whose `release` script only runs e.g. `changeset tag` needs no npm credentials.
 
 ```yaml
 name: Release
@@ -94,19 +99,19 @@ jobs:
 
 **Inputs:**
 
-| Input          | Required | Default                      | Description                                            |
-| -------------- | -------- | ---------------------------- | ------------------------------------------------------ |
-| `npm-scope`    | yes      | —                            | npm scope to authenticate (e.g. `@yourscope`).         |
-| `registry-url` | no       | `https://registry.npmjs.org` | Registry the scope is authenticated against.           |
-| `provenance`   | no       | `true`                       | Publish with npm provenance (needs `id-token: write`). |
+| Input          | Required | Default                      | Description                                                      |
+| -------------- | -------- | ---------------------------- | ---------------------------------------------------------------- |
+| `npm-scope`    | no       | `''`                         | npm scope to authenticate (e.g. `@yourscope`). Empty = tag-only. |
+| `registry-url` | no       | `https://registry.npmjs.org` | Registry the scope is authenticated against.                     |
+| `provenance`   | no       | `true`                       | Publish with npm provenance (needs `id-token: write`).           |
 
 **Secrets:**
 
-| Secret            | Required | Description                                                         |
-| ----------------- | -------- | ------------------------------------------------------------------- |
-| `app_id`          | yes      | GitHub App client ID used to mint a token for git ops.              |
-| `app_private_key` | yes      | GitHub App private key (PEM).                                       |
-| `npm_token`       | yes      | Token for the target registry (e.g. an npmjs.org automation token). |
+| Secret            | Required | Description                                                           |
+| ----------------- | -------- | --------------------------------------------------------------------- |
+| `app_id`          | yes      | GitHub App client ID used to mint a token for git ops.                |
+| `app_private_key` | yes      | GitHub App private key (PEM).                                         |
+| `npm_token`       | no       | Token for the target registry. Required only when `npm-scope` is set. |
 
 **Prerequisites:**
 

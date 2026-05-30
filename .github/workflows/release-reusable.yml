@@ -4,9 +4,10 @@ on:
   workflow_call:
     inputs:
       npm-scope:
-        description: 'npm scope to authenticate (e.g. @kin0992).'
-        required: true
+        description: 'npm scope to authenticate (e.g. @kin0992). Leave empty for tag-only consumers that do not publish to a registry.'
+        required: false
         type: string
+        default: ''
       registry-url:
         description: 'npm registry to authenticate against.'
         required: false
@@ -25,8 +26,8 @@ on:
         description: 'GitHub App private key (PEM).'
         required: true
       npm_token:
-        description: 'Token for the target npm registry (e.g. an npmjs.org automation token).'
-        required: true
+        description: 'Token for the target npm registry (e.g. an npmjs.org automation token). Required only when npm-scope is set.'
+        required: false
 
 permissions:
   contents: read
@@ -66,6 +67,7 @@ jobs:
         run: pnpm turbo run build
 
       - name: Configure npm scope auth
+        if: ${{ inputs.npm-scope != '' }}
         env:
           NPM_SCOPE: ${{ inputs.npm-scope }}
           REGISTRY_URL: ${{ inputs.registry-url }}
