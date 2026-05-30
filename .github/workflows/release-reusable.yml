@@ -86,7 +86,7 @@ jobs:
           commit: 'Release new artifacts'
           title: 'Release new artifacts'
         env:
+          # npm auth comes from the .npmrc written above; the publish step only
+          # needs the git token (for the version PR/tags) and provenance flag.
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
-          NPM_TOKEN: ${{ secrets.npm_token }}
           NPM_CONFIG_PROVENANCE: ${{ inputs.provenance }}
