@@ -1,5 +1,16 @@
 # @kin0992/skills
 
+## 0.2.0
+
+### Minor Changes
+
+- 51632aa: Publish to the public npm registry (npmjs.org) with provenance.
+
+  These packages now ship from `https://registry.npmjs.org` under public access
+  instead of GitHub Packages. Consumers no longer need a `read:packages` token or
+  a scoped `.npmrc` entry — a plain `pnpm add @kin0992/<pkg>` works anonymously.
+  Existing GitHub Packages versions remain available but will not receive updates.
+
 ## 0.1.0
 
 ### Minor Changes
@@ -19,15 +30,15 @@
   Before:
 
   ```ts
-  import.meta.resolve('@kin0992/skills/commit-message');
-  import.meta.resolve('@kin0992/skills/pr-title-description');
+  import.meta.resolve("@kin0992/skills/commit-message");
+  import.meta.resolve("@kin0992/skills/pr-title-description");
   ```
 
   After:
 
   ```ts
-  import.meta.resolve('@kin0992/skills/git/commit-message');
-  import.meta.resolve('@kin0992/skills/git/pr-title-description');
+  import.meta.resolve("@kin0992/skills/git/commit-message");
+  import.meta.resolve("@kin0992/skills/git/pr-title-description");
   ```
 
   The marketplace `git-skills` plugin and its `SKILL.md` content are unchanged

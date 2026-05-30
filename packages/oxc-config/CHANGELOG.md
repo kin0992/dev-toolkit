@@ -1,5 +1,21 @@
 # @kin0992/oxc-config
 
+## 0.3.0
+
+### Minor Changes
+
+- 51632aa: Publish to the public npm registry (npmjs.org) with provenance.
+
+  These packages now ship from `https://registry.npmjs.org` under public access
+  instead of GitHub Packages. Consumers no longer need a `read:packages` token or
+  a scoped `.npmrc` entry — a plain `pnpm add @kin0992/<pkg>` works anonymously.
+  Existing GitHub Packages versions remain available but will not receive updates.
+
+### Patch Changes
+
+- 149ac97: Ignore `CHANGELOG.md` files in the shared oxfmt and oxlint configs so generated
+  changelogs are left untouched by formatting and linting.
+
 ## 0.2.1
 
 ### Patch Changes
@@ -13,6 +29,7 @@
 - 2970dfb: Add multi-flavor oxlint configs
 
   Introduce four composable lint flavors so consumers can pick exactly the rules they need:
+
   - `@kin0992/oxc-config/oxlint/core` — curated rules for any TypeScript project (eslint, typescript, import, unicorn, promise plugins)
   - `@kin0992/oxc-config/oxlint/react` — extends core with React, JSX A11y, and React Perf rules
   - `@kin0992/oxc-config/oxlint/node` — extends core with Node.js-specific rules
