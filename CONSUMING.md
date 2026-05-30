@@ -4,7 +4,7 @@
 
 1. **Reusable GitHub workflows & composite actions** — referenced by path/ref. Pin to `main` for rolling updates or to a tag (e.g. `v1`) for stability.
 2. **AI Skills marketplace** — install one plugin per category into Claude Code, Copilot CLI, or VS Code. No auth required.
-3. **npm packages on GitHub Packages** — under the `@kin0992` scope. Auth required (GitHub Packages requires a PAT with `read:packages` even for packages from a public repo).
+3. **npm packages on npmjs.org** — public packages under the `@kin0992` scope, published with provenance. No auth required to install.
 
 ---
 
@@ -67,7 +67,12 @@ jobs:
 
 ### Release (Changesets + npm publish)
 
-Consumers call the reusable workflow `release-reusable.yml` and pass their own npm scope. `release.yml` in this repo is a thin local entry-point — do not reference it from another repository.
+Consumers call the reusable workflow `release-reusable.yml`. `release.yml` in this repo is a thin local entry-point — do not reference it from another repository.
+
+There are two modes:
+
+- **Publishing** — set `npm-scope` and provide the `npm_token` secret. The workflow authenticates to the registry and your `release` script publishes packages.
+- **Tag-only** — omit `npm-scope` (and `npm_token`). The npm auth step is skipped entirely, so a repo whose `release` script only runs e.g. `changeset tag` needs no npm credentials.
 
 ```yaml
 name: Release
@@ -80,32 +85,43 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      packages: write
-      id-token: write
+      id-token: write # required for npm provenance
     uses: kin0992/dev-toolkit/.github/workflows/release-reusable.yml@main
     with:
       npm-scope: '@yourscope'
-      # registry-url defaults to https://npm.pkg.github.com; override for npmjs.org etc.
-      # registry-url: 'https://registry.npmjs.org'
+      # registry-url defaults to https://registry.npmjs.org
+      # provenance defaults to true (needs id-token: write and a public registry)
     secrets:
       app_id: ${{ secrets.APP_ID }}
       app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+      npm_token: ${{ secrets.NPM_TOKEN }}
 ```
 
 **Inputs:**
 
-| Input          | Required | Default                      | Description                                    |
-| -------------- | -------- | ---------------------------- | ---------------------------------------------- |
-| `npm-scope`    | yes      | —                            | npm scope to authenticate (e.g. `@yourscope`). |
-| `registry-url` | no       | `https://npm.pkg.github.com` | Registry the scope is authenticated against.   |
+| Input          | Required | Default                      | Description                                                      |
+| -------------- | -------- | ---------------------------- | ---------------------------------------------------------------- |
+| `npm-scope`    | no       | `''`                         | npm scope to authenticate (e.g. `@yourscope`). Empty = tag-only. |
+| `registry-url` | no       | `https://registry.npmjs.org` | Registry the scope is authenticated against.                     |
+| `provenance`   | no       | `true`                       | Publish with npm provenance (needs `id-token: write`).           |
+
+**Secrets:**
+
+| Secret            | Required | Description                                                           |
+| ----------------- | -------- | --------------------------------------------------------------------- |
+| `app_id`          | yes      | GitHub App client ID used to mint a token for git ops.                |
+| `app_private_key` | yes      | GitHub App private key (PEM).                                         |
+| `npm_token`       | no       | Token for the target registry. Required only when `npm-scope` is set. |
 
 **Prerequisites:**
 
 - Your `package.json` must define `release` and `version-packages` scripts.
-- The workflow always uses a **GitHub App token** for all git operations and publishing. This ensures that tags pushed by the release workflow trigger downstream workflows (e.g. `deploy.yml`), which `GITHUB_TOKEN` cannot do.
+- The workflow uses a **GitHub App token** for all git operations. This ensures that tags pushed by the release workflow trigger downstream workflows (e.g. `deploy.yml`), which `GITHUB_TOKEN` cannot do.
   - Create a GitHub App with `contents: write` and `pull-requests: write` permissions on your repository.
   - Add `APP_ID` (the numeric App ID — used as `client-id`) and `APP_PRIVATE_KEY` (the PEM private key) as repository secrets.
   - Install the GitHub App on the repository.
+- For publishing to npmjs.org, generate an **Automation** access token for an account that owns (or is a member of) the target scope and add it as the `NPM_TOKEN` repository secret.
+- Provenance requires the repository to be **public** and the job to grant `id-token: write`. Each published package should set `"publishConfig": { "access": "public", "provenance": true }`.
 
 ### Security analysis (CodeQL + secret scan + pnpm audit)
 
@@ -212,25 +228,12 @@ jobs:
 
 ---
 
-## 2. npm packages from GitHub Packages
+## 2. npm packages from npmjs.org
 
-### Authenticate
-
-Create or update `.npmrc` in the consumer repo:
-
-```
-@kin0992:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
-```
-
-In CI, set `NODE_AUTH_TOKEN` to `${{ secrets.GITHUB_TOKEN }}` (the default token has `read:packages` scope when `permissions.packages: read` is set).
-
-`dev-toolkit`'s shared setup action also forwards a token to pnpm-related steps as
-`NODE_AUTH_TOKEN`, defaulting to `github.token`. If you override job
-permissions in a caller workflow, keep `packages: read` available or private
-`@kin0992/*` installs will still fail.
-
-Locally, generate a Personal Access Token with `read:packages` and put it in `~/.npmrc` or export it as `NODE_AUTH_TOKEN`.
+The `@kin0992/*` packages are published publicly to npmjs.org, so **no
+authentication or `.npmrc` configuration is required** to install them — in CI
+or locally. They resolve from the default registry like any other public
+package.
 
 ### Install configs
 
@@ -285,8 +288,8 @@ export { default } from '@kin0992/vitest-config/node';
 
 ### Install AI Skills (programmatic / non-Copilot tooling)
 
-> **Note:** GitHub Packages requires authentication even for packages from a public repository.
-> Marketplace install (below) has no auth requirement and is recommended for Claude Code / Copilot users.
+> **Note:** For Claude Code / Copilot users, the marketplace install (below) is
+> the simpler path — skills auto-load without any `node_modules` plumbing.
 
 ```sh
 pnpm add -D @kin0992/skills

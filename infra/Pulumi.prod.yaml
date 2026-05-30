@@ -2,3 +2,7 @@ config:
   devToolkit:repoName: dev-toolkit
   devToolkit:defaultBranch: main
   github:owner: kin0992
+  devToolkit:npmToken:
+    secure: AAABAJBpCXqVz2KYKQtgTPB4oEUkgDOLc1AhEHGhogxUi8vnCc6VjyIyIR0ilZhWdozxWL2eByCJ+w8dW9o/YyJ8o2j/XADZ
+  devToolkit:pulumiAccessToken:
+    secure: AAABAFzzntAVe+s+2gBaaraLf9IrltK0s4ReAMCJ/FTm3/37kuSOyzOeZQPZR0GetzDO9Oj1A+i6qaJn53h6A0ct9lEmbIitL7Ap5Q==
