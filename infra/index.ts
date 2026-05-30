@@ -3,6 +3,9 @@ import * as github from '@pulumi/github';
 
 const cfg = new pulumi.Config('devToolkit');
 const repoName = cfg.get('repoName') ?? 'dev-toolkit';
+// npmjs.org Automation token consumed by the release workflow to publish
+// @kin0992/* packages with provenance.
+const npmToken = cfg.requireSecret('npmToken');
 
 export const repo = new github.Repository('dev-toolkit', {
   name: repoName,
@@ -22,8 +25,6 @@ export const repo = new github.Repository('dev-toolkit', {
   squashMergeCommitMessage: 'PR_BODY',
   vulnerabilityAlerts: true,
   allowUpdateBranch: true,
-  mergeCommitTitle: 'PR_TITLE',
-  mergeCommitMessage: 'PR_BODY',
   topics: [
     'platform-engineering',
     'github-actions',
@@ -76,6 +77,12 @@ new github.ActionsRepositoryPermissions('actions-permissions', {
 new github.RepositoryDependabotSecurityUpdates('dependabot-updates', {
   repository: repo.name,
   enabled: true,
+});
+
+new github.ActionsSecret('npm-token', {
+  repository: repo.name,
+  secretName: 'NPM_TOKEN',
+  value: npmToken,
 });
 
 // TODO: Move Private Vulnerability Reporting under Pulumi when
