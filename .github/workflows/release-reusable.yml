@@ -62,21 +62,24 @@ jobs:
       - name: Setup
         uses: kin0992/dev-toolkit/.github/actions/setup@main
 
+      - name: Build
+        run: pnpm turbo run build
+
       - name: Configure npm scope auth
         env:
           NPM_SCOPE: ${{ inputs.npm-scope }}
           REGISTRY_URL: ${{ inputs.registry-url }}
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
         run: |
           set -euo pipefail
           host="${REGISTRY_URL#https://}"
           host="${host#http://}"
           host="${host%/}"
+          # Write the token as an unexpanded ${NODE_AUTH_TOKEN} reference so the
+          # secret is never persisted to disk; npm/pnpm interpolate it from the
+          # environment at publish time. Runs after Build so no earlier pnpm
+          # invocation sees the unresolved placeholder.
           echo "${NPM_SCOPE}:registry=${REGISTRY_URL}" >> .npmrc
-          echo "//${host}/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
-
-      - name: Build
-        run: pnpm turbo run build
+          echo "//${host}/:_authToken=\${NODE_AUTH_TOKEN}" >> .npmrc
 
       - name: Create release PR or publish
         uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # 1.8.0
@@ -86,7 +89,6 @@ jobs:
           commit: 'Release new artifacts'
           title: 'Release new artifacts'
         env:
-          # npm auth comes from the .npmrc written above; the publish step only
-          # needs the git token (for the version PR/tags) and provenance flag.
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
           NPM_CONFIG_PROVENANCE: ${{ inputs.provenance }}
