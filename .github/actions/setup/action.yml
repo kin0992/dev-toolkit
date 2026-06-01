@@ -1,25 +1,16 @@
 name: 'Setup Node + pnpm'
 description: 'Sets up Node.js (LTS by default) with pnpm and dependency caching.'
-inputs:
-  node-auth-token:
-    description: 'Optional token exposed as NODE_AUTH_TOKEN to pnpm-related steps. Defaults to github.token.'
-    required: false
-    default: ''
 
 runs:
   using: 'composite'
   steps:
     - name: Install pnpm
       uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # 6.0.8
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.node-auth-token || github.token }}
       with:
         run_install: false
 
     - name: Setup Node.js
       uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # 6.4.0
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.node-auth-token || github.token }}
       with:
         node-version-file: .node-version
         cache: 'pnpm'
@@ -27,6 +18,4 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.node-auth-token || github.token }}
       run: pnpm install --frozen-lockfile
