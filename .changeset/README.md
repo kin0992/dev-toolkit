@@ -14,4 +14,4 @@ Pick the changed packages, the bump type (`patch` / `minor` / `major`), and writ
 
 1. PRs include changeset files.
 2. On merge to `main`, the `release` workflow opens (or updates) a "Version Packages" PR that bumps versions and updates `CHANGELOG.md` for each package.
-3. Merging that PR publishes the affected packages to GitHub Packages and creates GitHub Releases.
+3. Merging that PR publishes the affected packages to npmjs.org (public, with provenance) and creates GitHub Releases.
