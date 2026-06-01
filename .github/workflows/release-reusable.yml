@@ -26,7 +26,7 @@ on:
         description: 'GitHub App private key (PEM).'
         required: true
       npm_token:
-        description: 'Token for the target npm registry (e.g. an npmjs.org automation token). Required only when npm-scope is set.'
+        description: 'Deprecated and unused: publishing now relies on npm Trusted Publishing (OIDC). Kept for backward compatibility with existing callers.'
         required: false
 
 permissions:
@@ -66,23 +66,12 @@ jobs:
       - name: Build
         run: pnpm turbo run build
 
-      - name: Configure npm scope auth
-        if: ${{ inputs.npm-scope != '' }}
-        env:
-          NPM_SCOPE: ${{ inputs.npm-scope }}
-          REGISTRY_URL: ${{ inputs.registry-url }}
-        run: |
-          set -euo pipefail
-          host="${REGISTRY_URL#https://}"
-          host="${host#http://}"
-          host="${host%/}"
-          # Write the token as an unexpanded ${NODE_AUTH_TOKEN} reference so the
-          # secret is never persisted to disk; npm/pnpm interpolate it from the
-          # environment at publish time. Runs after Build so no earlier pnpm
-          # invocation sees the unresolved placeholder.
-          echo "${NPM_SCOPE}:registry=${REGISTRY_URL}" >> .npmrc
-          echo "//${host}/:_authToken=\${NODE_AUTH_TOKEN}" >> .npmrc
-
+      # Publishing uses npm Trusted Publishing (OIDC): no npm token is written to
+      # disk or exposed in the environment. npm exchanges this workflow's id-token
+      # for a short-lived registry credential and signs provenance automatically.
+      # Each package must have a Trusted Publisher configured on npmjs.org that
+      # points at this repo's release.yml workflow, and npm must be >= 11.5.1
+      # (satisfied by the Node version in .node-version).
       - name: Create release PR or publish
         uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # 1.8.0
         with:
@@ -92,5 +81,4 @@ jobs:
           title: 'Release new artifacts'
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
           NPM_CONFIG_PROVENANCE: ${{ inputs.provenance }}
