@@ -1,5 +1,13 @@
 # @kin0992/skills
 
+## 0.2.1
+
+### Patch Changes
+
+- 8bf1542: Republish to npmjs.org with build provenance via npm Trusted Publishing (OIDC).
+  No functional changes — this release attaches signed provenance attestations
+  that earlier versions were published without.
+
 ## 0.2.0
 
 ### Minor Changes
