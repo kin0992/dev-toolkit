@@ -3,16 +3,6 @@ name: Release (reusable)
 on:
   workflow_call:
     inputs:
-      npm-scope:
-        description: 'npm scope to authenticate (e.g. @kin0992). Leave empty for tag-only consumers that do not publish to a registry.'
-        required: false
-        type: string
-        default: ''
-      registry-url:
-        description: 'npm registry to authenticate against.'
-        required: false
-        type: string
-        default: 'https://registry.npmjs.org'
       provenance:
         description: 'Publish with npm provenance (requires id-token: write and a public registry).'
         required: false
