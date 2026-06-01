@@ -19,8 +19,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      id-token: write # required for npm provenance
+      id-token: write # required for Trusted Publishing + provenance
     uses: ./.github/workflows/release-reusable.yml
-    with:
-      npm-scope: '@kin0992'
     secrets: inherit

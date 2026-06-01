@@ -69,10 +69,9 @@ jobs:
 
 Consumers call the reusable workflow `release-reusable.yml`. `release.yml` in this repo is a thin local entry-point — do not reference it from another repository.
 
-There are two modes:
+Publishing uses **npm Trusted Publishing** (OIDC): the workflow exchanges the job's `id-token` for a short-lived npmjs.org credential and npm signs **provenance** automatically. No npm token is stored or passed. Each published package needs a Trusted Publisher configured on npmjs.org (see Prerequisites).
 
-- **Publishing** — set `npm-scope` and provide the `npm_token` secret. The workflow authenticates to the registry and your `release` script publishes packages.
-- **Tag-only** — omit `npm-scope` (and `npm_token`). The npm auth step is skipped entirely, so a repo whose `release` script only runs e.g. `changeset tag` needs no npm credentials.
+If your `release` script only creates git tags (e.g. `changeset tag`) and never runs `npm publish`, none of the npm / Trusted-Publishing setup applies.
 
 ```yaml
 name: Release
@@ -85,33 +84,26 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      id-token: write # required for npm provenance
+      id-token: write # required for Trusted Publishing + provenance
     uses: kin0992/dev-toolkit/.github/workflows/release-reusable.yml@main
-    with:
-      npm-scope: '@yourscope'
-      # registry-url defaults to https://registry.npmjs.org
-      # provenance defaults to true (needs id-token: write and a public registry)
+    # provenance defaults to true; pass `provenance: false` to opt out
     secrets:
       app_id: ${{ secrets.APP_ID }}
       app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
-      npm_token: ${{ secrets.NPM_TOKEN }}
 ```
 
 **Inputs:**
 
-| Input          | Required | Default                      | Description                                                      |
-| -------------- | -------- | ---------------------------- | ---------------------------------------------------------------- |
-| `npm-scope`    | no       | `''`                         | npm scope to authenticate (e.g. `@yourscope`). Empty = tag-only. |
-| `registry-url` | no       | `https://registry.npmjs.org` | Registry the scope is authenticated against.                     |
-| `provenance`   | no       | `true`                       | Publish with npm provenance (needs `id-token: write`).           |
+| Input        | Required | Default | Description                                            |
+| ------------ | -------- | ------- | ------------------------------------------------------ |
+| `provenance` | no       | `true`  | Publish with npm provenance (needs `id-token: write`). |
 
 **Secrets:**
 
-| Secret            | Required | Description                                                           |
-| ----------------- | -------- | --------------------------------------------------------------------- |
-| `app_id`          | yes      | GitHub App client ID used to mint a token for git ops.                |
-| `app_private_key` | yes      | GitHub App private key (PEM).                                         |
-| `npm_token`       | no       | Token for the target registry. Required only when `npm-scope` is set. |
+| Secret            | Required | Description                                            |
+| ----------------- | -------- | ------------------------------------------------------ |
+| `app_id`          | yes      | GitHub App client ID used to mint a token for git ops. |
+| `app_private_key` | yes      | GitHub App private key (PEM).                          |
 
 **Prerequisites:**
 
@@ -120,7 +112,7 @@ jobs:
   - Create a GitHub App with `contents: write` and `pull-requests: write` permissions on your repository.
   - Add `APP_ID` (the numeric App ID — used as `client-id`) and `APP_PRIVATE_KEY` (the PEM private key) as repository secrets.
   - Install the GitHub App on the repository.
-- For publishing to npmjs.org, generate an **Automation** access token for an account that owns (or is a member of) the target scope and add it as the `NPM_TOKEN` repository secret.
+- For publishing to npmjs.org, configure **Trusted Publishing** once per package: on npmjs.org open the package → **Settings → Trusted Publisher → GitHub Actions**, and set the owner/repo to your consumer repo and the workflow filename to your release workflow (e.g. `release.yml`). No npm token is needed. (A brand-new package may need an initial token-based publish before a trusted publisher can be attached — see npm's docs.)
 - Provenance requires the repository to be **public** and the job to grant `id-token: write`. Each published package should set `"publishConfig": { "access": "public", "provenance": true }`.
 
 ### Security analysis (CodeQL + secret scan + pnpm audit)
