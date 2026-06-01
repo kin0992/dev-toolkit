@@ -1,6 +1,6 @@
 {
   "name": "@kin0992/skills",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "AI Skills bundle: commit messages and PR title/description.",
   "license": "MIT",
   "repository": {
