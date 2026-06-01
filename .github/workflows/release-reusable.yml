@@ -25,9 +25,6 @@ on:
       app_private_key:
         description: 'GitHub App private key (PEM).'
         required: true
-      npm_token:
-        description: 'Deprecated and unused: publishing now relies on npm Trusted Publishing (OIDC). Kept for backward compatibility with existing callers.'
-        required: false
 
 permissions:
   contents: read
