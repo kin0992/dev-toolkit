@@ -32,7 +32,7 @@
     "oxlint": "catalog:core",
     "turbo": "^2.9.16",
     "typescript": "catalog:core",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.8"
   },
   "engines": {
     "node": ">=24.0.0",
