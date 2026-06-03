@@ -3,8 +3,13 @@ name: Security
 on:
   push:
     branches: [main]
+    paths-ignore: &docs
+      - '**/*.md'
+      - 'LICENSE'
+      - '.editorconfig'
   pull_request:
     branches: [main]
+    paths-ignore: *docs
   schedule:
     - cron: '0 6 * * 1'
   workflow_dispatch:

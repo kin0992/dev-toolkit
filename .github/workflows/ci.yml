@@ -18,6 +18,12 @@ jobs:
   static-analysis:
     name: Static Analysis (self)
     uses: ./.github/workflows/static-analysis.yml
+    # Forward Turbo remote-cache creds explicitly (not `secrets: inherit`) so
+    # fork PRs run cache-read-only and cannot poison the shared cache. Inert
+    # until TURBO_TOKEN/TURBO_TEAM are added to repo secrets.
+    secrets:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
 
   setup-self-test:
     name: Setup action self-test
