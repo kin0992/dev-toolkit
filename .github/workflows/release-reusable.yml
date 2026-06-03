@@ -29,10 +29,26 @@ jobs:
       pull-requests: write
       id-token: write # required for npm provenance
     steps:
+      # This job holds the GitHub App private key and mints the npm OIDC publish
+      # credential, so egress is locked down to the endpoints the release path
+      # actually needs. If a release fails on a blocked endpoint, check the
+      # harden-runner run summary ("insights" link) and add the host here.
       - name: Harden runner
         uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
-          egress-policy: audit
+          egress-policy: block
+          disable-sudo: true
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
+            codeload.github.com:443
+            objects.githubusercontent.com:443
+            raw.githubusercontent.com:443
+            nodejs.org:443
+            registry.npmjs.org:443
+            fulcio.sigstore.dev:443
+            rekor.sigstore.dev:443
+            tuf-repo-cdn.sigstore.dev:443
 
       - name: Generate GitHub App token
         id: app-token

@@ -46,9 +46,9 @@ jobs:
         uses: github/codeql-action/init@7211b7c8077ea37d8641b6271f6a365a22a5fbfa # v4.36.0
         with:
           languages: ${{ inputs.codeql-languages }}
-
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@7211b7c8077ea37d8641b6271f6a365a22a5fbfa # v4.36.0
+          # JS/TS is interpreted: no compilation needed, so skip the Autobuild
+          # step entirely and let CodeQL extract source directly.
+          build-mode: none
 
       - name: Analyze
         uses: github/codeql-action/analyze@7211b7c8077ea37d8641b6271f6a365a22a5fbfa # v4.36.0

@@ -26,4 +26,5 @@ runs:
       shell: bash
       env:
         PULUMI_ACCESS_TOKEN: ${{ inputs.pulumi-access-token }}
-      run: pulumi login "${{ inputs.cloud-url }}"
+        CLOUD_URL: ${{ inputs.cloud-url }}
+      run: pulumi login "$CLOUD_URL"
