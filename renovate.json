@@ -1,0 +1,56 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommitsDisabled"
+  ],
+  "timezone": "Etc/UTC",
+  "schedule": ["before 9am on monday"],
+  "dependencyDashboard": true,
+  "labels": ["dependencies"],
+  "prConcurrentLimit": 10,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 9am on monday"]
+  },
+  "packageRules": [
+    {
+      "description": "Group all GitHub Actions bumps into one PR.",
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions"
+    },
+    {
+      "description": "Group non-major dev dependency bumps.",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "dev-dependencies"
+    },
+    {
+      "description": "Group non-major prod dependency bumps.",
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "prod-dependencies"
+    },
+    {
+      "description": "Group non-major pnpm catalog toolchain bumps (oxlint, oxfmt, typescript, @types/node).",
+      "matchFileNames": ["pnpm-workspace.yaml"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "catalog toolchain"
+    },
+    {
+      "description": "Automerge low-risk updates once required checks pass.",
+      "matchUpdateTypes": ["digest", "pin", "patch"],
+      "automerge": true
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Bump the waza CLI version in the eval workflow. NOTE: WAZA_SHA256 is not auto-updated; refresh it by hand or the eval job's `sha256sum -c` guard will (safely) fail the PR.",
+      "managerFilePatterns": ["/^\\.github/workflows/eval\\.yml$/"],
+      "matchStrings": ["WAZA_VERSION:\\s*(?<currentValue>v[\\d.]+)"],
+      "depNameTemplate": "microsoft/waza",
+      "datasourceTemplate": "github-releases"
+    }
+  ]
+}
