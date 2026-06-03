@@ -44,8 +44,10 @@ jobs:
             codeload.github.com:443
             objects.githubusercontent.com:443
             raw.githubusercontent.com:443
+            release-assets.githubusercontent.com:443
             nodejs.org:443
             registry.npmjs.org:443
+            fonts.googleapis.com:443
             fulcio.sigstore.dev:443
             rekor.sigstore.dev:443
             tuf-repo-cdn.sigstore.dev:443
@@ -68,6 +70,8 @@ jobs:
 
       - name: Build
         run: pnpm turbo run build
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
 
       # Publishing uses npm Trusted Publishing (OIDC): no npm token is written to
       # disk or exposed in the environment. npm exchanges this workflow's id-token
