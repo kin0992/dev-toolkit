@@ -30,9 +30,9 @@
     "@kin0992/oxc-config": "workspace:*",
     "oxfmt": "catalog:core",
     "oxlint": "catalog:core",
-    "turbo": "^2.9.16",
+    "turbo": "^2.10.0",
     "typescript": "catalog:core",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.9"
   },
   "engines": {
     "node": ">=24.0.0",
