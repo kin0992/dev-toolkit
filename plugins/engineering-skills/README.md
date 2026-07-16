@@ -20,8 +20,8 @@ copilot plugin marketplace add kin0992/dev-toolkit
 copilot plugin install engineering-skills@dev-toolkit
 ```
 
-The skill requires Python 3.10 or newer and an authenticated `gh` CLI session
-with access to the target pull request.
+The skill requires only an authenticated `gh` CLI session with access to the
+target pull request.
 
 ## Manifests
 

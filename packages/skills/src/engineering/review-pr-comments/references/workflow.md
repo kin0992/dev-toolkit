@@ -5,14 +5,9 @@
 1. Identify one PR from a URL, `OWNER/REPO#NUMBER`, or a number in the current
    repository. Ask if it is missing or ambiguous.
 2. Verify `gh auth status`.
-3. Run:
-
-   ```sh
-   python3 <skill-directory>/scripts/pr_review_comments.py list \
-     --pr "<PR>" [--repo "OWNER/REPO"]
-   ```
-
-4. Inspect the PR diff and relevant source context. Human, bot, Copilot, and
+3. Use the collection queries in [`gh-commands.md`](gh-commands.md). Paginate
+   both review threads and comments within each thread.
+4. Inspect `gh pr diff` and relevant source context. Human, bot, Copilot, and
    other agent comments all count.
 5. Process every actionable opening comment and reply in every unresolved
    thread. Skip acknowledgements, status messages, duplicates, and replies with
@@ -34,13 +29,9 @@ Ask one question at a time:
 - `Defer (👀)` — valid, but should be handled later
 - `Ignore (👎)` — invalid, irrelevant, duplicate, or already addressed
 
-After the decision, run:
-
-```sh
-python3 <skill-directory>/scripts/pr_review_comments.py react \
-  --repo "OWNER/REPO" --comment-id <databaseId> \
-  --content "<+1|-1|eyes>"
-```
+After the decision, use the reaction commands in
+[`gh-commands.md`](gh-commands.md). Replace only the authenticated user's
+previous `+1`, `-1`, or `eyes` decision reactions.
 
 Do not react to non-actionable comments. A reaction does not mean code changed.
 If implementation is explicitly requested, treat it as separate work that may
@@ -60,13 +51,8 @@ Show the exact text and target URL, then ask:
 Only the first choice authorizes posting that exact draft. If edited, show the
 new exact text and ask again. Reaction approval never authorizes a reply.
 
-After exact-text approval, run:
-
-```sh
-python3 <skill-directory>/scripts/pr_review_comments.py reply \
-  --repo "OWNER/REPO" --pr-number <number> \
-  --comment-id <databaseId> --body "<approved text>"
-```
+After exact-text approval, use the review-comment reply command in
+[`gh-commands.md`](gh-commands.md).
 
 Never use a general PR comment endpoint and never resolve or unresolve threads.
 Finish with decisions, posted and declined replies, skipped comments, and

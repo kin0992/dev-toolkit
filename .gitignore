@@ -7,8 +7,6 @@ dist/
 build/
 *.tsbuildinfo
 .turbo/
-__pycache__/
-*.py[cod]
 
 # Test / coverage
 coverage/

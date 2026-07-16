@@ -6,7 +6,7 @@ description: |
   USE FOR: review unresolved PR comments, triage review threads, process
   Copilot feedback.
   DO NOT USE FOR: general PR comments, resolving threads, unapproved replies.
-  INVOKES: gh CLI and the bundled Python helper.
+  INVOKES: gh CLI, including gh api GraphQL and REST calls.
 license: MIT
 ---
 
@@ -14,7 +14,8 @@ license: MIT
 
 ## Instructions
 
-1. Read and follow the complete [workflow](references/workflow.md).
+1. Read and follow the complete [workflow](references/workflow.md) and
+   [`gh` commands](references/gh-commands.md).
 2. Process one PR and all actionable comments in its unresolved review threads;
    include bots, but exclude general PR conversation comments.
 3. Evaluate each comment against the diff and source context.
@@ -24,10 +25,11 @@ license: MIT
    approval; editing a draft is not approval.
 6. Never resolve threads or post general PR comments.
 
-Requires Python 3.10+ and authenticated `gh`. Use:
+Requires an authenticated `gh` CLI. Use `gh api graphql --paginate` to collect
+threads and comments, and `gh api` REST calls for reactions and approved replies.
 
 ```sh
-python3 <skill-directory>/scripts/pr_review_comments.py <list|react|reply>
+gh auth status
 ```
 
 ## Errors
