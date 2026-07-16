@@ -1,0 +1,16 @@
+id: review-comments-other-001
+name: Should Not Trigger
+description: |
+  Test that general PR conversation replies do not trigger the skill.
+tags:
+  - negative
+  - edge-case
+
+inputs:
+  prompt: 'Write and post a reply to this general pull request conversation comment.'
+
+expected:
+  outcomes:
+    - type: task_not_triggered
+  behavior:
+    max_tool_calls: 0

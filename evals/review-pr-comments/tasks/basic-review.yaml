@@ -1,0 +1,16 @@
+id: review-comments-basic-001
+name: Review Unresolved Comments
+description: |
+  Test the interactive workflow for one pull request.
+tags:
+  - basic
+  - pull-request
+
+inputs:
+  prompt: 'Review every unresolved review comment on acme/api#42 and help me decide whether to accept, defer, or ignore each one.'
+
+expected:
+  outcomes:
+    - type: task_completed
+  behavior:
+    max_tool_calls: 15

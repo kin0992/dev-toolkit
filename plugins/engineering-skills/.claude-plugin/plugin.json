@@ -1,0 +1,11 @@
+{
+  "name": "engineering-skills",
+  "description": "AI Skills for engineering workflows: triage unresolved pull-request review comments and draft approval-gated replies.",
+  "version": "0.1.0",
+  "author": {
+    "name": "kin0992"
+  },
+  "license": "MIT",
+  "keywords": ["engineering", "github", "pull-request", "code-review", "skills"],
+  "skills": ["./skills/review-pr-comments/"]
+}

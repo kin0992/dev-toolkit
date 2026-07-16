@@ -27,6 +27,13 @@ care about.
   classic Git commit style (Conventional Commits forbidden).
 - `pr-title-description` — Generate a PR title and description from the diff
   and commit log.
+- `branch-name` — Suggest a branch name using the repository's activity naming
+  convention.
+
+### `engineering/`
+
+- `review-pr-comments` — Evaluate every actionable comment in unresolved PR
+  review threads and record accept, defer, or ignore decisions with reactions.
 
 ## Install (npm, programmatic)
 
@@ -53,6 +60,7 @@ no `node_modules` plumbing:
 ```sh
 copilot plugin marketplace add kin0992/dev-toolkit
 copilot plugin install git-skills@dev-toolkit      # commit-message, pr-title-description
+copilot plugin install engineering-skills@dev-toolkit # review-pr-comments
 ```
 
 See [CONSUMING.md](../../CONSUMING.md#3-ai-skills-via-the-dev-toolkit-marketplace)

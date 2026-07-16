@@ -1,0 +1,16 @@
+id: review-comments-agent-001
+name: Review Agent Feedback
+description: |
+  Test that Copilot and other agent comments are included.
+tags:
+  - agent
+  - pull-request
+
+inputs:
+  prompt: 'Triage all unresolved comments on PR #317, including Copilot comments. Suggest a response, but never post it until I approve the exact text.'
+
+expected:
+  outcomes:
+    - type: task_completed
+  behavior:
+    max_tool_calls: 15
