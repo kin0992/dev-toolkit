@@ -1,5 +1,12 @@
 # @kin0992/skills
 
+## 0.3.0
+
+### Minor Changes
+
+- 225728f: Add the `engineering/review-pr-comments` skill with interactive unresolved
+  pull-request review triage, decision reactions, and approval-gated replies.
+
 ## 0.2.1
 
 ### Patch Changes
