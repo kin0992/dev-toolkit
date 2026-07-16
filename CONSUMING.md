@@ -303,9 +303,10 @@ For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel
 
 `dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json` (mirrored at `.claude-plugin/marketplace.json` so Claude Code finds it on the conventional path), exposing skills via **one plugin per category**:
 
-| Plugin       | Category | Skills                                   |
-| ------------ | -------- | ---------------------------------------- |
-| `git-skills` | `git`    | `commit-message`, `pr-title-description` |
+| Plugin               | Category      | Skills                                   |
+| -------------------- | ------------- | ---------------------------------------- |
+| `git-skills`         | `git`         | `commit-message`, `pr-title-description` |
+| `engineering-skills` | `engineering` | `review-pr-comments`                     |
 
 Each category folder under `packages/skills/src/` has a sibling plugin under `plugins/<category>-skills/`. Adding a new category is mechanical: drop the skills in `packages/skills/src/<category>/`, copy `plugins/git-skills/` as a template, and register the new plugin in `.github/plugin/marketplace.json`.
 

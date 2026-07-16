@@ -2,7 +2,7 @@
 # See: https://github.com/microsoft/waza
 
 paths:
-  skills: packages/skills/src/git
+  skills: packages/skills/src
   evals: evals
 
 tokens:

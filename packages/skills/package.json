@@ -1,7 +1,7 @@
 {
   "name": "@kin0992/skills",
   "version": "0.2.1",
-  "description": "AI Skills bundle: commit messages and PR title/description.",
+  "description": "AI Skills bundle for git and engineering workflows.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -16,7 +16,8 @@
   "exports": {
     "./git/commit-message": "./src/git/commit-message/SKILL.md",
     "./git/pr-title-description": "./src/git/pr-title-description/SKILL.md",
-    "./git/branch-name": "./src/git/branch-name/SKILL.md"
+    "./git/branch-name": "./src/git/branch-name/SKILL.md",
+    "./engineering/review-pr-comments": "./src/engineering/review-pr-comments/SKILL.md"
   },
   "publishConfig": {
     "access": "public",

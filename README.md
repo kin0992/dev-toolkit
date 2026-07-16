@@ -17,6 +17,7 @@ Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared Typ
 | `packages/vitest-config`                | `@kin0992/vitest-config` — shared Vitest preset                                                       |
 | `packages/skills`                       | `@kin0992/skills` — AI Skills organized by category (`git/`, …)                                       |
 | `plugins/git-skills`                    | Copilot/Claude plugin (category: git): `commit-message`, `pr-title-description`                       |
+| `plugins/engineering-skills`            | Copilot/Claude plugin (category: engineering): `review-pr-comments`                                   |
 | `.github/plugin/marketplace.json`       | Marketplace registry — public, no auth. Mirrored at `.claude-plugin/marketplace.json` for Claude Code |
 
 ## Stack

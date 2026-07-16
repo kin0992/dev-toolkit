@@ -15,6 +15,12 @@
       "source": "./plugins/git-skills"
     },
     {
+      "name": "engineering-skills",
+      "description": "Skills for engineering workflows: triage unresolved pull-request review comments and draft approval-gated replies.",
+      "version": "0.1.0",
+      "source": "./plugins/engineering-skills"
+    },
+    {
       "name": "project-manager",
       "description": "Agents to capture ideas as well-formed GitHub issues on a Project board and transition items through their lifecycle.",
       "version": "0.1.0",

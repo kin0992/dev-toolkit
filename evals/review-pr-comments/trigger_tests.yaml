@@ -1,0 +1,27 @@
+skill: engineering/review-pr-comments
+
+should_trigger_prompts:
+  - prompt: 'Review every unresolved comment on PR #42 and help me decide what to address.'
+    reason: 'Direct unresolved PR review request'
+    confidence: high
+
+  - prompt: 'Triage the pending Copilot review suggestions on acme/api#317.'
+    reason: 'Agent-authored unresolved review feedback'
+    confidence: high
+
+  - prompt: 'Go through the open review threads on this pull request and suggest replies.'
+    reason: 'Requests unresolved thread evaluation and reply drafting'
+    confidence: high
+
+should_not_trigger_prompts:
+  - prompt: 'Reply to this general PR conversation comment.'
+    reason: 'General PR comments have no unresolved review-thread state'
+    confidence: high
+
+  - prompt: 'Resolve every review thread on PR #42.'
+    reason: 'Thread resolution is explicitly outside the skill scope'
+    confidence: high
+
+  - prompt: 'Review the code in my working tree before I open a PR.'
+    reason: 'This is code review, not unresolved PR comment triage'
+    confidence: high
