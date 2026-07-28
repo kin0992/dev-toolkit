@@ -34,7 +34,7 @@ jobs:
       # actually needs. If a release fails on a blocked endpoint, check the
       # harden-runner run summary ("insights") and add the host here.
       - name: Harden runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
         with:
           egress-policy: block
           disable-sudo: true
@@ -61,7 +61,7 @@ jobs:
           private-key: ${{ secrets.app_private_key }}
 
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
@@ -81,7 +81,7 @@ jobs:
       # points at this repo's release.yml workflow, and npm must be >= 11.5.1
       # (satisfied by the Node version in .node-version).
       - name: Create release PR or publish
-        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # 1.8.0
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
         with:
           publish: pnpm release
           version: pnpm version-packages
