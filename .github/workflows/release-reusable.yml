@@ -65,6 +65,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
 
       - name: Setup
         uses: kin0992/dev-toolkit/.github/actions/setup@main
