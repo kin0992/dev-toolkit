@@ -57,10 +57,10 @@ importers:
     dependencies:
       '@pulumi/github':
         specifier: ^6.14.1
-        version: 6.14.1(typescript@7.0.2)
+        version: 6.14.1(typescript@5.9.3)
       '@pulumi/pulumi':
         specifier: ^3.255.0
-        version: 3.255.0(typescript@7.0.2)
+        version: 3.255.0(typescript@5.9.3)
     devDependencies:
       '@kin0992/oxc-config':
         specifier: workspace:*
@@ -75,8 +75,8 @@ importers:
         specifier: catalog:core
         version: 1.76.0
       typescript:
-        specifier: catalog:core
-        version: 7.0.2
+        specifier: ^5.9.3
+        version: 5.9.3
 
   packages/oxc-config:
     devDependencies:
@@ -2131,6 +2131,11 @@ packages:
     resolution: {integrity: sha512-GHx6WExIFSKNJ5qMlzDpXBXlu9ApxaMjqxAVrCNcW94xf/+uqgIz41SAuRUMbXva2ExNAaY/h8V0q90SWSzmRw==}
     hasBin: true
 
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   typescript@7.0.2:
     resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
     engines: {node: '>=16.20.0'}
@@ -3005,15 +3010,15 @@ snapshots:
 
   '@protobufjs/utf8@1.1.2': {}
 
-  '@pulumi/github@6.14.1(typescript@7.0.2)':
+  '@pulumi/github@6.14.1(typescript@5.9.3)':
     dependencies:
-      '@pulumi/pulumi': 3.255.0(typescript@7.0.2)
+      '@pulumi/pulumi': 3.255.0(typescript@5.9.3)
     transitivePeerDependencies:
       - supports-color
       - ts-node
       - typescript
 
-  '@pulumi/pulumi@3.255.0(typescript@7.0.2)':
+  '@pulumi/pulumi@3.255.0(typescript@5.9.3)':
     dependencies:
       '@grpc/grpc-js': 1.14.4
       '@logdna/tail-file': 2.2.0
@@ -3041,7 +3046,7 @@ snapshots:
       source-map-support: 0.5.21
       upath: 1.2.0
     optionalDependencies:
-      typescript: 7.0.2
+      typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
 
@@ -4238,6 +4243,8 @@ snapshots:
       '@turbo/linux-arm64': 2.10.7
       '@turbo/windows-64': 2.10.7
       '@turbo/windows-arm64': 2.10.7
+
+  typescript@5.9.3: {}
 
   typescript@7.0.2:
     optionalDependencies:

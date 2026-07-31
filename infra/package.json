@@ -25,6 +25,6 @@
     "@types/node": "catalog:core",
     "oxfmt": "catalog:core",
     "oxlint": "catalog:core",
-    "typescript": "catalog:core"
+    "typescript": "^5.9.3"
   }
 }
