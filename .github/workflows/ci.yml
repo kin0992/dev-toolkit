@@ -12,7 +12,7 @@ concurrency:
 
 permissions:
   contents: read
-  packages: read
+  packages: read # Required to install packages from GitHub Packages.
 
 jobs:
   static-analysis:
@@ -31,7 +31,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: read
-      packages: read
+      packages: read # Required by the setup action to install private packages.
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0

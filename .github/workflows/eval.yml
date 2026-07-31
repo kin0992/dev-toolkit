@@ -22,11 +22,12 @@ permissions:
 
 jobs:
   evaluate:
+    name: Evaluate skills
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write # Required to comment evaluation results on pull requests.
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
@@ -67,7 +68,8 @@ jobs:
         run: |
           waza run --format github-comment > comment.md 2>/dev/null || true
           if [ -s comment.md ]; then
-            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+            gh pr comment "$PR_NUMBER" --body-file comment.md
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}

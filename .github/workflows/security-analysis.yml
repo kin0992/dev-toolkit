@@ -29,8 +29,8 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: read
-      actions: read
-      security-events: write
+      actions: read # Required for CodeQL workflow analysis.
+      security-events: write # Required to upload CodeQL results.
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
@@ -82,7 +82,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: read
-      packages: read
+      packages: read # Required by the setup action to install private packages.
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}

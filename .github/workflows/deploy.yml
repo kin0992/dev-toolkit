@@ -16,8 +16,8 @@ jobs:
     uses: ./.github/workflows/iac-deploy.yml
     permissions:
       contents: read
-      id-token: write
-      packages: read
+      id-token: write # Required for Pulumi OIDC authentication.
+      packages: read # Required by the setup action to install private packages.
     with:
       stack: prod
     secrets:

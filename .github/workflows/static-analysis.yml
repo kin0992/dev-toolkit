@@ -21,9 +21,10 @@ permissions:
 
 jobs:
   static-analysis:
+    name: Static analysis
     permissions:
       contents: read
-      packages: read
+      packages: read # Required by the setup action to install private packages.
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:

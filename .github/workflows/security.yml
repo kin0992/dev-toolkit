@@ -3,13 +3,16 @@ name: Security
 on:
   push:
     branches: [main]
-    paths-ignore: &docs
+    paths-ignore:
       - '**/*.md'
       - 'LICENSE'
       - '.editorconfig'
   pull_request:
     branches: [main]
-    paths-ignore: *docs
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+      - '.editorconfig'
   schedule:
     - cron: '0 6 * * 1'
   workflow_dispatch:
@@ -26,7 +29,7 @@ jobs:
     name: Security (self)
     permissions:
       contents: read
-      packages: read
-      actions: read
-      security-events: write
+      packages: read # Required by the setup action to install private packages.
+      actions: read # Required for security workflow analysis.
+      security-events: write # Required to upload security analysis results.
     uses: ./.github/workflows/security-analysis.yml

@@ -32,12 +32,13 @@ permissions:
 
 jobs:
   deploy:
+    name: Pulumi deploy
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
       contents: read
-      id-token: write
-      packages: read
+      id-token: write # Required for Pulumi OIDC authentication.
+      packages: read # Required by the setup action to install private packages.
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}

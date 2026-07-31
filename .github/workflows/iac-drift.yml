@@ -32,13 +32,14 @@ permissions:
 
 jobs:
   drift:
+    name: Pulumi drift preview
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
       contents: read
-      id-token: write
-      packages: read
-      pull-requests: write
+      id-token: write # Required for Pulumi OIDC authentication.
+      packages: read # Required by the setup action to install private packages.
+      pull-requests: write # Required for Pulumi preview comments.
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}
