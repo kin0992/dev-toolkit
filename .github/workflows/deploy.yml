@@ -10,13 +10,14 @@ on:
 
 permissions:
   contents: read
-  id-token: write
-  pull-requests: write
-  packages: read
 
 jobs:
   deploy:
     uses: ./.github/workflows/iac-deploy.yml
+    permissions:
+      contents: read
+      id-token: write
+      packages: read
     with:
       stack: prod
     secrets:

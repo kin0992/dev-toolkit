@@ -10,13 +10,15 @@ on:
 
 permissions:
   contents: read
-  id-token: write
-  pull-requests: write
-  packages: read
 
 jobs:
   drift:
     uses: ./.github/workflows/iac-drift.yml
+    permissions:
+      contents: read
+      id-token: write
+      packages: read
+      pull-requests: write
     with:
       stack: prod
     secrets:

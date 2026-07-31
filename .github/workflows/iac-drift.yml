@@ -29,14 +29,16 @@ on:
 
 permissions:
   contents: read
-  packages: read
-  id-token: write
-  pull-requests: write
 
 jobs:
   drift:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
+      id-token: write
+      packages: read
+      pull-requests: write
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}
