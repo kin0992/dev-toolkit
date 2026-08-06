@@ -9,8 +9,8 @@ allowBuilds:
 catalogs:
   core:
     '@types/node': ^24.13.2
-    oxfmt: ^0.61.0
-    oxlint: ^1.76.0
+    oxfmt: ^0.62.0
+    oxlint: ^1.77.0
     typescript: ^7.0.2
 
 autoInstallPeers: true
