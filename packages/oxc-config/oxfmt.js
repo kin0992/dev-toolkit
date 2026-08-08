@@ -9,6 +9,7 @@ export default {
   quoteProps: 'as-needed',
   objectWrap: 'preserve',
   proseWrap: 'preserve',
+  sortImports: true,
   sortPackageJson: true,
   ignorePatterns: [
     'dist/**',
