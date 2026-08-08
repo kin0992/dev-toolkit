@@ -42,7 +42,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup
-        uses: kin0992/dev-toolkit/.github/actions/setup@main
+        uses: $/.github/actions/setup
 
       - name: Code Review
         run: pnpm code-review

@@ -19,7 +19,7 @@ runs:
         persist-credentials: false
 
     - name: Setup Node and pnpm
-      uses: kin0992/dev-toolkit/.github/actions/setup@main
+      uses: $/.github/actions/setup
 
     - name: Pulumi login (custom backend)
       if: inputs.cloud-url != ''

@@ -50,7 +50,7 @@ jobs:
           egress-policy: audit
 
       - name: Pulumi setup
-        uses: kin0992/dev-toolkit/.github/actions/pulumi-setup@main
+        uses: $/.github/actions/pulumi-setup
         with:
           cloud-url: ${{ inputs.cloud-url }}
           pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
