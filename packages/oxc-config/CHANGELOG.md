@@ -1,5 +1,11 @@
 # @kin0992/oxc-config
 
+## 0.4.0
+
+### Minor Changes
+
+- 9e8afed: Enable `sortImports` by default in the shared oxfmt config, alongside the already-enabled `sortPackageJson`. Import statements in JS/TS/TSX/JSX files are now automatically sorted.
+
 ## 0.3.1
 
 ### Patch Changes
