@@ -1,5 +1,5 @@
-import * as pulumi from '@pulumi/pulumi';
 import * as github from '@pulumi/github';
+import * as pulumi from '@pulumi/pulumi';
 
 const cfg = new pulumi.Config('devToolkit');
 const repoName = cfg.get('repoName') ?? 'dev-toolkit';
