@@ -102,13 +102,14 @@ importers:
         version: 1.77.0
 
   packages/tsconfig:
+    dependencies:
+      '@tsconfig/node24':
+        specifier: ^24.0.4
+        version: 24.0.4
     devDependencies:
       '@kin0992/oxc-config':
         specifier: workspace:*
         version: link:../oxc-config
-      '@tsconfig/node24':
-        specifier: ^24.0.4
-        version: 24.0.4
       oxfmt:
         specifier: catalog:core
         version: 0.62.0

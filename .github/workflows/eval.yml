@@ -54,7 +54,11 @@ jobs:
         run: waza check
 
       - name: Run evaluations
-        run: waza run --output results.json -v
+        run: waza run --output results.json --format github-comment > comment.md
+
+      - name: Show results
+        if: always()
+        run: cat comment.md || true
 
       - name: Upload results
         if: always()
@@ -63,10 +67,13 @@ jobs:
           name: eval-results
           path: results.json
 
+      # Fork PRs get a read-only GITHUB_TOKEN, so commenting would fail. Skip
+      # them rather than failing the job; the results artifact is still uploaded.
       - name: Comment PR with results
-        if: github.event_name == 'pull_request' && always()
+        if: >-
+          always() && github.event_name == 'pull_request'
+          && github.event.pull_request.head.repo.full_name == github.repository
         run: |
-          waza run --format github-comment > comment.md 2>/dev/null || true
           if [ -s comment.md ]; then
             gh pr comment "$PR_NUMBER" --body-file comment.md
           fi

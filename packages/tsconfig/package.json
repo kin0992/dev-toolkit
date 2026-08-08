@@ -30,9 +30,11 @@
     "lint": "oxlint",
     "lint:check": "oxlint"
   },
+  "dependencies": {
+    "@tsconfig/node24": "^24.0.4"
+  },
   "devDependencies": {
     "@kin0992/oxc-config": "workspace:*",
-    "@tsconfig/node24": "^24.0.4",
     "oxfmt": "catalog:core",
     "oxlint": "catalog:core"
   }
