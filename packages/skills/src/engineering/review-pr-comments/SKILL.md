@@ -24,13 +24,18 @@ license: MIT
    show its recommendation plus a concise suggested reply. Record `Accept` with
    `+1`, `Defer` with `eyes`, and `Reject` with `-1`; do not edit code merely
    because a comment was accepted.
-5. Keep every decision and reply draft grouped locally until all actionable
-   comments have been triaged. Then show the complete grouped plan and ask for
-   one confirmation to publish it. Do not publish a partial batch.
-6. Publish each selected reaction and only the exact reply text approved for
+5. After all decisions are collected, identify accepted comments that require
+   code changes and ask explicitly whether to implement them. An `Accept`
+   decision never authorizes code edits. If approved, implement and validate
+   the requested changes before finalizing reply drafts; if declined, leave
+   code unchanged and continue with the decisions.
+6. Keep every decision and reply draft grouped locally until triage and any
+   authorized implementation are complete. Then show the complete grouped plan
+   and ask for one confirmation to publish it. Do not publish a partial batch.
+7. Publish each selected reaction and only the exact reply text approved for
    that target. If a draft is edited, ask for approval of the new exact text
    before publishing it.
-7. Never resolve threads or post general PR comments.
+8. Never resolve threads or post general PR comments.
 
 Requires an authenticated `gh` CLI. Use `gh api graphql --paginate` to collect
 threads and comments, and `gh api` REST calls for reactions and approved replies.

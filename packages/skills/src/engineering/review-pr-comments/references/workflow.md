@@ -35,11 +35,22 @@ actionable comment, the same staging rules apply; skip the batch summary only
 when there is no second item to group.
 
 After all decisions are collected, show a grouped summary containing every
-comment, selected reaction, and exact reply draft. Ask for one confirmation to
-publish the complete plan. If the user declines, publish nothing. Do not react
-to non-actionable comments. A reaction does not mean code changed. If
-implementation is explicitly requested, treat it as separate work that may run
-asynchronously.
+comment, selected reaction, and exact reply draft. Identify accepted comments
+that require code changes and ask explicitly:
+
+- `Implement the accepted changes`
+- `Leave code unchanged`
+
+An `Accept` decision does not authorize editing code. If implementation is
+approved, make and validate the changes before finalizing any affected reply
+drafts. If implementation is declined, leave the code unchanged and continue
+with the selected decisions. Do not react to non-actionable comments. A
+reaction does not mean code changed.
+
+After any authorized implementation is complete, show the refreshed grouped
+plan and ask for one confirmation to publish it. If the user declines, publish
+nothing. If implementation is explicitly requested but the user declines this
+consent step, treat it as declined rather than inferring approval.
 
 ## Draft and approve a reply
 

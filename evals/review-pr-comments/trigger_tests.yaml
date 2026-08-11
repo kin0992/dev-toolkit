@@ -17,6 +17,10 @@ should_trigger_prompts:
     reason: 'Requests grouped decision collection before GitHub mutations'
     confidence: high
 
+  - prompt: 'After we decide which review comments to accept, ask me before making any requested code changes.'
+    reason: 'Requests explicit implementation consent after comment decisions'
+    confidence: high
+
 should_not_trigger_prompts:
   - prompt: 'Reply to this general PR conversation comment.'
     reason: 'General PR comments have no unresolved review-thread state'
