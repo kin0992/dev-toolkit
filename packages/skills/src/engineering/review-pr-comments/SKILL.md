@@ -19,11 +19,23 @@ license: MIT
 2. Process one PR and all actionable comments in its unresolved review threads;
    include bots, but exclude general PR conversation comments.
 3. Evaluate each comment against the diff and source context.
-4. Ask one question at a time. Record `Accept` with `+1`, `Defer` with `eyes`,
-   and `Ignore` with `-1`. Do not edit code merely because it was accepted.
-5. Suggest possible answers. Post a reply only after exact-text and target
-   approval; editing a draft is not approval.
-6. Never resolve threads or post general PR comments.
+4. If there is more than one actionable comment, enter batch triage before
+   making any GitHub mutation. Ask one question at a time, and for each comment
+   show its recommendation plus a concise suggested reply. Record `Accept` with
+   `+1`, `Defer` with `eyes`, and `Reject` with `-1`; do not edit code merely
+   because a comment was accepted.
+5. After all decisions are collected, identify accepted comments that require
+   code changes and ask explicitly whether to implement them. An `Accept`
+   decision never authorizes code edits. If approved, implement and validate
+   the requested changes before finalizing reply drafts; if declined, leave
+   code unchanged and continue with the decisions.
+6. Keep every decision and reply draft grouped locally until triage and any
+   authorized implementation are complete. Then show the complete grouped plan
+   and ask for one confirmation to publish it. Do not publish a partial batch.
+7. Publish each selected reaction and only the exact reply text approved for
+   that target. If a draft is edited, ask for approval of the new exact text
+   before publishing it.
+8. Never resolve threads or post general PR comments.
 
 Requires an authenticated `gh` CLI. Use `gh api graphql --paginate` to collect
 threads and comments, and `gh api` REST calls for reactions and approved replies.

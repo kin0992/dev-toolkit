@@ -75,6 +75,9 @@ query($threadId: ID!, $endCursor: String) {
 
 ## Replace a decision reaction
 
+Run these mutations only after the complete grouped plan is approved. Do not
+run them while collecting decisions or if the grouped plan is cancelled.
+
 Set `REACTION` to `+1`, `-1`, or `eyes`. Remove only decision reactions made by
 the authenticated user, then add the selected reaction:
 

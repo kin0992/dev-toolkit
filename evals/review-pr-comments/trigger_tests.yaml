@@ -13,6 +13,14 @@ should_trigger_prompts:
     reason: 'Requests unresolved thread evaluation and reply drafting'
     confidence: high
 
+  - prompt: 'There are lots of unresolved comments on this PR. Triage each one with me, then publish the approved reactions and replies together.'
+    reason: 'Requests grouped decision collection before GitHub mutations'
+    confidence: high
+
+  - prompt: 'After we decide which review comments to accept, ask me before making any requested code changes.'
+    reason: 'Requests explicit implementation consent after comment decisions'
+    confidence: high
+
 should_not_trigger_prompts:
   - prompt: 'Reply to this general PR conversation comment.'
     reason: 'General PR comments have no unresolved review-thread state'

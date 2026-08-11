@@ -17,7 +17,7 @@
     {
       "name": "engineering-skills",
       "description": "Skills for engineering workflows: triage unresolved pull-request review comments and draft approval-gated replies.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "source": "./plugins/engineering-skills"
     },
     {
