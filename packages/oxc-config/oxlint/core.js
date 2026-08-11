@@ -30,6 +30,11 @@ export default {
     'eslint/guard-for-in': 'error',
     'eslint/no-throw-literal': 'error',
     'eslint/no-shadow': 'warn',
+    'eslint/no-param-reassign': 'error',
+
+    // eslint — security
+    'eslint/no-implied-eval': 'error',
+    'eslint/no-new-func': 'error',
 
     // eslint — modern syntax
     'eslint/object-shorthand': 'error',
@@ -73,6 +78,8 @@ export default {
     'typescript/no-extraneous-class': 'error',
     'typescript/only-throw-error': 'error',
     'typescript/ban-types': 'error',
+    'typescript/no-shadow': 'error',
+    'typescript/explicit-function-return-type': 'error',
 
     // typescript — type-aware (requires --tsconfig flag)
     'typescript/no-floating-promises': 'error',
@@ -89,12 +96,15 @@ export default {
     'typescript/no-redundant-type-constituents': 'error',
     'typescript/restrict-template-expressions': 'error',
     'typescript/switch-exhaustiveness-check': 'error',
+    'typescript/strict-boolean-expressions': 'error',
+    'typescript/no-unnecessary-condition': 'error',
 
     // import
     'import/no-cycle': 'error',
     'import/no-duplicates': 'error',
     'import/no-self-import': 'error',
     'import/first': 'error',
+    'import/no-mutable-exports': 'error',
 
     // promise
     'promise/no-return-wrap': 'error',
@@ -131,6 +141,7 @@ export default {
     'unicorn/no-instanceof-array': 'error',
     'unicorn/no-negated-condition': 'error',
     'unicorn/prefer-logical-operator-over-ternary': 'error',
+    'unicorn/prefer-ternary': 'error',
     'unicorn/no-static-only-class': 'error',
     'unicorn/consistent-function-scoping': 'error',
     'unicorn/no-unnecessary-await': 'error',
@@ -142,6 +153,7 @@ export default {
     'unicorn/no-useless-undefined': 'error',
     'unicorn/prefer-optional-catch-binding': 'error',
     'unicorn/no-useless-switch-case': 'error',
+    'unicorn/filename-case': 'error',
   },
   overrides: [
     {
@@ -153,6 +165,7 @@ export default {
         'typescript/no-unsafe-call': 'off',
         'typescript/no-unsafe-member-access': 'off',
         'typescript/no-unsafe-return': 'off',
+        'typescript/explicit-function-return-type': 'off',
       },
     },
   ],
