@@ -31,7 +31,7 @@
     "lint:check": "oxlint"
   },
   "dependencies": {
-    "@tsconfig/node24": "^24.0.4"
+    "@tsconfig/node24": "^24.0.5"
   },
   "devDependencies": {
     "@kin0992/oxc-config": "workspace:*",
