@@ -1,5 +1,11 @@
 # @kin0992/skills
 
+## 0.3.1
+
+### Patch Changes
+
+- 81b5517: Improve review-pr-comments triage by batching decisions and requiring consent before implementing accepted code changes.
+
 ## 0.3.0
 
 ### Minor Changes
