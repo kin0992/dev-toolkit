@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@pulumi/github": "^6.15.0",
-    "@pulumi/pulumi": "^3.257.0"
+    "@pulumi/pulumi": "^3.258.0"
   },
   "devDependencies": {
     "@kin0992/oxc-config": "workspace:*",
