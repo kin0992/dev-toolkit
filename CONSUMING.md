@@ -71,7 +71,7 @@ Consumers call the reusable workflow `release-reusable.yml`. `release.yml` in th
 
 Publishing uses **npm Trusted Publishing** (OIDC): the workflow exchanges the job's `id-token` for a short-lived npmjs.org credential and npm signs **provenance** automatically. No npm token is stored or passed. Each published package needs a Trusted Publisher configured on npmjs.org (see Prerequisites).
 
-If your `release` script only creates git tags (e.g. `changeset tag`) and never runs `npm publish`, none of the npm / Trusted-Publishing setup applies.
+If your `release` script only creates git tags (e.g. `changeset git-tag`) and never runs `npm publish`, none of the npm / Trusted-Publishing setup applies.
 
 ```yaml
 name: Release
@@ -107,7 +107,11 @@ jobs:
 
 **Prerequisites:**
 
+- Install `@changesets/cli@^3`. The reusable workflow uses
+  `changesets/action@v2`, which does not support Changesets CLI v2.
 - Your `package.json` must define `release` and `version-packages` scripts.
+  Use `changeset publish` when publishing packages, or `changeset git-tag` for
+  a tag-only repository.
 - The workflow uses a **GitHub App token** for all git operations. This ensures that tags pushed by the release workflow trigger downstream workflows (e.g. `deploy.yml`), which `GITHUB_TOKEN` cannot do.
   - Create a GitHub App with `contents: write` and `pull-requests: write` permissions on your repository.
   - Add `APP_ID` (the numeric App ID — used as `client-id`) and `APP_PRIVATE_KEY` (the PEM private key) as repository secrets.
