@@ -84,12 +84,12 @@ jobs:
       # points at this repo's release.yml workflow, and npm must be >= 11.5.1
       # (satisfied by the Node version in .node-version).
       - name: Create release PR or publish
-        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
+        uses: changesets/action@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2.1.1
         with:
-          publish: pnpm release
-          version: pnpm version-packages
-          commit: 'Release new artifacts'
-          title: 'Release new artifacts'
+          github-token: ${{ steps.app-token.outputs.token }}
+          publish-script: pnpm release
+          version-script: pnpm version-packages
+          commit-message: 'Release new artifacts'
+          pr-title: 'Release new artifacts'
         env:
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           NPM_CONFIG_PROVENANCE: ${{ inputs.provenance }}
