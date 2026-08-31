@@ -19,7 +19,7 @@ strictPeerDependencies: false
 overrides:
   '@opentelemetry/core@<2.8.0': ^2.8.0
   esbuild@>=0.27.3 <0.28.1: ^0.28.1
-  nanoid@<3.3.17: ^3.3.17
+  nanoid@<3.3.18: ^3.3.18
   postcss@<=8.5.22: ^8.5.23
   protobufjs@<=7.6.2: ^7.6.3
   tar@<=7.5.15: ^7.5.16
@@ -34,4 +34,4 @@ minimumReleaseAgeExclude:
   - '@opentelemetry/core@2.8.0'
   - undici@6.27.0
   - postcss@8.5.23
-  - nanoid@3.3.17
+  - nanoid@3.3.18
