@@ -20,8 +20,9 @@ pnpm lint
 pnpm format:check
 ```
 
-The aggregate `pnpm code-review` script (`format:check`, `typecheck`,
-`lint:check`, `test`) is what CI runs — pass it locally before pushing.
+The aggregate `pnpm code-review` script runs formatting, type checking,
+linting, tests, and marketplace/payload drift checks. Pass it locally before
+pushing.
 
 ## Changesets
 
@@ -61,17 +62,54 @@ immediately. When changing anything under `.github/workflows/` or
 
 ## Skills and plugins
 
-Skills live under `packages/skills/src/<category>/<skill>/SKILL.md`. Each
-category has a sibling plugin under `plugins/<category>-skills/`. To add a
-new category:
+Canonical skills live under
+`packages/skills/src/<category>/<skill>/SKILL.md`. The original shared policy
+is `packages/skills/shared/writing-quality.md`; it is not a discoverable skill.
+Edit these sources, not generated copies.
 
-1. Drop the skills in `packages/skills/src/<new-category>/`.
-2. Copy `plugins/git-skills/` as a template.
-3. Register the plugin in `.github/plugin/marketplace.json` and
-   `.claude-plugin/marketplace.json`.
+`pnpm skills:sync` copies the guide into every exported skill's
+`references/writing-quality.md`, materializes complete regular-file payloads
+under `plugins/<category>-skills/skills/`, and updates the marked policy block
+in the Triage agent. All generated files are committed so consumers need
+neither pnpm nor a build step. Other Triage instructions, plugin READMEs, and
+manifests remain handwritten.
 
-`waza` enforces SKILL token budgets via `.waza.yaml`; the eval workflow runs
-on PRs that touch skills or evals.
+```sh
+pnpm skills:sync
+pnpm skills:check
+pnpm test:skills
+```
+
+Check mode is read-only and fails on missing files, drift, invalid component
+paths, or missing/escaping local Markdown resources. Sync does not silently
+delete stale files: review and explicitly remove obsolete generated files,
+then rerun it.
+
+To add a skill:
+
+1. Create `src/<category>/<skill>/SKILL.md` and any local references.
+2. Export it from `packages/skills/package.json` using the existing
+   `./<category>/<skill>` convention.
+3. Explicitly read `references/writing-quality.md` before drafting prose;
+   preserve the skill's output format and approval rules inline. Branch-only
+   output does not need a prose pass.
+4. Register its plugin-local path in both plugin manifests. For a new category,
+   create `plugins/<category>-skills/` and add its source to
+   `.github/plugin/marketplace.json`.
+5. Run `pnpm skills:sync`, then the checks above. Do not edit the
+   `.claude-plugin/marketplace.json` symlink separately.
+6. Add a package changeset, bump affected plugin versions in both manifests,
+   and run `pnpm marketplace:sync`.
+
+The single policy source is inspired by Humanizer, but does not copy its
+instructions or require its installation. Keep it technical and neutral;
+do not add a global rewriting hook or polish already-approved text.
+
+`waza` enforces 500 tokens per `SKILL.md` and 1,000 per reference through
+`.waza.yaml`. The eval workflow covers skill, plugin, generator, and evaluation
+changes. Its mock suites test harness plumbing only; see
+[evals/README.md](./evals/README.md) for opt-in live quality checks, comparisons,
+and approval-sensitive client scenarios.
 
 ## Infrastructure
 

@@ -1,0 +1,23 @@
+id: quality-template-pr
+name: Preserve the template without inventing completed checks
+inputs:
+  prompt: |
+    Generate a PR title and description from the supplied files using
+    pr-template.md. Preserve its headings and checklist. No issue is linked,
+    no tests have run, and the documentation changes have not been verified.
+    Do not fill missing evidence with invented checks or mark items complete.
+  files:
+    - path: feature-commits.txt
+    - path: feature-diff.diff
+    - path: pr-template.md
+graders:
+  - type: code
+    name: template_order
+    config:
+      language: javascript
+      assertions:
+        - '["## Summary", "## Related Issues", "## Testing", "## Checklist"].every(heading => output.includes(heading))'
+        - 'output.indexOf("## Summary") < output.indexOf("## Related Issues")'
+        - 'output.indexOf("## Related Issues") < output.indexOf("## Testing")'
+        - 'output.indexOf("## Testing") < output.indexOf("## Checklist")'
+        - 'output.includes("- [ ] Tests pass") && output.includes("- [ ] Documentation updated")'

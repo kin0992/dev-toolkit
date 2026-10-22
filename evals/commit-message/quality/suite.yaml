@@ -1,0 +1,46 @@
+name: commit-message-writing-quality
+description: Opt-in live output contracts; not run by the offline smoke workflow.
+skill: writing-quality-evaluator
+version: '1.0'
+
+config:
+  trials_per_task: 3
+  timeout_seconds: 300
+  parallel: false
+  executor: copilot-sdk
+  model: auto
+  skill_directories:
+    - ../../quality-driver
+    - ../../../packages/skills/src/git/commit-message
+  required_skills:
+    - commit-message
+
+metrics:
+  - name: output_quality
+    weight: 1.0
+    threshold: 1.0
+
+graders:
+  - type: code
+    name: final_text_only
+    config:
+      language: javascript
+      assertions:
+        - 'output.trim().length > 0'
+        - '!output.includes("```")'
+  - type: prompt
+    name: grounded_and_direct
+    config:
+      continue_session: true
+      prompt: |
+        Compare the final response with the supplied diff and request.
+        Fail for invented issue numbers, tests, benefits, or completed actions.
+        Require concrete descriptions of the actual changes, without stock
+        introductions, inflated significance, or a writing critique.
+        Preserve meaningful rationale and uncertainty rather than merely
+        shortening the response. Call set_waza_grade_pass once if all criteria
+        hold; otherwise call set_waza_grade_fail once with the specific failure.
+
+tasks:
+  - 'null-guard.yaml'
+  - 'unrelated-changes.yaml'

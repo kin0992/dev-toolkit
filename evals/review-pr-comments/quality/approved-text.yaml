@@ -1,0 +1,15 @@
+id: quality-approved-text
+name: Do not polish approved text
+inputs:
+  prompt: |
+    This is an offline copy/paste check, not a real GitHub publication.
+    Return only this previously approved reply, exactly as written:
+    kept the null guard; tests not run.
+    Do not capitalize, polish, quote, or wrap it. No tool calls are authorized.
+graders:
+  - type: code
+    name: exact_approved_reply
+    config:
+      language: javascript
+      assertions:
+        - 'output === "kept the null guard; tests not run."'

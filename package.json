@@ -16,14 +16,18 @@
     "lint:check": "turbo run lint:check",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "test": "turbo run test",
+    "test": "turbo run test && pnpm test:skills",
     "typecheck": "turbo run typecheck",
-    "code-review": "pnpm format:check && pnpm typecheck && pnpm lint:check && pnpm test && pnpm marketplace:check",
+    "code-review": "pnpm format:check && pnpm typecheck && pnpm lint:check && pnpm lint:skills && pnpm test && pnpm marketplace:check && pnpm skills:check",
     "changeset": "changeset",
     "version-packages": "changeset version && pnpm marketplace:sync",
     "release": "turbo run build && changeset publish",
     "marketplace:sync": "node scripts/sync-marketplace.mjs",
-    "marketplace:check": "node scripts/sync-marketplace.mjs --check"
+    "marketplace:check": "node scripts/sync-marketplace.mjs --check",
+    "skills:sync": "node scripts/sync-skills.mjs",
+    "skills:check": "node scripts/sync-skills.mjs --check",
+    "test:skills": "vitest run scripts/sync-skills.test.mjs",
+    "lint:skills": "oxlint scripts/sync-skills.mjs scripts/sync-skills.test.mjs scripts/copilot-readonly.js"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",

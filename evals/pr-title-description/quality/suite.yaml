@@ -1,0 +1,50 @@
+name: pr-title-description-writing-quality
+description: Opt-in live PR formatting, template, and evidence contracts.
+skill: writing-quality-evaluator
+version: '1.0'
+
+config:
+  trials_per_task: 3
+  timeout_seconds: 300
+  parallel: false
+  executor: copilot-sdk
+  model: auto
+  skill_directories:
+    - ../../quality-driver
+    - ../../../packages/skills/src/git/pr-title-description
+  required_skills:
+    - pr-title-description
+
+metrics:
+  - name: output_quality
+    weight: 1.0
+    threshold: 1.0
+
+graders:
+  - type: code
+    name: pr_output_contract
+    config:
+      language: javascript
+      assertions:
+        - 'output.startsWith("TITLE: ")'
+        - 'output.split("\n")[0].slice(7).length > 0 && output.split("\n")[0].slice(7).length <= 72'
+        - 'output.split("\n")[1] === ""'
+        - '!output.includes("```")'
+        - '!/^\s*-\s*\[[xX]\]/m.test(output)'
+  - type: prompt
+    name: grounded_and_direct
+    config:
+      continue_session: true
+      prompt: |
+        Judge the final PR against the supplied code and request. The code
+        makes at most three total delivery attempts, not three retries after
+        an initial attempt. Metrics are present; no tests or benchmarks ran.
+        Reject fabricated validation, issue links, performance claims, or
+        unsupported benefits. Require informative sections without filler.
+        Suggested checks must be distinguished from checks actually run.
+        Call set_waza_grade_pass once only if all criteria hold; otherwise
+        call set_waza_grade_fail once and identify the unsupported claim.
+
+tasks:
+  - 'default-structure.yaml'
+  - 'template.yaml'

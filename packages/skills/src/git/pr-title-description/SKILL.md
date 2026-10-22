@@ -16,6 +16,9 @@ license: MIT
 Summarize a branch for reviewers with a concise PR title and markdown
 description.
 
+Before drafting, read [writing quality](references/writing-quality.md).
+Keep claims grounded in the branch evidence; preserve templates and output.
+
 ## Instructions
 
 1. Read commits, diff, and optional template before writing.
@@ -29,6 +32,8 @@ description.
      Omit empty sections.
 4. Describe intent and outcome, not every edit. Never fabricate ticket
    numbers, links, or steps.
+5. Distinguish checks actually run from suggested verification. If a required
+   section lacks evidence, say it is not verified; never mark a check complete.
 
 ## Output
 
@@ -46,19 +51,19 @@ TITLE: <pr title>
 TITLE: Add retry handling for webhook delivery
 
 ## Why
-Transient outages could permanently fail webhook delivery.
+A failed request previously ended delivery without another attempt.
 
 ## What
-- retry failed deliveries before marking them failed
-- emit retry metrics
-- document retry behavior
+- make up to three delivery attempts for unsuccessful responses
+- count delivered, retried, and exhausted deliveries
 
 ## How to verify
-- review retry path tests
-- confirm metrics for retries and terminal failures
+Not run. Suggested: return non-2xx responses and confirm delivery stops
+after three attempts.
 ```
 
 ## Common edge cases
 
 - If a template includes required headings, preserve them.
-- If verification details are missing, do not invent steps.
+- Omit unsupported optional verification; keep required template sections
+  and identify missing evidence.

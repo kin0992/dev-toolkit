@@ -16,6 +16,9 @@ license: MIT
 Turn a staged diff into a classic Git commit message.
 Conventional Commits are forbidden.
 
+Before drafting, read [writing quality](references/writing-quality.md).
+Keep claims grounded in the diff; preserve the output format below.
+
 ## Instructions
 
 1. Read the entire diff; identify the _primary intent_ of the change.
@@ -24,7 +27,7 @@ Conventional Commits are forbidden.
 3. Prefer specific verbs ("Fix", "Add", "Remove", "Rename", "Refactor").
    Avoid vague verbs like "Update".
 4. Add a **body** only when it adds useful context. Separate with a
-   blank line, wrap at 72 chars, explain what and why.
+   blank line, explain what and why, and keep every line at most 72 chars.
 5. If the change touches unrelated areas, suggest splitting into
    multiple commits.
 6. Never invent issue numbers.
@@ -32,6 +35,7 @@ Conventional Commits are forbidden.
 ## Output
 
 Return only the commit message text, no commentary or fences.
+Check the subject and body length limits before returning.
 If a body is needed:
 
 ```text
@@ -43,11 +47,10 @@ If a body is needed:
 ## Example
 
 ```text
-Guard startup when config is missing
+Reject non-object configuration
 
-Prevent the app from crashing when optional configuration is absent.
-This keeps startup behavior predictable and makes the fallback path
-explicit.
+Throw an error for null or primitive JSON values instead of returning
+them as Config.
 ```
 
 ## Common edge cases

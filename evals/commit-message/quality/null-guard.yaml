@@ -1,0 +1,23 @@
+id: quality-null-guard
+name: Describe the actual configuration guard
+inputs:
+  prompt: |
+    Generate a classic commit message from the supplied staged diff.
+    The entire diff is in fix-null-check.diff; do not run git commands.
+    No tests or benchmarks have been run. Do not claim full Config validation:
+    the code only rejects null and non-object JSON values.
+  files:
+    - path: fix-null-check.diff
+graders:
+  - type: code
+    name: classic_commit_format
+    config:
+      language: javascript
+      assertions:
+        - 'output.split("\n")[0].length > 0 && output.split("\n")[0].length <= 50'
+        - '/^[A-Z]/.test(output)'
+        - '!output.split("\n")[0].endsWith(".")'
+        - '!/^(feat|fix|docs|chore|refactor|test|style|ci|build|perf)(\([^)]*\))?:/i.test(output)'
+        - 'output.trim().split("\n").length === 1 || output.split("\n")[1] === ""'
+        - 'output.split("\n").slice(2).every(line => line.length <= 72)'
+        - '/null|object|config/i.test(output.split("\n")[0])'

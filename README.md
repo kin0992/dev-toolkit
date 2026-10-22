@@ -16,8 +16,9 @@ Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared Typ
 | `packages/oxc-config`                   | `@kin0992/oxc-config` — shared OXC format + lint config                                               |
 | `packages/vitest-config`                | `@kin0992/vitest-config` — shared Vitest preset                                                       |
 | `packages/skills`                       | `@kin0992/skills` — AI Skills organized by category (`git/`, …)                                       |
-| `plugins/git-skills`                    | Copilot/Claude plugin (category: git): `commit-message`, `pr-title-description`                       |
+| `plugins/git-skills`                    | Copilot/Claude plugin (category: git): `commit-message`, `pr-title-description`, `branch-name`        |
 | `plugins/engineering-skills`            | Copilot/Claude plugin (category: engineering): `review-pr-comments`                                   |
+| `plugins/project-manager`               | Copilot/Claude plugin: Triage agent for GitHub issues and Projects                                    |
 | `.github/plugin/marketplace.json`       | Marketplace registry — public, no auth. Mirrored at `.claude-plugin/marketplace.json` for Claude Code |
 
 ## Stack
@@ -27,6 +28,12 @@ Platform Engineering toolkit: reusable GitHub Actions, AI Skills, and shared Typ
 ## How to consume from another project
 
 See [CONSUMING.md](./CONSUMING.md).
+
+Every plugin includes the writing guidance its skills or agents need.
+No separate Humanizer installation is required. The guidance keeps toolkit
+output concrete and evidence-based; it does not rewrite unrelated conversations
+or source code. Existing Git and authenticated `gh` requirements still apply
+to the workflows that use them.
 
 ## Development
 

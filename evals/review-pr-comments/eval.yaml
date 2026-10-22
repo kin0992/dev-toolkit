@@ -1,6 +1,7 @@
 name: review-pr-comments-eval
 description: |
-  Evaluation suite for interactive unresolved PR review-comment triage.
+  Offline mock harness smoke checks, not writing-quality or approval evidence.
+  Live draft-only output contracts are in quality/suite.yaml.
 
 skill: engineering/review-pr-comments
 version: '1.0'
