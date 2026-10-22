@@ -1,0 +1,26 @@
+id: quality-multiple-branches
+name: Keep multi-branch rationales concrete
+inputs:
+  prompt: |
+    Suggest separate branches for two unrelated changes: add dark mode settings,
+    and fix broken pagination links. Give one branch per line with a short
+    one-sentence rationale for each. Do not execute commands.
+graders:
+  - type: code
+    name: two_specific_branches
+    config:
+      language: javascript
+      assertions:
+        - 'output.trim().split("\n").filter(line => line.trim()).length === 2'
+        - '/^features\/[a-z0-9-]+/m.test(output)'
+        - '/^fixes\/[a-z0-9-]+/m.test(output)'
+  - type: prompt
+    name: useful_rationales
+    config:
+      continue_session: true
+      prompt: |
+        Require exactly two distinct branch proposals with brief rationales:
+        dark mode settings and broken pagination links. Reject invented scope,
+        generic significance, introductory praise, or a closing invitation.
+        Call set_waza_grade_pass once if both rationales are concrete and
+        supported; otherwise call set_waza_grade_fail once with the reason.

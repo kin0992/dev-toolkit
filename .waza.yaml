@@ -11,7 +11,11 @@ tokens:
   limits:
     defaults:
       'SKILL.md': 500
+      # Waza's globstar requires a directory segment, so cover direct files too.
+      'references/*.md': 1000
       'references/**/*.md': 1000
+      '**/references/*.md': 1000
+      '**/references/**/*.md': 1000
       '*.md': 2000
     overrides:
       'README.md': 3000

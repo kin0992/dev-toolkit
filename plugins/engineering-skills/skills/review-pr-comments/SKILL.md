@@ -1,0 +1,49 @@
+---
+name: review-pr-comments
+description: |
+  **INTERACTIVE SKILL** - Evaluate every actionable comment in unresolved
+  GitHub PR review threads, including agent comments.
+  USE FOR: review unresolved PR comments, triage review threads, process
+  Copilot feedback.
+  DO NOT USE FOR: general PR comments, resolving threads, unapproved replies.
+  INVOKES: gh CLI, including gh api GraphQL and REST calls.
+license: MIT
+---
+
+# Review unresolved PR comments
+
+## Instructions
+
+1. Read the complete [workflow](references/workflow.md),
+   [`gh` commands](references/gh-commands.md), and
+   [writing quality](references/writing-quality.md) before drafting.
+2. Process one PR and all actionable comments in its unresolved review threads;
+   include bots, but exclude general PR conversation comments.
+3. Ground each recommendation and reply in the diff and source context.
+4. If there is more than one actionable comment, enter batch triage before
+   making any GitHub mutation. Ask one question at a time, and for each comment
+   show its recommendation plus a concise suggested reply. Record `Accept` with
+   `+1`, `Defer` with `eyes`, and `Reject` with `-1`; do not edit code merely
+   because a comment was accepted.
+5. After all decisions are collected, identify accepted comments that require
+   code changes and ask explicitly whether to implement them. An `Accept`
+   decision never authorizes code edits. If approved, implement and validate
+   the requested changes before finalizing reply drafts; if declined, leave
+   code unchanged and continue with the decisions.
+6. Keep every decision and reply draft grouped locally until triage and any
+   authorized implementation are complete. Then show the complete grouped plan
+   and ask for one confirmation to publish it. Do not publish a partial batch.
+7. Publish only the approved reactions and exact replies to their approved
+   targets. Never polish approved text. Any revision needs new exact-text approval.
+8. Never resolve threads or post general PR comments.
+
+Requires an authenticated `gh` CLI. Use `gh api graphql --paginate` to collect
+threads and comments, and `gh api` REST calls for reactions and approved replies.
+
+```sh
+gh auth status
+```
+
+## Errors
+
+Surface API, permission, and missing-context failures; never silently skip them.

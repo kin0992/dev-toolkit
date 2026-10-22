@@ -1,0 +1,20 @@
+id: quality-default-pr
+name: Preserve useful default PR sections
+inputs:
+  prompt: |
+    Generate a PR title and description from feature-commits.txt and
+    feature-diff.diff. There is no PR template and no linked issue.
+    No tests have run. Preserve the skill's default sections when useful,
+    omit empty risks, and do not claim successful verification.
+  files:
+    - path: feature-commits.txt
+    - path: feature-diff.diff
+graders:
+  - type: text
+    name: informative_default_sections
+    config:
+      contains_cs:
+        - '## Why'
+        - '## What'
+      contains:
+        - retry

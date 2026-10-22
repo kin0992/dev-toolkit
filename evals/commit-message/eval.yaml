@@ -1,7 +1,8 @@
 name: commit-message-eval
 description: |
-  Evaluation suite for the commit-message skill.
-  Tests commit message generation across different:
+  Offline mock harness smoke checks, not writing-quality evidence.
+  Live output contracts are in quality/suite.yaml.
+  Covers commit message generation across different:
   - Diff sizes (small fix, multi-file refactor)
   - Change types (bug fix, feature addition, rename)
   - Edge cases (multi-area diff, missing context)

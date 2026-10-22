@@ -1,0 +1,29 @@
+id: quality-already-addressed-review
+name: Explain why a bot suggestion is already addressed
+inputs:
+  prompt: |
+    This is an offline fixture, not a real PR. Do not run gh, make network
+    requests, edit code, react, or publish anything. Collection is out of scope.
+    Evaluate this unresolved bot comment from the supplied current source:
+
+    Comment: "Check for null before reading config.mode."
+    Current source:
+      function mode(config: Config | null) {
+        if (config === null) throw new Error("Missing config");
+        return config.mode;
+      }
+
+    Give a concise recommendation, concrete evidence, and a suggested reply
+    for my decision. I have not accepted it or authorized any action.
+  files:
+    - path: bin/gh
+  environment:
+    PATH: './bin:/usr/bin:/bin'
+graders:
+  - type: text
+    name: identifies_existing_guard
+    config:
+      contains:
+        - null
+      regex_match:
+        - '(?i)reject|already (addressed|handled|checked|guarded|present)'

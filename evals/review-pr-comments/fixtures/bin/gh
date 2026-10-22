@@ -1,0 +1,3 @@
+#!/bin/sh
+printf '%s\n' 'Offline drafting fixture: GitHub commands are disabled.' >&2
+exit 1

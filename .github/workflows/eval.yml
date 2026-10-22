@@ -6,12 +6,20 @@ on:
       - 'packages/skills/**'
       - 'evals/**'
       - '.waza.yaml'
+      - 'plugins/**'
+      - 'scripts/sync-skills*'
+      - 'scripts/copilot-readonly.js'
+      - '.github/workflows/eval.yml'
   push:
     branches: [main]
     paths:
       - 'packages/skills/**'
       - 'evals/**'
       - '.waza.yaml'
+      - 'plugins/**'
+      - 'scripts/sync-skills*'
+      - 'scripts/copilot-readonly.js'
+      - '.github/workflows/eval.yml'
 
 concurrency:
   group: eval-${{ github.ref }}
@@ -40,8 +48,8 @@ jobs:
 
       - name: Install waza
         env:
-          WAZA_VERSION: v0.33.0
-          WAZA_SHA256: c1a31a15d959d2cd536feb41cf7b20f94b0434a8e86949d3de3d21c1e3fb6ff3
+          WAZA_VERSION: v0.38.10
+          WAZA_SHA256: fae469af3b20ca63b789ad64e8f2c007a069d0843cc88d9e83d224de4f7077b3
         run: |
           set -euo pipefail
           curl -fsSL -o /tmp/waza \
@@ -53,7 +61,10 @@ jobs:
       - name: Check skill compliance
         run: waza check
 
-      - name: Run evaluations
+      - name: Enforce skill and reference token budgets
+        run: waza tokens check --strict packages/skills/src
+
+      - name: Run offline harness smoke checks (not writing-quality evidence)
         run: waza run --output results.json --format github-comment > comment.md
 
       - name: Show results
@@ -65,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # 7.0.1
         with:
           name: eval-results
-          path: results.json
+          path: results*.json
 
       # Fork PRs get a read-only GITHUB_TOKEN, so commenting would fail. Skip
       # them rather than failing the job; the results artifact is still uploaded.

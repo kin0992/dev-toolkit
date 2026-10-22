@@ -54,6 +54,8 @@ consent step, treat it as declined rather than inferring approval.
 
 ## Draft and approve a reply
 
+Apply [writing quality](writing-quality.md) before showing drafts. Give the
+concrete reason for the decision, not generic praise or unsupported benefits.
 Draft a concise reply consistent with the decision. Do not claim a change was
 implemented or verified unless that work completed.
 
@@ -65,8 +67,9 @@ different comment. Before the grouped publish confirmation, ask:
 - `Edit a draft`
 - `Cancel publication`
 
-If edited, show the new exact text and ask for approval of that draft before
-the grouped publish confirmation. Reaction approval never authorizes a reply
+Never reword or polish approved text, even for punctuation. If edited, show the
+new exact text and ask for approval before the grouped publish confirmation.
+Reaction approval never authorizes a reply
 unless the exact draft is included in the confirmed plan. A `Defer` or
 `Reject` decision may intentionally have no reply.
 
