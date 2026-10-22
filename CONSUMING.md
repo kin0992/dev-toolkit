@@ -174,9 +174,21 @@ jobs:
     with:
       stack: kin0992/myapp/dev
       working-directory: infra
+      # Fail scheduled runs on drift; PR previews just show the diff.
+      expect-no-changes: ${{ github.event_name == 'schedule' }}
     secrets:
       PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 ```
+
+| Input               | Required | Default | Description                                                                                                                       |
+| ------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `stack`             | yes      |         | Pulumi stack name.                                                                                                                |
+| `working-directory` | no       | `infra` | Path to the Pulumi project.                                                                                                       |
+| `comment-on-pr`     | no       | `true`  | Post the preview as a PR comment.                                                                                                 |
+| `cloud-url`         | no       | `''`    | Self-managed Pulumi backend URL.                                                                                                  |
+| `refresh`           | no       | `true`  | Refresh against live state first. Without it the preview compares code with stored state and cannot see out-of-band edits.        |
+| `expect-no-changes` | no       | `false` | Fail the job when the preview has changes.                                                                                        |
+| `environment`       | no       | `''`    | GitHub environment for the job (e.g. one with required reviewers for PR previews). A calling job cannot set `environment` itself. |
 
 ### IaC deploy (Pulumi up)
 
