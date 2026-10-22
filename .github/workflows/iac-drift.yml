@@ -22,6 +22,21 @@ on:
         required: false
         type: string
         default: ''
+      refresh:
+        description: 'Refresh against live provider state before diffing. Without it, preview only compares the program with stored state and cannot see out-of-band edits.'
+        required: false
+        type: boolean
+        default: true
+      expect-no-changes:
+        description: 'Fail the job when the preview has any change. Enable for scheduled drift checks so drift produces a failed run.'
+        required: false
+        type: boolean
+        default: false
+      environment:
+        description: 'Optional GitHub environment for the job, e.g. one with required reviewers for PR previews. Callers cannot set `environment` on a job that calls a reusable workflow, so it has to be declared here.'
+        required: false
+        type: string
+        default: ''
     secrets:
       PULUMI_ACCESS_TOKEN:
         description: 'Pulumi Cloud access token (omit when using OIDC + self-managed backend).'
@@ -33,6 +48,7 @@ permissions:
 jobs:
   drift:
     name: Pulumi drift preview
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -89,7 +105,8 @@ jobs:
           command: preview
           stack-name: ${{ inputs.stack }}
           work-dir: ${{ inputs.working-directory }}
-          expect-no-changes: false
+          refresh: ${{ inputs.refresh }}
+          expect-no-changes: ${{ inputs.expect-no-changes }}
           comment-on-pr: ${{ inputs.comment-on-pr }}
           diff: true
         env:
