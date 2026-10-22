@@ -8,9 +8,9 @@ allowBuilds:
 
 catalogs:
   core:
-    '@types/node': ^24.13.3
-    oxfmt: ^0.64.0
-    oxlint: ^1.79.0
+    '@types/node': ^24.19.2
+    oxfmt: ^0.74.0
+    oxlint: ^1.89.0
     typescript: ^7.0.2
 
 autoInstallPeers: true
@@ -35,3 +35,4 @@ minimumReleaseAgeExclude:
   - undici@6.27.0
   - postcss@8.5.23
   - nanoid@3.3.18
+  - http-cache-semantics@4.2.1

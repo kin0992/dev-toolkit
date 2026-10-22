@@ -26,13 +26,13 @@
     "marketplace:check": "node scripts/sync-marketplace.mjs --check"
   },
   "devDependencies": {
-    "@changesets/cli": "^3.0.1",
+    "@changesets/cli": "^3.0.3",
     "@kin0992/oxc-config": "workspace:*",
     "oxfmt": "catalog:core",
     "oxlint": "catalog:core",
-    "turbo": "^2.10.11",
+    "turbo": "^2.11.10",
     "typescript": "catalog:core",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   },
   "engines": {
     "node": ">=24.0.0",
