@@ -14,11 +14,12 @@ license: MIT
 
 ## Instructions
 
-1. Read and follow the complete [workflow](references/workflow.md) and
-   [`gh` commands](references/gh-commands.md).
+1. Read the complete [workflow](references/workflow.md),
+   [`gh` commands](references/gh-commands.md), and
+   [writing quality](references/writing-quality.md) before drafting.
 2. Process one PR and all actionable comments in its unresolved review threads;
    include bots, but exclude general PR conversation comments.
-3. Evaluate each comment against the diff and source context.
+3. Ground each recommendation and reply in the diff and source context.
 4. If there is more than one actionable comment, enter batch triage before
    making any GitHub mutation. Ask one question at a time, and for each comment
    show its recommendation plus a concise suggested reply. Record `Accept` with
@@ -32,9 +33,8 @@ license: MIT
 6. Keep every decision and reply draft grouped locally until triage and any
    authorized implementation are complete. Then show the complete grouped plan
    and ask for one confirmation to publish it. Do not publish a partial batch.
-7. Publish each selected reaction and only the exact reply text approved for
-   that target. If a draft is edited, ask for approval of the new exact text
-   before publishing it.
+7. Publish only the approved reactions and exact replies to their approved
+   targets. Never polish approved text. Any revision needs new exact-text approval.
 8. Never resolve threads or post general PR comments.
 
 Requires an authenticated `gh` CLI. Use `gh api graphql --paginate` to collect

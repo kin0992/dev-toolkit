@@ -1,7 +1,8 @@
 name: branch-name-eval
 description: |
-  Evaluation suite for the branch-name skill.
-  Tests branch naming across different:
+  Offline mock harness smoke checks, not writing-quality evidence.
+  Live output contracts are in quality/suite.yaml.
+  Covers branch naming across different:
   - Activity types (features, fixes, refactors, chores, docs)
   - Task descriptions (clear, vague, with IDs)
   - Edge cases (multi-concern tasks, security fixes)

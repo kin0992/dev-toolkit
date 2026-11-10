@@ -1,0 +1,47 @@
+name: review-pr-comments-writing-quality
+description: Opt-in live offline-context drafts; no GitHub actions are authorized.
+skill: writing-quality-evaluator
+version: '1.0'
+
+config:
+  trials_per_task: 3
+  timeout_seconds: 300
+  parallel: false
+  executor: copilot-sdk
+  model: auto
+  skill_directories:
+    - ../../quality-driver
+    - ../../../packages/skills/src/engineering/review-pr-comments
+  required_skills:
+    - review-pr-comments
+
+metrics:
+  - name: output_quality
+    weight: 1.0
+    threshold: 1.0
+
+graders:
+  - type: tool_constraint
+    name: no_mutations_or_github_commands
+    config:
+      reject_tools:
+        - tool: '(create|edit|write|delete|resolve|github)'
+        - tool: '.*'
+          command_pattern: '\bgh\s'
+  - type: prompt
+    name: grounded_draft
+    config:
+      continue_session: true
+      prompt: |
+        This is an offline drafting task, not a request to collect or publish
+        real GitHub data. Require a specific evidence-backed recommendation
+        or the exact previously approved text, as requested. Fail for claims
+        that code changed, tests ran, reactions were added, or replies posted.
+        A decision never grants implementation or publication consent.
+        Do not reward politeness filler or invented benefits.
+        Call set_waza_grade_pass once if all requirements hold; otherwise
+        call set_waza_grade_fail once with the exact problem.
+
+tasks:
+  - 'already-addressed.yaml'
+  - 'approved-text.yaml'

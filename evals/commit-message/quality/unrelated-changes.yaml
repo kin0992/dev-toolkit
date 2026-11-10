@@ -1,0 +1,18 @@
+id: quality-unrelated-changes
+name: Keep unrelated change rationales separate
+inputs:
+  prompt: |
+    Generate commit-message suggestions from multi-area.diff.
+    These changes have no shared purpose. Recommend separate commits rather
+    than inventing a unifying feature. Do not execute git or edit any files.
+    No tests were run.
+  files:
+    - path: multi-area.diff
+graders:
+  - type: text
+    name: recommends_separation
+    config:
+      regex_match:
+        - '(?i)split|separate|distinct|three commits'
+      regex_not_match:
+        - '(?i)tests? (pass|passed)'

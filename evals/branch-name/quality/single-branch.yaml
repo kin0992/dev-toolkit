@@ -1,0 +1,14 @@
+id: quality-single-branch
+name: Return a specific branch name without prose
+inputs:
+  prompt: |
+    Name a branch for PROJ-123: fix broken pagination links.
+    Return only the branch name, with no tracking ID. Do not execute commands.
+graders:
+  - type: code
+    name: branch_only
+    config:
+      language: javascript
+      assertions:
+        - '/^fixes\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(output.trim())'
+        - '/pagination/.test(output)'

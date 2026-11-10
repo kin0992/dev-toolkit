@@ -311,6 +311,15 @@ loaded by your AI tooling of choice. Resolve them via subpath exports:
 const skillUrl = import.meta.resolve('@kin0992/skills/git/commit-message');
 ```
 
+Keep each skill directory intact and let your loader resolve its relative
+references. Reading only a detached `SKILL.md` string does not load its writing
+guide or workflow references. The bundled writing guide resolves relative to
+the skill entrypoint:
+
+```ts
+const writingGuideUrl = new URL('./references/writing-quality.md', skillUrl);
+```
+
 For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel below — skills auto-load on demand without any `node_modules` plumbing.
 
 ---
@@ -319,19 +328,51 @@ For GitHub Copilot CLI, VS Code, and Claude Code, prefer the marketplace channel
 
 `dev-toolkit` ships a Copilot/Claude **marketplace** at `.github/plugin/marketplace.json` (mirrored at `.claude-plugin/marketplace.json` so Claude Code finds it on the conventional path), exposing skills via **one plugin per category**:
 
-| Plugin               | Category      | Skills                                   |
-| -------------------- | ------------- | ---------------------------------------- |
-| `git-skills`         | `git`         | `commit-message`, `pr-title-description` |
-| `engineering-skills` | `engineering` | `review-pr-comments`                     |
+| Plugin               | Category           | Skills or agents                                        |
+| -------------------- | ------------------ | ------------------------------------------------------- |
+| `git-skills`         | `git`              | `commit-message`, `pr-title-description`, `branch-name` |
+| `engineering-skills` | `engineering`      | `review-pr-comments`                                    |
+| `project-manager`    | Project management | Triage agent for GitHub issues and Projects             |
 
-Each category folder under `packages/skills/src/` has a sibling plugin under `plugins/<category>-skills/`. Adding a new category is mechanical: drop the skills in `packages/skills/src/<category>/`, copy `plugins/git-skills/` as a template, and register the new plugin in `.github/plugin/marketplace.json`.
+Each skill category under `packages/skills/src/` has a sibling plugin under
+`plugins/<category>-skills/`. Project-manager ships an agent rather than an npm
+skill. See [CONTRIBUTING.md](./CONTRIBUTING.md#skills-and-plugins) for adding
+skills and generating their installable payloads.
 
 Each plugin ships dual manifests so it works in:
 
 - **GitHub Copilot CLI** and **VS Code** — via `.github/plugin.json`
 - **Claude Code** — via `.claude-plugin/plugin.json`
 
-Skills load **on demand**: Copilot/Claude only pull a skill into context when it matches the current task, so installing a plugin has no token cost when its skills are not relevant.
+Skill instructions load **on demand**; clients may still include installed
+skill metadata in context. Each plugin contains regular files for its complete
+skills, references, and writing guidance. Installation needs no build step or
+access to the source monorepo.
+
+### Bundled guidance and prerequisites
+
+**No separate Humanizer install is needed.** Install or update the plugin you
+use; its compact technical-writing policy is included. The policy is original
+guidance inspired by [Humanizer](https://github.com/blader/humanizer), not a
+copy of that skill or a new discoverable skill. It applies to toolkit-generated
+prose, not every conversation, quoted text, or source code.
+
+Prompt resources are bundled assets, not npm `peerDependencies` or system
+software. Claude Code supports native plugin dependencies, but that is not a
+portable contract across all three clients; these plugins do not rely on
+cross-plugin dependency installation.
+
+| Plugin               | Tools you provide                                                                                |
+| -------------------- | ------------------------------------------------------------------------------------------------ |
+| `git-skills`         | Git for staged diffs and branch history. Branch naming alone needs no external tool.             |
+| `engineering-skills` | Installed, authenticated `gh` with access to the target pull request.                            |
+| `project-manager`    | Installed, authenticated `gh`, the required Projects permissions, and a GitHub Project v2 board. |
+
+The plugins do not install or authenticate these tools. Public marketplace
+downloads need no registry credentials; client sign-in, subscriptions, trust
+prompts, and GitHub permissions still apply. Writing guidance does not grant
+permission to edit code or publish anything, and approved publication text
+must not be silently rewritten.
 
 ### GitHub Copilot CLI
 
@@ -340,6 +381,9 @@ No authentication is required — `dev-toolkit` is a public repository.
 ```sh
 copilot plugin marketplace add kin0992/dev-toolkit
 copilot plugin install git-skills@dev-toolkit
+# Install other categories only if you need them:
+copilot plugin install engineering-skills@dev-toolkit
+copilot plugin install project-manager@dev-toolkit
 ```
 
 To pin to a specific version, push a Git tag from `dev-toolkit` and reference it; otherwise installs track the marketplace's default branch.
@@ -394,11 +438,11 @@ Alternatively, add the marketplace interactively:
 
 ### Choosing between npm and the marketplace
 
-| Use case                                                                        | Recommended channel                         |
-| ------------------------------------------------------------------------------- | ------------------------------------------- |
-| GitHub Copilot CLI, Copilot in VS Code, or Claude Code                          | Marketplace (`copilot plugin install`)      |
-| Programmatic access to a `SKILL.md` (custom tooling, scripts, other AI clients) | npm (`@kin0992/skills`)                     |
-| You want both                                                                   | Both — they share the same `SKILL.md` files |
+| Use case                                                                        | Recommended channel                                 |
+| ------------------------------------------------------------------------------- | --------------------------------------------------- |
+| GitHub Copilot CLI, Copilot in VS Code, or Claude Code                          | Marketplace through your client's install UI or CLI |
+| Programmatic access to a `SKILL.md` (custom tooling, scripts, other AI clients) | npm (`@kin0992/skills`)                             |
+| You want both                                                                   | Both — they share the same `SKILL.md` files         |
 
 ---
 

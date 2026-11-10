@@ -10,8 +10,17 @@ via the [`dev-toolkit` marketplace](../../.github/plugin/marketplace.json).
 | `triage` | Capture rough ideas / bugs / improvements as well-formed GitHub issues, attach them to a GitHub Project (v2) board, and transition existing items through their lifecycle. |
 
 The agent talks to GitHub through the `gh` CLI (and `gh api graphql` for the
-parts of GitHub Projects v2 that the CLI doesn't cover yet), so it works
-locally and in CI without extra plumbing.
+parts of GitHub Projects v2 that the CLI doesn't cover yet). Install and
+authenticate `gh` separately with the permissions listed below.
+
+The agent includes the same compact writing policy as the toolkit's skills.
+No Humanizer install, npm package, or build step is needed. Drafts stay factual
+and direct; the agent still needs explicit confirmation before any GitHub
+mutation and publishes only approved text.
+
+Maintainers edit the agent's handwritten instructions here and the shared
+policy at `packages/skills/shared/writing-quality.md`. Run `pnpm skills:sync`
+to update the marked policy block rather than editing that block by hand.
 
 ## Install
 
@@ -23,14 +32,17 @@ copilot plugin install project-manager@dev-toolkit
 ```
 
 For Claude Code, add the same marketplace; the `.claude-plugin/plugin.json`
-manifest is shipped alongside `.github/plugin.json`.
+manifest is shipped alongside `.github/plugin.json`. For VS Code and Claude
+Code, follow [native client setup](../../CONSUMING.md#3-ai-skills-via-the-dev-toolkit-marketplace);
+Copilot CLI is not required.
 
 ## Usage
 
-In a chat session inside any repository:
+Select the Triage agent in your client's agent picker. In Copilot CLI, start
+a session inside the target repository with the plugin-qualified name:
 
-```
-/agent triage
+```sh
+copilot --agent project-manager:triage
 ```
 
 Then either describe a rough idea / bug ("capture" mode) or reference an
