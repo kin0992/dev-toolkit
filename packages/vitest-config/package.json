@@ -32,6 +32,12 @@
     "oxlint": "catalog:core"
   },
   "peerDependencies": {
-    "vitest": "^4.1.12"
+    "@vitest/coverage-v8": "^4.1.12 || ^5.0.0",
+    "vitest": "^4.1.12 || ^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vitest/coverage-v8": {
+      "optional": true
+    }
   }
 }
