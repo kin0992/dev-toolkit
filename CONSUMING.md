@@ -17,10 +17,10 @@ Before consuming any reusable workflow from `dev-toolkit`, your repository must 
 All workflows use **pnpm** exclusively. Your consumer repository must:
 
 - Use pnpm as its package manager (not npm or yarn).
-- Declare the exact pnpm version in the `packageManager` field of your root `package.json`. The `setup` composite action reads this field to install the correct pnpm version.
+- Declare the exact pnpm version in the `packageManager` field of your root `package.json`. The `setup` composite action reads this field to install the correct pnpm version. pnpm 10, 11 and 12 are supported.
 
   ```json
-  { "packageManager": "pnpm@10.x.x+sha512.<hash>" }
+  { "packageManager": "pnpm@12.x.x+sha512.<hash>" }
   ```
 
   Generate the correct value locally with `corepack use pnpm@latest`.
