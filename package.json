@@ -18,7 +18,7 @@
     "format:check": "oxfmt --check",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "code-review": "pnpm format:check && pnpm typecheck && pnpm lint:check && pnpm test && pnpm marketplace:check",
+    "code-review": "pnpm format:check && turbo run typecheck lint:check test && pnpm marketplace:check",
     "changeset": "changeset",
     "version-packages": "changeset version && pnpm marketplace:sync",
     "release": "turbo run build && changeset publish",

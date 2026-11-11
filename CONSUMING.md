@@ -152,7 +152,7 @@ jobs:
 | `codeql-languages`  | no       | `javascript-typescript` | Comma-separated CodeQL languages.         |
 | `audit-level`       | no       | `high`                  | Minimum severity that fails `pnpm audit`. |
 
-The workflow runs three independent jobs: `CodeQL` (init + autobuild + analyze, results upload as SARIF to code scanning), `Secret scan (trufflehog)` over the full git history with `--only-verified`, and `pnpm audit` against production dependencies. Each job hardens the runner with `step-security/harden-runner` in audit mode.
+The workflow runs three independent jobs: `CodeQL` (init + autobuild + analyze, results upload as SARIF to code scanning), `Secret scan (trufflehog)` over the full git history with `--only-verified`, and `pnpm audit` against production dependencies. The audit job reads `pnpm-lock.yaml` directly and does not install dependencies. Each job hardens the runner with `step-security/harden-runner` in audit mode.
 
 ### IaC drift detection (Pulumi)
 
