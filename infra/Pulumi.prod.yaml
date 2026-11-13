@@ -3,4 +3,4 @@ config:
   devToolkit:defaultBranch: main
   github:owner: kin0992
   devToolkit:pulumiAccessToken:
-    secure: AAABAFzzntAVe+s+2gBaaraLf9IrltK0s4ReAMCJ/FTm3/37kuSOyzOeZQPZR0GetzDO9Oj1A+i6qaJn53h6A0ct9lEmbIitL7Ap5Q==
+    secure: AAABAFyvzv9Q4BG7+MJrAo2ygpsQOX3fzsz6oYK15mqhJFDUvXlVL3MokYHDlfzwq0cugr4za7+MbDEmSc9gnNj2UdXRoaBX6cS4oQ==
