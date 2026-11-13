@@ -30,7 +30,7 @@
     "@kin0992/oxc-config": "workspace:*",
     "oxfmt": "catalog:core",
     "oxlint": "catalog:core",
-    "turbo": "^2.11.10",
+    "turbo": "^2.11.11",
     "typescript": "catalog:core",
     "vitest": "^5.1.0"
   },
