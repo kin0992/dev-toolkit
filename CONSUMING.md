@@ -63,7 +63,7 @@ jobs:
       working-directory: '.'
 ```
 
-**Note:** The workflow reads your repository's `.node-version` file automatically. Ensure it exists at the root and contains the Node.js version you want to use (e.g., `24.22.3`).
+**Note:** The workflow reads your repository's `.node-version` file automatically. Ensure it exists at the root and contains the Node.js version you want to use (e.g., `26.13.1`).
 
 ### Release (Changesets + npm publish)
 
