@@ -25,11 +25,49 @@ permissions:
   contents: read
 
 jobs:
-  security:
-    name: Security (self)
+  # CodeQL is the slowest security job and only analyzes JS/TS, so pull
+  # requests that touch no JS/TS skip it. Pushes to main and the weekly
+  # schedule always run it.
+  changes:
+    name: Detect JS/TS changes
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
-      packages: read # Required by the setup action to install private packages.
+      pull-requests: read # Required to list the pull request's files.
+    outputs:
+      code: ${{ steps.files.outputs.code }}
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: audit
+
+      - name: List changed files
+        id: files
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          files="$(gh api --paginate "repos/${REPO}/pulls/${PR_NUMBER}/files" --jq '.[].filename')"
+          if grep -qE '\.(c|m)?[jt]sx?$' <<< "$files"; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  security:
+    name: Security (self)
+    needs: changes
+    # `changes` is skipped outside pull requests; run anyway in that case.
+    if: ${{ !cancelled() && needs.changes.result != 'failure' }}
+    permissions:
+      contents: read
       actions: read # Required for security workflow analysis.
       security-events: write # Required to upload security analysis results.
     uses: ./.github/workflows/security-analysis.yml
+    with:
+      codeql: ${{ github.event_name != 'pull_request' || needs.changes.outputs.code == 'true' }}
