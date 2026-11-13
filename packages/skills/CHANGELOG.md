@@ -1,5 +1,11 @@
 # @kin0992/skills
 
+## 0.3.2
+
+### Patch Changes
+
+- 5c6236c: Trim the `branch-name` skill under its 500-token budget without changing its behaviour.
+
 ## 0.3.1
 
 ### Patch Changes
