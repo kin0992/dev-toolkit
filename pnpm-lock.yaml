@@ -274,23 +274,22 @@ importers:
         version: 1.93.0
 
   packages/vitest-config:
-    dependencies:
-      '@vitest/coverage-v8':
-        specifier: ^4.1.12 || ^5.0.0
-        version: 5.1.0(vitest@5.1.0)
-      vitest:
-        specifier: ^4.1.12 || ^5.0.0
-        version: 5.1.0(@opentelemetry/api@1.9.1)(@types/node@24.19.2)(@vitest/coverage-v8@5.1.0)(vite@7.3.8(@types/node@24.19.2)(yaml@2.9.1))
     devDependencies:
       '@kin0992/oxc-config':
         specifier: workspace:*
         version: link:../oxc-config
+      '@vitest/coverage-v8':
+        specifier: ^5.1.0
+        version: 5.1.0(vitest@5.1.0)
       oxfmt:
         specifier: catalog:core
         version: 0.78.0
       oxlint:
         specifier: catalog:core
         version: 1.93.0
+      vitest:
+        specifier: ^5.1.0
+        version: 5.1.0(@opentelemetry/api@1.9.1)(@types/node@24.19.2)(@vitest/coverage-v8@5.1.0)(vite@7.3.8(@types/node@24.19.2)(yaml@2.9.1))
 
 packages:
 

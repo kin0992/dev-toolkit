@@ -24,12 +24,15 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "lint": "oxlint",
-    "lint:check": "oxlint"
+    "lint:check": "oxlint",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@kin0992/oxc-config": "workspace:*",
+    "@vitest/coverage-v8": "^5.1.0",
     "oxfmt": "catalog:core",
-    "oxlint": "catalog:core"
+    "oxlint": "catalog:core",
+    "vitest": "^5.1.0"
   },
   "peerDependencies": {
     "@vitest/coverage-v8": "^4.1.12 || ^5.0.0",
