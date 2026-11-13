@@ -1,5 +1,11 @@
 # @kin0992/vitest-config
 
+## 0.2.0
+
+### Minor Changes
+
+- 856a2b3: Support Vitest 5 alongside Vitest 4, and declare `@vitest/coverage-v8` as an optional peer dependency since the config uses the v8 coverage provider.
+
 ## 0.1.1
 
 ### Patch Changes
