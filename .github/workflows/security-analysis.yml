@@ -13,6 +13,11 @@ on:
         required: false
         type: string
         default: 'javascript-typescript'
+      codeql:
+        description: 'Run the CodeQL job. Callers can turn it off for changes with no code CodeQL analyzes.'
+        required: false
+        type: boolean
+        default: true
       audit-level:
         description: 'Minimum severity that fails pnpm audit (low, moderate, high, critical).'
         required: false
@@ -25,6 +30,7 @@ permissions:
 jobs:
   codeql:
     name: CodeQL
+    if: inputs.codeql
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
