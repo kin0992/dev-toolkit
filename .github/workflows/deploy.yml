@@ -20,5 +20,7 @@ jobs:
       packages: read # Required by the setup action to install private packages.
     with:
       stack: prod
-    secrets:
-      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      # Personal tokens work on every Pulumi edition; organization tokens need a paid one.
+      pulumi-organization: kin0992
+      pulumi-token-type: personal
+      pulumi-token-scope: user:kin0992
