@@ -22,9 +22,24 @@ on:
         required: false
         type: string
         default: ''
+      pulumi-organization:
+        description: 'Pulumi organization to log in to with OIDC instead of PULUMI_ACCESS_TOKEN. Requires GitHub registered as an OIDC issuer in that organization.'
+        required: false
+        type: string
+        default: ''
+      pulumi-token-type:
+        description: 'Token type to request over OIDC: organization, team or personal.'
+        required: false
+        type: string
+        default: 'organization'
+      pulumi-token-scope:
+        description: 'Scope for team (team:NAME) or personal (user:NAME) OIDC tokens.'
+        required: false
+        type: string
+        default: ''
     secrets:
       PULUMI_ACCESS_TOKEN:
-        description: 'Pulumi Cloud access token (omit when using OIDC + self-managed backend).'
+        description: 'Pulumi access token. Omit when pulumi-organization is set.'
         required: false
 
 permissions:
@@ -51,7 +66,7 @@ jobs:
       # Inlined rather than calling .github/actions/pulumi-setup: a nested
       # composite action is resolved at run time, so a caller pinning this
       # workflow by SHA would still run whatever that action ref points to,
-      # with PULUMI_ACCESS_TOKEN in the job. Every step here is fixed by the
+      # with a Pulumi token in the job. Every step here is fixed by the
       # caller's pin.
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -74,11 +89,24 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: pnpm install --frozen-lockfile
 
+      - name: Pulumi login (OIDC)
+        id: pulumi-oidc
+        if: inputs.pulumi-organization != ''
+        uses: pulumi/auth-actions@273044cc19e63ea565285da8edd4e059126a0bdb # v2.1.2
+        with:
+          organization: ${{ inputs.pulumi-organization }}
+          requested-token-type: urn:pulumi:token-type:access_token:${{ inputs.pulumi-token-type }}
+          scope: ${{ inputs.pulumi-token-scope }}
+          cloud-url: ${{ inputs.cloud-url }}
+          # Passed explicitly below instead: a step-level env would shadow
+          # the exported variable with the empty secret.
+          export-environment-variables: false
+
       - name: Pulumi login (custom backend)
         if: inputs.cloud-url != ''
         working-directory: ${{ github.workspace }}
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.pulumi-oidc.outputs.pulumi-access-token || secrets.PULUMI_ACCESS_TOKEN }}
           CLOUD_URL: ${{ inputs.cloud-url }}
         run: pulumi login "$CLOUD_URL"
 
@@ -90,4 +118,4 @@ jobs:
           work-dir: ${{ inputs.working-directory }}
           message: ${{ inputs.message }}
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.pulumi-oidc.outputs.pulumi-access-token || secrets.PULUMI_ACCESS_TOKEN }}
