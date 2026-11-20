@@ -26,6 +26,12 @@ on:
       PULUMI_ACCESS_TOKEN:
         description: 'Pulumi Cloud access token (omit when using OIDC + self-managed backend).'
         required: false
+      APP_ID:
+        description: 'Optional GitHub App ID. With APP_PRIVATE_KEY, the job mints an installation token and gives it to Pulumi as GITHUB_TOKEN, for stacks that use the GitHub provider. The App needs the permissions the stack manages.'
+        required: false
+      APP_PRIVATE_KEY:
+        description: 'Private key (PEM) of the GitHub App named by APP_ID.'
+        required: false
 
 permissions:
   contents: read
@@ -42,6 +48,9 @@ jobs:
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}
+    env:
+      # The secrets context is not available in step conditions.
+      HAS_GITHUB_APP: ${{ secrets.APP_ID != '' && secrets.APP_PRIVATE_KEY != '' }}
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
@@ -74,6 +83,19 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: pnpm install --frozen-lockfile
 
+      # Without an App, GITHUB_TOKEN stays empty and the GitHub provider is unauthenticated, as before.
+      # The token is scoped to this repository and carries the App installation's permissions:
+      # a shared workflow cannot know which resources a stack manages, so the caller's App
+      # installation is the permission boundary.
+      - name: Generate GitHub App token
+        id: app-token
+        if: env.HAS_GITHUB_APP == 'true'
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # 3.3.0 # zizmor: ignore[github-app]
+        with:
+          client-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }}
+
       - name: Pulumi login (custom backend)
         if: inputs.cloud-url != ''
         working-directory: ${{ github.workspace }}
@@ -91,3 +113,4 @@ jobs:
           message: ${{ inputs.message }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
