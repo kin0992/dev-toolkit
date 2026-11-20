@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
     uses: ./.github/workflows/iac-deploy.yml
     permissions:
       contents: read
@@ -20,6 +21,7 @@ jobs:
       packages: read # Required by the setup action to install private packages.
     with:
       stack: prod
+      environment: iac-admin
       # Personal tokens work on every Pulumi edition; organization tokens need a paid one.
       pulumi-organization: kin0992
       pulumi-token-type: personal

@@ -229,6 +229,7 @@ jobs:
 | `working-directory`   | no       | `infra`        | Path to the Pulumi project                                                                                                  |
 | `message`             | no       | `''`           | Message attached to the update for audit trail                                                                              |
 | `cloud-url`           | no       | `''`           | Self-managed backend URL; omit to use Pulumi Cloud                                                                          |
+| `environment`         | no       | `''`           | GitHub environment for the deploy job and its provider credentials.                                                         |
 | `pulumi-organization` | no       | `''`           | Log in to this Pulumi organization with OIDC instead of `PULUMI_ACCESS_TOKEN`. See [Pulumi OIDC login](#pulumi-oidc-login). |
 | `pulumi-token-type`   | no       | `organization` | OIDC token type: `organization`, `team` or `personal`.                                                                      |
 | `pulumi-token-scope`  | no       | `''`           | Required for `team` (`team:NAME`) and `personal` (`user:NAME`) tokens.                                                      |
@@ -252,13 +253,25 @@ Cloud, under **Settings → Access Management → OIDC Issuers**:
 
 1. Register an issuer with URL `https://token.actions.githubusercontent.com`.
 2. Add an **Allow** policy for the token type you request (with the matching
-   scope), with claims `aud` = `urn:pulumi:org:<org>` and
-   `sub` = `repo:<owner>/<repo>:*`. Narrow `sub` to `repo:<owner>/<repo>:ref:refs/heads/main`
-   to keep deploys on main only (pull request drift runs use
-   `repo:<owner>/<repo>:pull_request`).
+   scope). Match `aud` = `urn:pulumi:org:<org>` and the actual `sub` for
+   the caller's trusted ref or GitHub environment. Use the caller repository's
+   subject prefix from `gh api repos/<owner>/<repo>/actions/oidc/customization/sub --jq .sub_claim_prefix`.
+   An environment subject does not include the ref; check the `ref` claim
+   separately for branch or release-tag restrictions. For SHA-pinned callers,
+   also match `job_workflow_ref` to the called workflow at the approved SHA.
 
 Organization tokens need a paid Pulumi edition; personal tokens work on all
 of them.
+
+### GitHub provider authentication
+
+Pulumi OIDC only authenticates to Pulumi Cloud. If your stack uses the Pulumi
+GitHub provider and does not already configure its credential, supply a
+repo-scoped `GITHUB_PROVIDER_TOKEN`. Both reusable workflows pass it to Pulumi
+as `GITHUB_TOKEN`, only for the preview or deploy step. Pass the secret by name
+or store it on a protected GitHub environment selected by `with.environment`.
+Do not grant provider or Pulumi Cloud credentials to unreviewed PR code;
+preview runs the checked-out Pulumi program.
 
 ### Pinning strategy
 

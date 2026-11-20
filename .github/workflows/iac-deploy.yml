@@ -22,6 +22,11 @@ on:
         required: false
         type: string
         default: ''
+      environment:
+        description: 'Optional GitHub environment for the deploy job and its provider credentials.'
+        required: false
+        type: string
+        default: ''
       pulumi-organization:
         description: 'Pulumi organization to log in to with OIDC instead of PULUMI_ACCESS_TOKEN. Requires GitHub registered as an OIDC issuer in that organization.'
         required: false
@@ -41,6 +46,9 @@ on:
       PULUMI_ACCESS_TOKEN:
         description: 'Pulumi access token. Omit when pulumi-organization is set.'
         required: false
+      GITHUB_PROVIDER_TOKEN:
+        description: 'Optional GitHub API token for the Pulumi GitHub provider, separate from Pulumi Cloud authentication.'
+        required: false
 
 permissions:
   contents: read
@@ -48,6 +56,7 @@ permissions:
 jobs:
   deploy:
     name: Pulumi deploy
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -119,3 +128,4 @@ jobs:
           message: ${{ inputs.message }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ steps.pulumi-oidc.outputs.pulumi-access-token || secrets.PULUMI_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_PROVIDER_TOKEN }}
