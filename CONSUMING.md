@@ -191,6 +191,16 @@ jobs:
 | `expect-no-changes` | no       | `false` | Fail the job when the preview has changes.                                                                                        |
 | `environment`       | no       | `''`    | GitHub environment for the job (e.g. one with required reviewers for PR previews). A calling job cannot set `environment` itself. |
 
+**Secrets:**
+
+| Secret                | Required | Description                                                                                                                                            |
+| --------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `PULUMI_ACCESS_TOKEN` | no       | Pulumi Cloud access token. Omit when using OIDC with a self-managed backend.                                                                           |
+| `APP_ID`              | no       | GitHub App ID. With `APP_PRIVATE_KEY`, the job mints an installation token scoped to the calling repository and passes it to Pulumi as `GITHUB_TOKEN`. |
+| `APP_PRIVATE_KEY`     | no       | Private key (PEM) of that GitHub App.                                                                                                                  |
+
+Set `APP_ID` and `APP_PRIVATE_KEY` when the stack uses the **GitHub provider** (for example a stack that manages the repository's own settings, Actions secrets or collaborators): without a token, the provider's API calls fail with `401 Requires authentication`. The token carries the App installation's permissions, so grant the App what the stack manages (e.g. Administration, Secrets and Issues: read and write). With `secrets: inherit`, repository secrets with these names are passed automatically.
+
 ### IaC deploy (Pulumi up)
 
 To run `pulumi up` automatically on pushes to main (or manually):
@@ -226,6 +236,16 @@ jobs:
 | `working-directory` | no       | `infra` | Path to the Pulumi project                         |
 | `message`           | no       | `''`    | Message attached to the update for audit trail     |
 | `cloud-url`         | no       | `''`    | Self-managed backend URL; omit to use Pulumi Cloud |
+
+**Secrets:**
+
+| Secret                | Required | Description                                                                                                                                            |
+| --------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `PULUMI_ACCESS_TOKEN` | no       | Pulumi Cloud access token. Omit when using OIDC with a self-managed backend.                                                                           |
+| `APP_ID`              | no       | GitHub App ID. With `APP_PRIVATE_KEY`, the job mints an installation token scoped to the calling repository and passes it to Pulumi as `GITHUB_TOKEN`. |
+| `APP_PRIVATE_KEY`     | no       | Private key (PEM) of that GitHub App.                                                                                                                  |
+
+Set `APP_ID` and `APP_PRIVATE_KEY` when the stack uses the **GitHub provider** (for example a stack that manages the repository's own settings, Actions secrets or collaborators): without a token, the provider's API calls fail with `401 Requires authentication`. The token carries the App installation's permissions, so grant the App what the stack manages (e.g. Administration, Secrets and Issues: read and write). With `secrets: inherit`, repository secrets with these names are passed automatically.
 
 ### Pinning strategy
 
