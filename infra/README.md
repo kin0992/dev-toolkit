@@ -44,4 +44,9 @@ pulumi import github:index/repository:Repository dev-toolkit dev-toolkit
 
 ## Drift detection
 
-The repo CI calls the reusable `iac-drift.yml` workflow on a schedule and on PRs that touch `infra/**`. See `.github/workflows/drift.yml`.
+Run **IaC Drift** manually from a trusted ref. Both drift and deploy use the
+`iac-admin` GitHub environment; store a repository-scoped GitHub provider
+credential there as `GITHUB_PROVIDER_TOKEN`. Restrict the environment to
+trusted refs. Do not run these jobs against unreviewed PR code: Pulumi
+executes the checked-out program with the provider credential in scope.
+Deploys only run from `main`. Pulumi Cloud authentication uses OIDC separately.

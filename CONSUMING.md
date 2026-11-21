@@ -181,15 +181,18 @@ jobs:
       PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 ```
 
-| Input               | Required | Default | Description                                                                                                                       |
-| ------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `stack`             | yes      |         | Pulumi stack name.                                                                                                                |
-| `working-directory` | no       | `infra` | Path to the Pulumi project.                                                                                                       |
-| `comment-on-pr`     | no       | `true`  | Post the preview as a PR comment.                                                                                                 |
-| `cloud-url`         | no       | `''`    | Self-managed Pulumi backend URL.                                                                                                  |
-| `refresh`           | no       | `true`  | Refresh against live state first. Without it the preview compares code with stored state and cannot see out-of-band edits.        |
-| `expect-no-changes` | no       | `false` | Fail the job when the preview has changes.                                                                                        |
-| `environment`       | no       | `''`    | GitHub environment for the job (e.g. one with required reviewers for PR previews). A calling job cannot set `environment` itself. |
+| Input                 | Required | Default        | Description                                                                                                                       |
+| --------------------- | -------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `stack`               | yes      |                | Pulumi stack name.                                                                                                                |
+| `working-directory`   | no       | `infra`        | Path to the Pulumi project.                                                                                                       |
+| `comment-on-pr`       | no       | `true`         | Post the preview as a PR comment.                                                                                                 |
+| `cloud-url`           | no       | `''`           | Self-managed Pulumi backend URL.                                                                                                  |
+| `refresh`             | no       | `true`         | Refresh against live state first. Without it the preview compares code with stored state and cannot see out-of-band edits.        |
+| `expect-no-changes`   | no       | `false`        | Fail the job when the preview has changes.                                                                                        |
+| `environment`         | no       | `''`           | GitHub environment for the job (e.g. one with required reviewers for PR previews). A calling job cannot set `environment` itself. |
+| `pulumi-organization` | no       | `''`           | Log in to this Pulumi organization with OIDC instead of `PULUMI_ACCESS_TOKEN`. See [Pulumi OIDC login](#pulumi-oidc-login).       |
+| `pulumi-token-type`   | no       | `organization` | OIDC token type: `organization`, `team` or `personal`.                                                                            |
+| `pulumi-token-scope`  | no       | `''`           | Required for `team` (`team:NAME`) and `personal` (`user:NAME`) tokens.                                                            |
 
 ### IaC deploy (Pulumi up)
 
@@ -220,12 +223,55 @@ jobs:
 
 **Inputs:**
 
-| Input               | Required | Default | Description                                        |
-| ------------------- | -------- | ------- | -------------------------------------------------- |
-| `stack`             | yes      | —       | Pulumi stack name                                  |
-| `working-directory` | no       | `infra` | Path to the Pulumi project                         |
-| `message`           | no       | `''`    | Message attached to the update for audit trail     |
-| `cloud-url`         | no       | `''`    | Self-managed backend URL; omit to use Pulumi Cloud |
+| Input                 | Required | Default        | Description                                                                                                                 |
+| --------------------- | -------- | -------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `stack`               | yes      | —              | Pulumi stack name                                                                                                           |
+| `working-directory`   | no       | `infra`        | Path to the Pulumi project                                                                                                  |
+| `message`             | no       | `''`           | Message attached to the update for audit trail                                                                              |
+| `cloud-url`           | no       | `''`           | Self-managed backend URL; omit to use Pulumi Cloud                                                                          |
+| `environment`         | no       | `''`           | GitHub environment for the deploy job and its provider credentials.                                                         |
+| `pulumi-organization` | no       | `''`           | Log in to this Pulumi organization with OIDC instead of `PULUMI_ACCESS_TOKEN`. See [Pulumi OIDC login](#pulumi-oidc-login). |
+| `pulumi-token-type`   | no       | `organization` | OIDC token type: `organization`, `team` or `personal`.                                                                      |
+| `pulumi-token-scope`  | no       | `''`           | Required for `team` (`team:NAME`) and `personal` (`user:NAME`) tokens.                                                      |
+
+### Pulumi OIDC login
+
+Both IaC workflows can swap the long-lived `PULUMI_ACCESS_TOKEN` secret for a
+short-lived token minted from the job's GitHub OIDC token. Set
+`pulumi-organization` and drop the secret:
+
+```yaml
+with:
+  stack: kin0992/myapp/prod
+  pulumi-organization: kin0992
+  pulumi-token-type: personal # or organization / team
+  pulumi-token-scope: user:kin0992 # team:NAME for team tokens, omit for organization
+```
+
+The calling job already grants `id-token: write`. One-time setup in Pulumi
+Cloud, under **Settings → Access Management → OIDC Issuers**:
+
+1. Register an issuer with URL `https://token.actions.githubusercontent.com`.
+2. Add an **Allow** policy for the token type you request (with the matching
+   scope). Match `aud` = `urn:pulumi:org:<org>` and the actual `sub` for
+   the caller's trusted ref or GitHub environment. Use the caller repository's
+   subject prefix from `gh api repos/<owner>/<repo>/actions/oidc/customization/sub --jq .sub_claim_prefix`.
+   An environment subject does not include the ref; check the `ref` claim
+   separately for branch or release-tag restrictions. For SHA-pinned callers,
+   also match `job_workflow_ref` to the called workflow at the approved SHA.
+
+Organization tokens need a paid Pulumi edition; personal tokens work on all
+of them.
+
+### GitHub provider authentication
+
+Pulumi OIDC only authenticates to Pulumi Cloud. If your stack uses the Pulumi
+GitHub provider and does not already configure its credential, supply a
+repo-scoped `GITHUB_PROVIDER_TOKEN`. Both reusable workflows pass it to Pulumi
+as `GITHUB_TOKEN`, only for the preview or deploy step. Pass the secret by name
+or store it on a protected GitHub environment selected by `with.environment`.
+Do not grant provider or Pulumi Cloud credentials to unreviewed PR code;
+preview runs the checked-out Pulumi program.
 
 ### Pinning strategy
 

@@ -1,11 +1,6 @@
 name: IaC Drift
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - 'infra/**'
-      - '.github/workflows/drift.yml'
   workflow_dispatch:
 
 permissions:
@@ -18,8 +13,12 @@ jobs:
       contents: read
       id-token: write # Required for Pulumi OIDC authentication.
       packages: read # Required by the setup action to install private packages.
-      pull-requests: write # Required for Pulumi preview comments.
+      pull-requests: write # Required by the reusable workflow.
     with:
       stack: prod
-    secrets:
-      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      environment: iac-admin
+      comment-on-pr: false
+      # Personal tokens work on every Pulumi edition; organization tokens need a paid one.
+      pulumi-organization: kin0992
+      pulumi-token-type: personal
+      pulumi-token-scope: user:kin0992
